@@ -336,7 +336,7 @@ export default function Home() {
                           animateOn="hover"
                           speed={120}
                           maxIterations={8}
-                          characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
+                          characters={feature.title}
                           className="text-white"
                           encryptedClassName="text-gray-500"
                         />
