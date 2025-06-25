@@ -1,0 +1,7 @@
+POST http://localhost:3000/api/initCase
+Content-Type: application/json
+
+{
+  "userId": "fFnFrr9CFsUbLAldGxlYLfLLsl02",
+  "difficulty": "hard"
+}

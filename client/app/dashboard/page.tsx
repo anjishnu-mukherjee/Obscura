@@ -16,17 +16,24 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import DecryptedText from '@/react-bits/DecryptedText';
 import Navbar from '@/components/navbar';
-import { useEffect } from 'react';
+import DifficultyModal from '@/components/DifficultyModal';
+import { useCases, CaseData } from '@/hooks/useCases';
+import { useEffect, useState } from 'react';
   
 export default function DashboardPage() {
   const { user, userData, loading } = useAuth();
   const router = useRouter();
+  const [showDifficultyModal, setShowDifficultyModal] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { cases: recentCases, loading: casesLoading } = useCases(user?.uid, 3);
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
     }
   }, [user, loading, router]);
+
+
 
   if (loading) {
     return (
@@ -72,11 +79,61 @@ export default function DashboardPage() {
     { label: 'Current Rank', value: userData?.stats?.rank || 'Rookie Agent', icon: Shield },
   ];
 
-  const recentCases = [
-    { id: '2156-X', title: 'The Encrypted Messages', status: 'Active', progress: 47 },
-    { id: '2157-A', title: 'Digital Phantom', status: 'Completed', progress: 100 },
-    { id: '2158-B', title: 'The Silent Network', status: 'Pending', progress: 0 },
-  ];
+     // Mock data for cases without real data
+   const mockRecentCases: (CaseData & { progress?: number })[] = [
+     { id: '2156-X', title: 'The Encrypted Messages', status: 'active', progress: 47 } as CaseData & { progress: number },
+     { id: '2157-A', title: 'Digital Phantom', status: 'completed', progress: 100 } as CaseData & { progress: number },
+     { id: '2158-B', title: 'The Silent Network', status: 'active', progress: 0 } as CaseData & { progress: number },
+   ];
+
+   const casesToShow: (CaseData & { progress?: number })[] = recentCases.length > 0 
+     ? recentCases.map(c => ({ ...c, progress: 0 })) 
+     : mockRecentCases;
+
+  const handleStartNewMission = () => {
+    setShowDifficultyModal(true);
+  };
+
+  const handleSelectDifficulty = async (difficulty: 'easy' | 'medium' | 'hard') => {
+    setIsGenerating(true);
+    
+    try {
+      const response = await fetch('/api/initCase', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user?.uid,
+          difficulty,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate case');
+      }
+
+      const result = await response.json();
+      
+      if (result.success && result.caseId) {
+        // Navigate to the case file page
+        router.push(`/dashboard/case/${result.caseId}`);
+      } else {
+        throw new Error(result.error || 'Failed to generate case');
+      }
+    } catch (error) {
+      console.error('Error generating case:', error);
+      alert('Failed to generate case. Please try again.');
+      setIsGenerating(false);
+      setShowDifficultyModal(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    if (!isGenerating) {
+      setShowDifficultyModal(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900">
@@ -134,7 +191,7 @@ export default function DashboardPage() {
             <motion.button
               whileHover={{ scale: 1, boxShadow: '0 0 12px 6px #444444, 0 0 2px 2px #fff2' }}
               whileTap={{ scale: 0.97 }}
-              onClick={() => router.push('/dashboard/new-case')}
+              onClick={handleStartNewMission}
               className="relative flex items-center gap-3 px-8 py-4 mt-2 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-900 shadow-lg shadow-yellow-400/20 border-none border-black/20 text-white font-bold tracking-tighter transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/40 hover:from-teal-400 hover:to-cyan-900 hover:shadow-2xl hover:shadow-pink-500/30"
               style={{ letterSpacing: '0.15em' }}
             >
@@ -153,12 +210,13 @@ export default function DashboardPage() {
             </div>
             
             <div className="space-y-4">
-              {recentCases.map((case_, index) => (
+              {casesToShow.map((case_, index) => (
                 <motion.div
                   key={case_.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
+                  onClick={() => case_.id && router.push(`/dashboard/case/${case_.id}`)}
                   className="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
                 >
                   <div className="flex items-center space-x-4">
@@ -166,26 +224,32 @@ export default function DashboardPage() {
                       <FileText className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-white font-semibold">Case #{case_.id}</h3>
+                      <h3 className="text-white font-semibold">
+                        Case #{case_.id ? case_.id.slice(-6).toUpperCase() : case_.id}
+                      </h3>
                       <p className="text-gray-400 text-sm">{case_.title}</p>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
                     <div className="text-right">
-                      <p className={`text-sm font-medium ${
-                        case_.status === 'Active' ? 'text-teal-400' :
-                        case_.status === 'Completed' ? 'text-green-400' :
+                      <p className={`text-sm font-medium capitalize ${
+                        case_.status === 'active' ? 'text-teal-400' :
+                        case_.status === 'completed' ? 'text-green-400' :
                         'text-gray-400'
                       }`}>
                         {case_.status}
                       </p>
-                      <p className="text-gray-400 text-xs">{case_.progress}% Complete</p>
+                      <p className="text-gray-400 text-xs">
+                        {case_.progress !== undefined 
+                          ? `${case_.progress}% Complete` 
+                          : 'Just started'}
+                      </p>
                     </div>
                     <div className="w-16 h-2 bg-gray-700 rounded-full">
                       <div 
                         className="h-full bg-gradient-to-r from-teal-500 to-teal-300 rounded-full transition-all duration-300"
-                        style={{ width: `${case_.progress}%` }}
+                        style={{ width: `${case_.progress || 0}%` }}
                       />
                     </div>
                   </div>
@@ -234,6 +298,14 @@ export default function DashboardPage() {
           </motion.div>
         </motion.div>
       </main>
+
+      {/* Difficulty Modal */}
+      <DifficultyModal
+        isOpen={showDifficultyModal}
+        onClose={handleCloseModal}
+        onSelectDifficulty={handleSelectDifficulty}
+        isGenerating={isGenerating}
+      />
     </div>
   );
 }
