@@ -13,15 +13,17 @@ import {
   Zap,
   ChevronRight
 } from 'lucide-react';
+import Link from 'next/link';
 import Navbar from '@/components/navbar';
 import Aurora from '@/react-bits/Aurora';
 import DecryptedText from '@/react-bits/DecryptedText';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showContent, setShowContent] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     const timer = setInterval(() => {
       setLoadingProgress(prev => {
@@ -107,7 +109,7 @@ export default function Home() {
         animate={{ opacity: showContent ? 1 : 0 }}
         transition={{ delay: 1 }}
         onClick={() => setAudioEnabled(!audioEnabled)}
-        className="fixed top-24 right-8 z-40 p-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full hover:bg-white/10 transition-colors"
+        className="fixed bottom-8 right-8 z-40 p-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full hover:bg-white/10 transition-colors"
       >
         {audioEnabled ? <Volume2 className="w-5 h-5 text-teal-400" /> : <VolumeX className="w-5 h-5 text-gray-400" />}
       </motion.button>
@@ -201,6 +203,7 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="group relative px-12 py-4 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/25"
+                  onClick={() => router.push('/dashboard')}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="relative flex items-center space-x-3">

@@ -1,48 +1,25 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { 
-  Zap, 
-  User, 
-  LogOut, 
   Shield, 
   FileText, 
   Trophy, 
   Search,
-  Bell,
-  Settings,
   ChevronRight,
   Eye,
   Lock,
-  Brain
+  Brain,
+  Briefcase
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { logOut } from '@/lib/auth';
 import DecryptedText from '@/react-bits/DecryptedText';
+import Navbar from '@/components/navbar';
 
 export default function DashboardPage() {
   const { user, userData, loading } = useAuth();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
-
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
-    try {
-      await logOut();
-      router.push('/');
-    } catch (error) {
-      console.error('Logout error:', error);
-      setIsLoggingOut(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -96,54 +73,8 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900">
-      {/* Header */}
-      <motion.header
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="bg-black/20 backdrop-blur-xl border-b border-white/10"
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <Zap className="w-8 h-8 text-teal-400" />
-                <div className="absolute inset-0 bg-teal-400/20 blur-lg rounded-full" />
-              </div>
-              <span className="text-2xl font-bold text-white tracking-tight">
-                Obs<span className="text-teal-400">cura</span>
-              </span>
-            </div>
-
-            {/* User Menu */}
-            <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-400 hover:text-white transition-colors">
-                <Bell className="w-5 h-5" />
-              </button>
-              <button className="p-2 text-gray-400 hover:text-white transition-colors">
-                <Settings className="w-5 h-5" />
-              </button>
-              <div className="flex items-center space-x-3 px-4 py-2 bg-white/5 rounded-lg">
-                <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-400 rounded-full flex items-center justify-center">
-                  <User className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-white font-medium">{userData?.name || user.displayName}</span>
-              </div>
-              <motion.button
-                onClick={handleLogout}
-                disabled={isLoggingOut}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 text-gray-400 hover:text-red-400 transition-colors disabled:opacity-50"
-              >
-                <LogOut className="w-5 h-5" />
-              </motion.button>
-            </div>
-          </div>
-        </div>
-      </motion.header>
-
+      {/* Navbar (dashboard mode) */}
+      <Navbar />
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
         <motion.div
@@ -153,7 +84,7 @@ export default function DashboardPage() {
           className="space-y-8"
         >
           {/* Welcome Section */}
-          <motion.div variants={fadeInUp} className="text-center">
+          <motion.div variants={fadeInUp} className="text-center mt-16">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               <DecryptedText
                 text={`Welcome back, ${userData?.name?.split(' ')[0] || 'Agent'}`}
@@ -186,6 +117,24 @@ export default function DashboardPage() {
                 <p className="text-gray-400 text-sm">{stat.label}</p>
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* Start a New Case Button */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex justify-center"
+          >
+            <motion.button
+              whileHover={{ scale: 1, boxShadow: '0 0 12px 6px #444444, 0 0 2px 2px #fff2' }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => router.push('/dashboard/new-case')}
+              className="relative flex items-center gap-3 px-8 py-4 mt-2 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-900 shadow-lg shadow-yellow-400/20 border-none border-black/20 text-white font-extrabold text-lg tracking-wide uppercase transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/40 hover:from-teal-400 hover:to-cyan-900 hover:shadow-2xl hover:shadow-pink-500/30"
+              style={{ letterSpacing: '0.15em' }}
+            >
+              <Briefcase className="w-6 h-6 text-white drop-shadow-lg" />
+              Start a New Case
+              {/* <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 blur-xl opacity-40 -z-10" /> */}
+            </motion.button>
           </motion.div>
 
           {/* Recent Cases */}
