@@ -135,12 +135,11 @@ export default function DashboardPage() {
               whileHover={{ scale: 1, boxShadow: '0 0 12px 6px #444444, 0 0 2px 2px #fff2' }}
               whileTap={{ scale: 0.97 }}
               onClick={() => router.push('/dashboard/new-case')}
-              className="relative flex items-center gap-3 px-8 py-4 mt-2 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-900 shadow-lg shadow-yellow-400/20 border-none border-black/20 text-white font-extrabold text-lg tracking-wide uppercase transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/40 hover:from-teal-400 hover:to-cyan-900 hover:shadow-2xl hover:shadow-pink-500/30"
+              className="relative flex items-center gap-3 px-8 py-4 mt-2 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-900 shadow-lg shadow-yellow-400/20 border-none border-black/20 text-white font-bold tracking-tighter transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/40 hover:from-teal-400 hover:to-cyan-900 hover:shadow-2xl hover:shadow-pink-500/30"
               style={{ letterSpacing: '0.15em' }}
             >
               <Briefcase className="w-6 h-6 text-white drop-shadow-lg" />
-              Start a New Case
-              {/* <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 blur-xl opacity-40 -z-10" /> */}
+                  <div className = "tracking-normal" >Start a New Mission</div>
             </motion.button>
           </motion.div>
 
