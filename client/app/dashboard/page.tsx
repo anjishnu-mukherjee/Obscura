@@ -16,10 +16,17 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import DecryptedText from '@/react-bits/DecryptedText';
 import Navbar from '@/components/navbar';
-
+import { useEffect } from 'react';
+  
 export default function DashboardPage() {
   const { user, userData, loading } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
 
   if (loading) {
     return (

@@ -20,27 +20,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import { logOut } from '@/lib/auth';
 import { useAuth } from '@/hooks/useAuth';
 
-interface NavbarProps {
-  variant?: 'dashboard';
-  user?: any;
-  userData?: any;
-  onLogout?: () => void;
-  isLoggingOut?: boolean;
-}
 
-export default function Navbar({ variant }: NavbarProps) {
-  const { user, userData, loading } = useAuth();
+export default function Navbar() {
+  const { user, userData } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
+  const router = useRouter()
 
   const onLogout = async () => {
     setIsLoggingOut(true);
