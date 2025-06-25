@@ -9,12 +9,26 @@ import {
   Shield, 
   FileText, 
   Users, 
-  HelpCircle 
+  HelpCircle,
+  Bell,
+  Settings,
+  User,
+  LogOut
 } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-export default function Navbar() {
+interface NavbarProps {
+  variant?: 'dashboard';
+  user?: any;
+  userData?: any;
+  onLogout?: () => void;
+  isLoggingOut?: boolean;
+}
+
+export default function Navbar({ variant, user, userData, onLogout, isLoggingOut }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
 
   const navItems = [
     { name: 'Cases', href: '#cases', icon: FileText },
@@ -22,6 +36,64 @@ export default function Navbar() {
     { name: 'Community', href: '#community', icon: Users },
     { name: 'Support', href: '#support', icon: HelpCircle },
   ];
+
+  if (variant === 'dashboard' || pathname.startsWith('/dashboard')) {
+    // Dashboard navbar
+    return (
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link href="/">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center space-x-3 cursor-pointer"
+              >
+                <div className="relative">
+                  <Zap className="w-8 h-8 text-teal-400" />
+                  <div className="absolute inset-0 bg-teal-400/20 blur-lg rounded-full" />
+                </div>
+                <span className="text-2xl font-bold text-white tracking-tight">
+                  Obs<span className="text-teal-400">cura</span>
+                </span>
+              </motion.div>
+            </Link>
+            {/* Dashboard user menu */}
+            <div className="flex items-center space-x-4">
+              <Link href="/dashboard/notifications" className="p-2 text-gray-400 hover:text-white transition-colors">
+                <Bell className="w-5 h-5" />
+              </Link>
+              <Link href="/dashboard/settings" className="p-2 text-gray-400 hover:text-white transition-colors">
+                <Settings className="w-5 h-5" />
+              </Link>
+              <div className="flex items-center space-x-3 px-4 py-2 bg-white/5 rounded-lg">
+                <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-400 rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-white font-medium">
+                  {userData?.name || user?.displayName || 'Agent'}
+                </span>
+              </div>
+              <motion.button
+                onClick={onLogout}
+                disabled={isLoggingOut}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 text-gray-400 hover:text-red-400 transition-colors disabled:opacity-50"
+              >
+                <LogOut className="w-5 h-5" />
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      </motion.nav>
+    );
+  }
 
   return (
     <motion.nav
