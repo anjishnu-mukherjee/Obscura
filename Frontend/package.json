@@ -49,6 +49,7 @@
     "embla-carousel-react": "^8.3.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
+    "firebase": "^10.7.1",
     "framer-motion": "^11.0.8",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.446.0",
@@ -69,5 +70,11 @@
     "typescript": "5.2.2",
     "vaul": "^0.9.9",
     "zod": "^3.23.8"
+  },
+  "resolutions": {
+    "undici": "^5.28.4"
+  },
+  "overrides": {
+    "undici": "^5.28.4"
   }
 }
