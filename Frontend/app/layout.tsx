@@ -5,7 +5,7 @@ import { Space_Grotesk } from 'next/font/google';
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'CipherX - Decode the Silence',
+  title: 'Obscura - Decode the Silence',
   description: 'A modern mystery experience. Clues are hidden. Truth is encrypted.',
 };
 

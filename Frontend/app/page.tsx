@@ -129,7 +129,7 @@ export default function Home() {
                 className="mb-8"
               >
                 <Eye className="w-16 h-16 text-teal-400 mx-auto mb-4" />
-                <h2 className="text-2xl font-light text-white mb-2">Initializing Cipher Protocol</h2>
+                <h2 className="text-2xl font-light text-white mb-2">Initializing Obscura Protocol</h2>
                 <p className="text-gray-400">Decrypting access permissions...</p>
               </motion.div>
               
@@ -330,17 +330,17 @@ export default function Home() {
                         <feature.icon className="w-6 h-6 text-white" />
                       </div>
                       
-                        <h3 className="text-xl font-semibold text-white mb-3">
+                      <h3 className="text-xl font-semibold text-white mb-3">
                         <DecryptedText
                           text={feature.title}
                           animateOn="hover"
                           speed={120}
                           maxIterations={8}
-                          characters={feature.title}
+                          characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
                           className="text-white"
                           encryptedClassName="text-gray-500"
                         />
-                        </h3>
+                      </h3>
                       <p className="text-gray-400 text-sm leading-relaxed">{feature.description}</p>
                     </div>
                   </motion.div>
@@ -359,11 +359,11 @@ export default function Home() {
             <div className="max-w-6xl mx-auto px-8 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <Zap className="w-6 h-6 text-teal-400" />
-                <span className="text-white font-semibold text-lg">CipherX</span>
+                <span className="text-white font-semibold text-lg">Obscura</span>
               </div>
               
               <p className="text-gray-400 text-sm">
-                © 2025 CipherX | Powered by Intelligence & Code
+                © 2025 Obscura | Powered by Intelligence & Code
               </p>
             </div>
           </motion.footer>
