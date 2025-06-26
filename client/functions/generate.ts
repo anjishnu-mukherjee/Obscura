@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenAI, Modality } from "@google/genai";
 import wav from 'wav';
+import fs from 'fs';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
@@ -95,7 +96,9 @@ async function saveWaveFile(
 
 export async function generateAudio(prompt: string, characters: { name: string, voice: string }[]): Promise<Buffer> {
    const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-
+  // const fname= 'output.wav';
+  // const audio=fs.readFileSync(fname);
+  // return audio;
    const speakerVoiceConfigs = characters.map((character) => ({
       speaker: character.name,
       voiceConfig: {

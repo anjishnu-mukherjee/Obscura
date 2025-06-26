@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { 
-  User, 
+import { motion } from "framer-motion";
+import {
+  User,
   Send,
   ChevronLeft,
   FileText,
@@ -13,15 +13,15 @@ import {
   Plus,
   Trash2,
   Play,
-  Volume2
-} from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
-import Navbar from '@/components/navbar';
-import { useEffect, useState, use } from 'react';
-import { useCase } from '@/hooks/useCases';
-import { canInterrogateSuspect } from '@/lib/investigationUtils';
-import { Suspect } from '@/functions/types';
+  Volume2,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import Navbar from "@/components/navbar";
+import { useEffect, useState, use } from "react";
+import { useCase } from "@/hooks/useCases";
+import { canInterrogateSuspect } from "@/lib/investigationUtils";
+import { Suspect } from "@/functions/types";
 
 interface InterrogatePageProps {
   params: Promise<{
@@ -34,22 +34,28 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const resolvedParams = use(params);
-  const { caseData, loading: isLoading, error } = useCase(resolvedParams.caseId);
-  const [questions, setQuestions] = useState<string[]>(['']);
+  const {
+    caseData,
+    loading: isLoading,
+    error,
+  } = useCase(resolvedParams.caseId);
+  const [questions, setQuestions] = useState<string[]>([""]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [interrogationComplete, setInterrogationComplete] = useState(false);
   const [conversation, setConversation] = useState<string | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
-  
+
   const suspectName = decodeURIComponent(resolvedParams.suspectName);
-  const suspect = caseData?.story.suspects.find((s: any) => s.name === suspectName);
+  const suspect = caseData?.story.suspects.find(
+    (s: any) => s.name === suspectName
+  );
   const progress = caseData?.investigationProgress;
   const existingInterrogation = progress?.interrogatedSuspects[suspectName];
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/login');
+      router.push("/login");
     }
   }, [user, loading, router]);
 
@@ -61,7 +67,7 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
 
   const addQuestion = () => {
     if (questions.length < 10) {
-      setQuestions([...questions, '']);
+      setQuestions([...questions, ""]);
     }
   };
 
@@ -78,35 +84,50 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
   };
 
   const handleStartInterrogation = async () => {
-    const validQuestions = questions.filter(q => q.trim());
+    const validQuestions = questions.filter((q) => q.trim());
     if (validQuestions.length === 0 || isSubmitting) return;
 
     setIsSubmitting(true);
-    
+
     try {
-      const response = await fetch('/api/investigation/interrogate-suspect', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/investigation/interrogate-suspect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           caseId: resolvedParams.caseId,
           suspectName,
           questions: validQuestions,
-          name: user?.displayName || 'Detective Morgan',
-        })
+          name: user?.displayName || "Detective Morgan",
+        }),
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        setConversation(result.conversation);
-        setAudioUrl(result.audioUrl);
-        setShowResults(true);
-      } else {
-        alert(result.error || 'Failed to start interrogation');
-      }
+        // Try to get audio from the response if present
+        if (response.headers.get("Content-Type") === "audio/wav") {
+          const wavBlob = await response.blob();
+          const audioUrl = URL.createObjectURL(wavBlob);
+          // Conversation may be in a custom header
+          const conversation = decodeURIComponent(
+            response.headers.get("X-Conversation") || ""
+          );
+          setConversation(conversation);
+          setAudioUrl(audioUrl);
+          setShowResults(true);
+          console.log("Audio URL:", audioUrl);
+        } else {
+          const result = await response.json();
+          if (response.ok) {
+            setConversation(result.conversation);
+            setAudioUrl(result.audioUrl);
+            setShowResults(true);
+          } else {
+            alert(result.error || "Failed to start interrogation");
+          }
+        }
+      } 
     } catch (error) {
-      console.error('Error starting interrogation:', error);
-      alert('Failed to start interrogation');
+      console.error("Error starting interrogation:", error);
+      alert("Failed to start interrogation");
     } finally {
       setIsSubmitting(false);
     }
@@ -124,7 +145,9 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl mb-6">
             <User className="w-8 h-8 text-teal-400 animate-pulse" />
           </div>
-          <h2 className="text-2xl font-light text-white mb-2">Preparing Interrogation</h2>
+          <h2 className="text-2xl font-light text-white mb-2">
+            Preparing Interrogation
+          </h2>
           <p className="text-gray-400">Setting up secure interview room...</p>
         </motion.div>
       </div>
@@ -140,14 +163,21 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 backdrop-blur-xl border border-red-400/30 rounded-2xl mb-6">
               <AlertCircle className="w-8 h-8 text-red-400" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Interrogation Unavailable</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">
+              Interrogation Unavailable
+            </h2>
             <p className="text-gray-400 mb-6">
-              {error || (!suspect ? 'Suspect not found' : 'Unable to access interrogation data.')}
+              {error ||
+                (!suspect
+                  ? "Suspect not found"
+                  : "Unable to access interrogation data.")}
             </p>
-                         <button
-               onClick={() => router.push(`/dashboard/investigate/${resolvedParams.caseId}`)}
-               className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 hover:bg-teal-600 rounded-lg text-white font-medium transition-colors"
-             >
+            <button
+              onClick={() =>
+                router.push(`/dashboard/investigate/${resolvedParams.caseId}`)
+              }
+              className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 hover:bg-teal-600 rounded-lg text-white font-medium transition-colors"
+            >
               <ChevronLeft className="w-4 h-4" />
               Back to Investigation
             </button>
@@ -159,7 +189,7 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 }
+    visible: { opacity: 1, y: 0 },
   };
 
   const staggerContainer = {
@@ -167,17 +197,17 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
-    // Show interrogation results
+  // Show interrogation results
   if (showResults && conversation) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900">
         <Navbar />
-        
+
         <main className="max-w-6xl mx-auto px-6 lg:px-8 py-8">
           <motion.div
             initial="hidden"
@@ -187,13 +217,15 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
           >
             <motion.div variants={fadeInUp} className="mt-16">
               <button
-                onClick={() => router.push(`/dashboard/investigate/${resolvedParams.caseId}`)}
+                onClick={() =>
+                  router.push(`/dashboard/investigate/${resolvedParams.caseId}`)
+                }
                 className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Back to Investigation
               </button>
-              
+
               <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-4">
@@ -201,11 +233,15 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                       <User className="w-8 h-8 text-white" />
                     </div>
                     <div>
-                      <h1 className="text-3xl font-bold text-white">Interrogation Complete</h1>
-                      <p className="text-gray-400">{suspect.name} - {suspect.role}</p>
+                      <h1 className="text-3xl font-bold text-white">
+                        Interrogation Complete
+                      </h1>
+                      <p className="text-gray-400">
+                        {suspect.name} - {suspect.role}
+                      </p>
                     </div>
                   </div>
-                  
+
                   {audioUrl && (
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -226,10 +262,15 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
 
             {/* Audio Player Section */}
             {audioUrl && (
-              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+              <motion.div
+                variants={fadeInUp}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+              >
                 <div className="flex items-center gap-3 mb-4">
                   <Volume2 className="w-6 h-6 text-green-400" />
-                  <h2 className="text-xl font-bold text-white">Audio Recording</h2>
+                  <h2 className="text-xl font-bold text-white">
+                    Audio Recording
+                  </h2>
                 </div>
                 <div className="bg-green-500/10 border border-green-400/20 rounded-lg p-6">
                   <audio controls className="w-full">
@@ -241,10 +282,15 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
             )}
 
             {/* Conversation Transcript */}
-            <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <motion.div
+              variants={fadeInUp}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+            >
               <div className="flex items-center gap-3 mb-6">
                 <MessageCircle className="w-6 h-6 text-teal-400" />
-                <h2 className="text-xl font-bold text-white">Interrogation Transcript</h2>
+                <h2 className="text-xl font-bold text-white">
+                  Interrogation Transcript
+                </h2>
               </div>
               <div className="bg-gray-800/50 rounded-lg p-6 max-h-96 overflow-y-auto">
                 <pre className="text-gray-300 leading-relaxed whitespace-pre-wrap font-mono text-sm">
@@ -276,7 +322,7 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900">
         <Navbar />
-        
+
         <main className="max-w-4xl mx-auto px-6 lg:px-8 py-8">
           <motion.div
             initial="hidden"
@@ -288,22 +334,30 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500/20 backdrop-blur-xl border border-green-400/30 rounded-2xl mb-6">
                 <CheckCircle className="w-10 h-10 text-green-400" />
               </div>
-              <h1 className="text-3xl font-bold text-white mb-4">Interrogation Complete</h1>
+              <h1 className="text-3xl font-bold text-white mb-4">
+                Interrogation Complete
+              </h1>
               <p className="text-gray-400 mb-8">
-                You have successfully interrogated {suspect.name}. 
+                You have successfully interrogated {suspect.name}.
                 <br />
                 You can interrogate another suspect tomorrow at 12 AM IST.
               </p>
-              
+
               <div className="flex gap-4 justify-center">
                 <button
-                  onClick={() => router.push(`/dashboard/investigate/${resolvedParams.caseId}`)}
+                  onClick={() =>
+                    router.push(
+                      `/dashboard/investigate/${resolvedParams.caseId}`
+                    )
+                  }
                   className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 hover:bg-teal-600 rounded-lg text-white font-medium transition-colors"
                 >
                   Continue Investigation
                 </button>
                 <button
-                  onClick={() => router.push(`/dashboard/case/${resolvedParams.caseId}`)}
+                  onClick={() =>
+                    router.push(`/dashboard/case/${resolvedParams.caseId}`)
+                  }
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors"
                 >
                   Back to Case File
@@ -319,7 +373,7 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900">
       <Navbar />
-      
+
       <main className="max-w-4xl mx-auto px-6 lg:px-8 py-8">
         <motion.div
           initial="hidden"
@@ -330,40 +384,52 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
           {/* Header */}
           <motion.div variants={fadeInUp} className="mt-16">
             <button
-              onClick={() => router.push(`/dashboard/investigate/${resolvedParams.caseId}`)}
+              onClick={() =>
+                router.push(`/dashboard/investigate/${resolvedParams.caseId}`)
+              }
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
             >
               <ChevronLeft className="w-4 h-4" />
               Back to Investigation
             </button>
-            
+
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-400 rounded-xl flex items-center justify-center">
                   <User className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-white">{suspect.name}</h1>
+                  <h1 className="text-3xl font-bold text-white">
+                    {suspect.name}
+                  </h1>
                   <p className="text-gray-400">{suspect.role}</p>
                 </div>
               </div>
-              
+
               <div className="bg-yellow-500/10 border border-yellow-400/20 rounded-lg p-4 mb-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Clock className="w-4 h-4 text-yellow-400" />
-                  <span className="text-yellow-400 font-medium">Daily Limit Notice</span>
+                  <span className="text-yellow-400 font-medium">
+                    Daily Limit Notice
+                  </span>
                 </div>
                 <p className="text-yellow-100 text-sm">
-                  You can only interrogate one suspect per day. This opportunity resets at 12 AM IST.
+                  You can only interrogate one suspect per day. This opportunity
+                  resets at 12 AM IST.
                 </p>
               </div>
             </div>
           </motion.div>
 
           {/* Suspect Information */}
-          <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Suspect Profile</h2>
-            
+          <motion.div
+            variants={fadeInUp}
+            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+          >
+            <h2 className="text-2xl font-bold text-white mb-6">
+              Suspect Profile
+            </h2>
+
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h3 className="text-white font-semibold mb-3">Background</h3>
@@ -382,11 +448,13 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                   </div>
                 </div>
               </div>
-              
+
               <div>
-                <h3 className="text-white font-semibold mb-3">Potential Motives</h3>
+                <h3 className="text-white font-semibold mb-3">
+                  Potential Motives
+                </h3>
                 <div className="space-y-2">
-                                     {suspect.motives.map((motive: string, index: number) => (
+                  {suspect.motives.map((motive: string, index: number) => (
                     <div key={index} className="bg-white/5 rounded-lg p-3">
                       <p className="text-gray-300 text-sm">{motive}</p>
                     </div>
@@ -397,45 +465,69 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
           </motion.div>
 
           {/* Previous Questions (if any) */}
-          {existingInterrogation && existingInterrogation.questionsAsked.length > 0 && (
-            <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">Previous Interrogation History</h2>
-              
-              <div className="space-y-4">
-                                 {existingInterrogation.questionsAsked.map((q: string, index: number) => (
-                  <div key={index} className="border-l-4 border-teal-400 pl-4">
-                    <div className="bg-white/5 rounded-lg p-4 mb-2">
-                      <div className="flex items-center gap-2 mb-2">
-                        <MessageCircle className="w-4 h-4 text-teal-400" />
-                        <span className="text-teal-400 font-medium">Your Question:</span>
-                      </div>
-                      <p className="text-white">{q}</p>
-                    </div>
-                    {existingInterrogation.responses[index] && (
-                      <div className="bg-purple-500/10 border border-purple-400/20 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <User className="w-4 h-4 text-purple-400" />
-                          <span className="text-purple-400 font-medium">{suspect.name}'s Response:</span>
+          {existingInterrogation &&
+            existingInterrogation.questionsAsked.length > 0 && (
+              <motion.div
+                variants={fadeInUp}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+              >
+                <h2 className="text-2xl font-bold text-white mb-6">
+                  Previous Interrogation History
+                </h2>
+
+                <div className="space-y-4">
+                  {existingInterrogation.questionsAsked.map(
+                    (q: string, index: number) => (
+                      <div
+                        key={index}
+                        className="border-l-4 border-teal-400 pl-4"
+                      >
+                        <div className="bg-white/5 rounded-lg p-4 mb-2">
+                          <div className="flex items-center gap-2 mb-2">
+                            <MessageCircle className="w-4 h-4 text-teal-400" />
+                            <span className="text-teal-400 font-medium">
+                              Your Question:
+                            </span>
+                          </div>
+                          <p className="text-white">{q}</p>
                         </div>
-                        <p className="text-gray-300">{existingInterrogation.responses[index]}</p>
+                        {existingInterrogation.responses[index] && (
+                          <div className="bg-purple-500/10 border border-purple-400/20 rounded-lg p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <User className="w-4 h-4 text-purple-400" />
+                              <span className="text-purple-400 font-medium">
+                                {suspect.name}'s Response:
+                              </span>
+                            </div>
+                            <p className="text-gray-300">
+                              {existingInterrogation.responses[index]}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
+                    )
+                  )}
+                </div>
+              </motion.div>
+            )}
 
           {/* Questions Input */}
-          <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Prepare Your Questions</h2>
-            
+          <motion.div
+            variants={fadeInUp}
+            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+          >
+            <h2 className="text-2xl font-bold text-white mb-6">
+              Prepare Your Questions
+            </h2>
+
             <div className="space-y-6">
-                              <div className="bg-yellow-500/10 border border-yellow-400/20 rounded-lg p-4">
-                  <p className="text-yellow-100 text-sm">
-                    📝 Plan up to 10 questions for your interrogation. The AI will create a natural conversation flow with intelligent voice assignments based on character names.
-                  </p>
-                </div>
+              <div className="bg-yellow-500/10 border border-yellow-400/20 rounded-lg p-4">
+                <p className="text-yellow-100 text-sm">
+                  📝 Plan up to 10 questions for your interrogation. The AI will
+                  create a natural conversation flow with intelligent voice
+                  assignments based on character names.
+                </p>
+              </div>
 
               <div className="space-y-4">
                 {questions.map((question, index) => (
@@ -447,7 +539,9 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-teal-400 font-medium">Question {index + 1}</span>
+                        <span className="text-teal-400 font-medium">
+                          Question {index + 1}
+                        </span>
                         {questions.length > 1 && (
                           <button
                             onClick={() => removeQuestion(index)}
@@ -481,17 +575,18 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                   Add Question ({questions.length}/10)
                 </motion.button>
               )}
-              
+
               <div className="flex justify-between items-center pt-4">
                 <p className="text-gray-400 text-sm">
-                  🎯 This is your only interrogation opportunity today - make it count!
+                  🎯 This is your only interrogation opportunity today - make it
+                  count!
                 </p>
-                
+
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleStartInterrogation}
-                  disabled={!questions.some(q => q.trim()) || isSubmitting}
+                  disabled={!questions.some((q) => q.trim()) || isSubmitting}
                   className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 rounded-xl text-white font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
@@ -513,4 +608,4 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
       </main>
     </div>
   );
-} 
+}
