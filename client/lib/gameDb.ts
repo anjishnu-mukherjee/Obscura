@@ -263,29 +263,74 @@ export const getCase = async (caseId: string) => {
 export const getUserCases = async (userId: string, status?: 'active' | 'completed' | 'archived') => {
   try {
     console.log('Fetching cases for user:', userId);
+    console.log('Status filter:', status);
     
-    let q = query(
-      collection(db, 'cases'),
-      where('userId', '==', userId),
-      orderBy('createdAt', 'desc')
-    );
+    // Build query step by step to handle potential composite index issues
+    let q;
     
     if (status) {
-      q = query(q, where('status', '==', status));
+      // If status is specified, use both filters
+      q = query(
+        collection(db, 'cases'),
+        where('userId', '==', userId),
+        where('status', '==', status),
+        orderBy('createdAt', 'desc')
+      );
+    } else {
+      // If no status filter, just use userId and orderBy
+      q = query(
+        collection(db, 'cases'),
+        where('userId', '==', userId),
+        orderBy('createdAt', 'desc')
+      );
     }
     
+    console.log('Executing query...');
     const querySnapshot = await getDocs(q);
     const cases: CaseData[] = [];
     
     querySnapshot.forEach((doc) => {
-      cases.push({ id: doc.id, ...doc.data() } as CaseData);
+      const data = doc.data();
+      console.log('Found case:', doc.id, 'title:', data.title, 'userId:', data.userId);
+      cases.push({ id: doc.id, ...data } as CaseData);
     });
     
-    console.log(`Found ${cases.length} cases for user`);
+    console.log(`Found ${cases.length} cases for user ${userId}`);
     return { cases, error: null };
   } catch (error) {
     console.error('Error fetching user cases:', error);
-    return { cases: [], error: 'Failed to fetch cases' };
+    console.error('Error details:', error);
+    
+    // Try a simpler query as fallback
+    try {
+      console.log('Trying fallback query without orderBy...');
+      const fallbackQuery = query(
+        collection(db, 'cases'),
+        where('userId', '==', userId)
+      );
+      
+      const fallbackSnapshot = await getDocs(fallbackQuery);
+      const fallbackCases: CaseData[] = [];
+      
+      fallbackSnapshot.forEach((doc) => {
+        const data = doc.data();
+        console.log('Fallback found case:', doc.id, 'title:', data.title);
+        fallbackCases.push({ id: doc.id, ...data } as CaseData);
+      });
+      
+      // Sort manually by createdAt
+      fallbackCases.sort((a, b) => {
+        const aTime = a.createdAt?.toDate?.() || new Date(0);
+        const bTime = b.createdAt?.toDate?.() || new Date(0);
+        return bTime.getTime() - aTime.getTime();
+      });
+      
+      console.log(`Fallback found ${fallbackCases.length} cases`);
+      return { cases: fallbackCases, error: null };
+    } catch (fallbackError) {
+      console.error('Fallback query also failed:', fallbackError);
+      return { cases: [], error: 'Failed to fetch cases' };
+    }
   }
 };
 

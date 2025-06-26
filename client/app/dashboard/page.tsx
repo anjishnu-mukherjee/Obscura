@@ -25,13 +25,20 @@ export default function DashboardPage() {
   const router = useRouter();
   const [showDifficultyModal, setShowDifficultyModal] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const { cases: recentCases, loading: casesLoading } = useCases(user?.uid, 3);
+  const { cases: recentCases, loading: casesLoading, error: casesError } = useCases(user?.uid, 3);
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
     }
   }, [user, loading, router]);
+
+  useEffect(() => {
+    console.log('Dashboard - User ID:', user?.uid);
+    console.log('Dashboard - Cases loading:', casesLoading);
+    console.log('Dashboard - Cases:', recentCases);
+    console.log('Dashboard - Cases error:', casesError);
+  }, [user?.uid, casesLoading, recentCases, casesError]);
 
 
 
@@ -79,16 +86,34 @@ export default function DashboardPage() {
     { label: 'Current Rank', value: userData?.stats?.rank || 'Rookie Agent', icon: Shield },
   ];
 
-     // Mock data for cases without real data
-   const mockRecentCases: (CaseData & { progress?: number })[] = [
-     { id: '2156-X', title: 'The Encrypted Messages', status: 'active', progress: 47 } as CaseData & { progress: number },
-     { id: '2157-A', title: 'Digital Phantom', status: 'completed', progress: 100 } as CaseData & { progress: number },
-     { id: '2158-B', title: 'The Silent Network', status: 'active', progress: 0 } as CaseData & { progress: number },
-   ];
+  // Calculate progress for each case based on investigation progress
+  const calculateCaseProgress = (caseData: CaseData): number => {
+    if (caseData.status === 'completed') return 100;
+    
+    const progress = caseData.investigationProgress;
+    if (!progress) return 0;
+    
+    // Calculate progress based on locations visited, suspects interrogated, and clues discovered
+    const totalLocations = Object.keys(caseData.map?.locations || {}).length;
+    const totalSuspects = caseData.story?.characters?.suspects?.length || 0;
+    const totalClues = Object.keys(caseData.clues?.processed || {}).length;
+    
+    const visitedLocations = Object.keys(progress.visitedLocations || {}).length;
+    const interrogatedSuspects = Object.keys(progress.interrogatedSuspects || {}).length;
+    const discoveredClues = progress.discoveredClues?.length || 0;
+    
+    const locationProgress = totalLocations > 0 ? (visitedLocations / totalLocations) * 40 : 0;
+    const suspectProgress = totalSuspects > 0 ? (interrogatedSuspects / totalSuspects) * 40 : 0;
+    const clueProgress = totalClues > 0 ? (discoveredClues / totalClues) * 20 : 0;
+    
+    return Math.min(100, Math.round(locationProgress + suspectProgress + clueProgress));
+  };
 
-   const casesToShow: (CaseData & { progress?: number })[] = recentCases.length > 0 
-     ? recentCases.map(c => ({ ...c, progress: 0 })) 
-     : mockRecentCases;
+  // Use real cases from Firestore with calculated progress
+  const casesToShow: (CaseData & { progress?: number })[] = recentCases.map(caseData => ({
+    ...caseData,
+    progress: calculateCaseProgress(caseData)
+  }));
 
   const handleStartNewMission = () => {
     setShowDifficultyModal(true);
@@ -204,58 +229,117 @@ export default function DashboardPage() {
           <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-white">Recent Cases</h2>
-              <button className="text-teal-400 hover:text-teal-300 transition-colors">
-                View All
-              </button>
+              {casesToShow.length > 0 && (
+                <button className="text-teal-400 hover:text-teal-300 transition-colors">
+                  View All
+                </button>
+              )}
             </div>
             
-            <div className="space-y-4">
-              {casesToShow.map((case_, index) => (
-                <motion.div
-                  key={case_.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => case_.id && router.push(`/dashboard/case/${case_.id}`)}
-                  className="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+            {casesLoading ? (
+              <div className="space-y-4">
+                {[...Array(3)].map((_, index) => (
+                  <div key={index} className="animate-pulse">
+                    <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-10 h-10 bg-gray-700 rounded-lg"></div>
+                        <div>
+                          <div className="h-4 bg-gray-700 rounded w-24 mb-2"></div>
+                          <div className="h-3 bg-gray-700 rounded w-32"></div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="text-right">
+                          <div className="h-3 bg-gray-700 rounded w-16 mb-1"></div>
+                          <div className="h-3 bg-gray-700 rounded w-20"></div>
+                        </div>
+                        <div className="w-16 h-2 bg-gray-700 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : casesError ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-red-600 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileText className="w-8 h-8 text-red-300" />
+                </div>
+                <h3 className="text-white font-semibold mb-2">Error Loading Cases</h3>
+                <p className="text-gray-400 text-sm mb-4">{casesError}</p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.location.reload()}
+                  className="px-6 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200"
                 >
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-white" />
+                  Retry
+                </motion.button>
+              </div>
+            ) : casesToShow.length > 0 ? (
+              <div className="space-y-4">
+                {casesToShow.map((case_, index) => (
+                  <motion.div
+                    key={case_.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => case_.id && router.push(`/dashboard/case/${case_.id}`)}
+                    className="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center">
+                        <FileText className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-semibold">
+                          Case #{case_.id ? case_.id.slice(-6).toUpperCase() : case_.id}
+                        </h3>
+                        <p className="text-gray-400 text-sm">{case_.title}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-white font-semibold">
-                        Case #{case_.id ? case_.id.slice(-6).toUpperCase() : case_.id}
-                      </h3>
-                      <p className="text-gray-400 text-sm">{case_.title}</p>
+                    
+                    <div className="flex items-center space-x-4">
+                      <div className="text-right">
+                        <p className={`text-sm font-medium capitalize ${
+                          case_.status === 'active' ? 'text-teal-400' :
+                          case_.status === 'completed' ? 'text-green-400' :
+                          'text-gray-400'
+                        }`}>
+                          {case_.status}
+                        </p>
+                        <p className="text-gray-400 text-xs">
+                          {case_.progress !== undefined 
+                            ? `${case_.progress}% Complete` 
+                            : 'Just started'}
+                        </p>
+                      </div>
+                      <div className="w-16 h-2 bg-gray-700 rounded-full">
+                        <div 
+                          className="h-full bg-gradient-to-r from-teal-500 to-teal-300 rounded-full transition-all duration-300"
+                          style={{ width: `${case_.progress || 0}%` }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="text-right">
-                      <p className={`text-sm font-medium capitalize ${
-                        case_.status === 'active' ? 'text-teal-400' :
-                        case_.status === 'completed' ? 'text-green-400' :
-                        'text-gray-400'
-                      }`}>
-                        {case_.status}
-                      </p>
-                      <p className="text-gray-400 text-xs">
-                        {case_.progress !== undefined 
-                          ? `${case_.progress}% Complete` 
-                          : 'Just started'}
-                      </p>
-                    </div>
-                    <div className="w-16 h-2 bg-gray-700 rounded-full">
-                      <div 
-                        className="h-full bg-gradient-to-r from-teal-500 to-teal-300 rounded-full transition-all duration-300"
-                        style={{ width: `${case_.progress || 0}%` }}
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-600 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileText className="w-8 h-8 text-gray-300" />
+                </div>
+                <h3 className="text-white font-semibold mb-2">No Cases Yet</h3>
+                <p className="text-gray-400 text-sm mb-4">Start your first investigation to begin your detective journey</p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleStartNewMission}
+                  className="px-6 py-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-lg hover:from-teal-600 hover:to-teal-700 transition-all duration-200"
+                >
+                  Start Your First Case
+                </motion.button>
+              </div>
+            )}
           </motion.div>
 
           {/* Quick Actions */}

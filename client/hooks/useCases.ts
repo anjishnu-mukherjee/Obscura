@@ -27,36 +27,46 @@ export const useCases = (userId?: string, limit?: number) => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchCases = async () => {
-    if (!userId) return;
+    if (!userId) {
+      console.log('useCases: No userId provided');
+      return;
+    }
     
     try {
       setLoading(true);
       setError(null);
       
       const url = `/api/cases/user/${userId}${limit ? `?limit=${limit}` : ''}`;
+      console.log('useCases: Fetching from URL:', url);
+      
       const response = await fetch(url);
       
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('useCases: API error:', errorData);
         throw new Error(errorData.error || 'Failed to fetch cases');
       }
       
       const result = await response.json();
+      console.log('useCases: API result:', result);
       
       if (result.success) {
+        console.log('useCases: Setting cases:', result.cases);
         setCases(result.cases);
       } else {
         throw new Error('Invalid response format');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch cases');
-      console.error('Error fetching cases:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch cases';
+      console.error('useCases: Error:', errorMessage, err);
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    console.log('useCases: useEffect triggered, userId:', userId, 'limit:', limit);
     if (userId) {
       fetchCases();
     }
