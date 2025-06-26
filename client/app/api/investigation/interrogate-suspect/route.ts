@@ -68,7 +68,7 @@ const canInterrogateSuspect = (progress: any, suspectName: string): boolean => {
   return suspectInterrogation.lastInterrogationDate !== today; // Can interrogate if not done today
 };
 
-export async function POST(request: NextRequest) {
+async function POSThandler(request: NextRequest) {
   try {
     const body = await request.json();
     const { caseId, suspectName, questions, name } = body;
@@ -171,7 +171,9 @@ Generate the complete interrogation conversation:`;
     console.log("Generating audio...");
 
     // Generate audio
-    let audioUrl: string | null = null;
+    // let audioUrl: string | null = null;
+    // let wavFile: File | undefined;
+    let audioBuffer: Buffer | undefined;
     try {
       // Determine voices based on gender detection using LLM
       const maleVoices = ["Puck", "Charon"];
@@ -198,10 +200,19 @@ Generate the complete interrogation conversation:`;
       console.log(`Voice assignments: ${name} (${detectiveGender}) -> ${detectiveVoice}, ${suspect.name} (${suspectGender}) -> ${suspectVoice}`);
 
       // Generate audio file
-      const audioBuffer = await generateAudio(conversation, characters);
+      audioBuffer = await generateAudio(conversation, characters);
+
+      // Convert Buffer to a .wav File object
+      //  wavFile = new File(
+      //   [audioBuffer],
+      //   `interrogation_${caseId}_${suspectName.replace(/\s+/g, '_')}_${Date.now()}.wav`,
+      //   { type: "audio/wav" }
+      // );
       
       // Upload to Cloudinary
-      audioUrl = await uploadAudioToCloudinary(audioBuffer, caseId, suspectName);
+      // audioUrl = await uploadAudioToCloudinary(audioBuffer, caseId, suspectName);
+
+      
       
     } catch (error) {
       console.error('Error generating audio:', error);
@@ -220,11 +231,24 @@ Generate the complete interrogation conversation:`;
 
     console.log("Suspect interrogation successful");
     
+    // If audio was generated, return it as a file response
+    if (typeof audioBuffer !== "undefined") {
+      return new NextResponse(audioBuffer, {
+      status: 200,
+      headers: {
+        "Content-Type": "audio/wav",
+        "Content-Disposition": `attachment; filename="interrogation_${caseId}_${suspectName.replace(/\s+/g, '_')}_${Date.now()}.wav"`,
+        "X-Conversation": encodeURIComponent(conversation)
+      }
+      });
+    }
+
+    // Fallback: no audio, return JSON
     return NextResponse.json({
       success: true,
       message: "Suspect interrogated successfully",
       conversation,
-      audioUrl
+      audioUrl: null
     });
 
   } catch (error) {
@@ -235,3 +259,7 @@ Generate the complete interrogation conversation:`;
     );
   }
 } 
+
+export {
+  POSThandler as POST
+}
