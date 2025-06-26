@@ -3,10 +3,10 @@ import { getCase } from "@/lib/gameDb";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { caseId: string } }
+  { params }: { params: Promise<{ caseId: string }> }
 ) {
   try {
-    const { caseId } = params;
+    const { caseId } = await params;
     
     if (!caseId) {
       return NextResponse.json(

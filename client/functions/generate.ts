@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenAI, Modality } from "@google/genai";
 import wav from 'wav';
-import fs from 'fs';
+import path from 'path';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
@@ -94,7 +94,7 @@ async function saveWaveFile(
    });
 }
 
-export async function generateAudio(prompt: string, characters: { name: string, voice: string }[]): Promise<Buffer> {
+export async function generateAudio(prompt: string, characters: { name: string, voice: string }[]): Promise<string> {
    const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
   // const fname= 'output.wav';
   // const audio=fs.readFileSync(fname);
@@ -124,8 +124,10 @@ export async function generateAudio(prompt: string, characters: { name: string, 
    const data = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
    const audioBuffer = Buffer.from(data || '', 'base64');
 
-   const fileName = 'output.wav';
-   await saveWaveFile(fileName, audioBuffer);
+   const id = crypto.randomUUID();
+
+   const fileName = `output-${id}.wav`;
+   await saveWaveFile(path.join(process.cwd(), "temp", fileName), audioBuffer);
    
-   return audioBuffer;
+   return id;
 }

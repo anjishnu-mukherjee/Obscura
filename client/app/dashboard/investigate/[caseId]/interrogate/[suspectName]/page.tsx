@@ -101,30 +101,18 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
         }),
       });
 
-      if (response.ok) {
-        // Try to get audio from the response if present
-        if (response.headers.get("Content-Type") === "audio/wav") {
-          const wavBlob = await response.blob();
-          const audioUrl = URL.createObjectURL(wavBlob);
-          // Conversation may be in a custom header
-          const conversation = decodeURIComponent(
-            response.headers.get("X-Conversation") || ""
-          );
-          setConversation(conversation);
-          setAudioUrl(audioUrl);
-          setShowResults(true);
-          console.log("Audio URL:", audioUrl);
-        } else {
-          const result = await response.json();
-          if (response.ok) {
-            setConversation(result.conversation);
-            setAudioUrl(result.audioUrl);
-            setShowResults(true);
-          } else {
-            alert(result.error || "Failed to start interrogation");
-          }
-        }
-      } 
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        setConversation(result.conversation);
+        // Use direct URL method with audioId
+        const directAudioUrl = `/api/getAudio?id=${result.audioId}`;
+        setAudioUrl(directAudioUrl);
+        setShowResults(true);
+        console.log("Audio URL:", directAudioUrl);
+      } else {
+        alert(result.error || "Failed to start interrogation");
+      }
     } catch (error) {
       console.error("Error starting interrogation:", error);
       alert("Failed to start interrogation");
@@ -243,18 +231,10 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                   </div>
 
                   {audioUrl && (
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        const audio = new Audio(audioUrl);
-                        audio.play();
-                      }}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 rounded-xl text-white font-medium"
-                    >
-                      <Play className="w-5 h-5" />
-                      Play Audio
-                    </motion.button>
+                    <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-600/20 to-green-500/20 border border-green-400/30 rounded-xl">
+                      <Volume2 className="w-5 h-5 text-green-400" />
+                      <span className="text-green-400 font-medium">Audio Ready</span>
+                    </div>
                   )}
                 </div>
               </div>
@@ -273,10 +253,13 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                   </h2>
                 </div>
                 <div className="bg-green-500/10 border border-green-400/20 rounded-lg p-6">
-                  <audio controls className="w-full">
+                  <audio controls className="w-full" key={audioUrl}>
                     <source src={audioUrl} type="audio/wav" />
                     Your browser does not support the audio element.
                   </audio>
+                  <p className="text-sm text-green-400 mt-3 opacity-75">
+                    Interrogation audio recording - Use controls to play, pause, and seek
+                  </p>
                 </div>
               </motion.div>
             )}

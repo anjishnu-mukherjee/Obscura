@@ -171,9 +171,7 @@ Generate the complete interrogation conversation:`;
     console.log("Generating audio...");
 
     // Generate audio
-    // let audioUrl: string | null = null;
-    // let wavFile: File | undefined;
-    let audioBuffer: Buffer | undefined;
+    let audioId: string = "";
     try {
       // Determine voices based on gender detection using LLM
       const maleVoices = ["Puck", "Charon"];
@@ -200,19 +198,7 @@ Generate the complete interrogation conversation:`;
       console.log(`Voice assignments: ${name} (${detectiveGender}) -> ${detectiveVoice}, ${suspect.name} (${suspectGender}) -> ${suspectVoice}`);
 
       // Generate audio file
-      audioBuffer = await generateAudio(conversation, characters);
-
-      // Convert Buffer to a .wav File object
-      //  wavFile = new File(
-      //   [audioBuffer],
-      //   `interrogation_${caseId}_${suspectName.replace(/\s+/g, '_')}_${Date.now()}.wav`,
-      //   { type: "audio/wav" }
-      // );
-      
-      // Upload to Cloudinary
-      // audioUrl = await uploadAudioToCloudinary(audioBuffer, caseId, suspectName);
-
-      
+      audioId = await generateAudio(conversation, characters);
       
     } catch (error) {
       console.error('Error generating audio:', error);
@@ -230,25 +216,13 @@ Generate the complete interrogation conversation:`;
     }
 
     console.log("Suspect interrogation successful");
-    
-    // If audio was generated, return it as a file response
-    if (typeof audioBuffer !== "undefined") {
-      return new NextResponse(audioBuffer, {
-      status: 200,
-      headers: {
-        "Content-Type": "audio/wav",
-        "Content-Disposition": `attachment; filename="interrogation_${caseId}_${suspectName.replace(/\s+/g, '_')}_${Date.now()}.wav"`,
-        "X-Conversation": encodeURIComponent(conversation)
-      }
-      });
-    }
 
     // Fallback: no audio, return JSON
     return NextResponse.json({
       success: true,
       message: "Suspect interrogated successfully",
       conversation,
-      audioUrl: null
+      audioId
     });
 
   } catch (error) {

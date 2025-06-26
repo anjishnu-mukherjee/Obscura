@@ -63,6 +63,8 @@ export default function DifficultyModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => !isGenerating && onClose()}>
+      <DialogTitle>Select Mission Difficulty</DialogTitle>
+      <DialogDescription>Choose your challenge level to begin the investigation</DialogDescription>
       <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-white/20 rounded-2xl p-0 max-w-4xl">
         <div className="relative p-8">
           {/* Close button */}
