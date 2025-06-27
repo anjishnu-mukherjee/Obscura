@@ -167,8 +167,25 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
             </button>
             
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-              <h1 className="text-3xl font-bold text-white mb-2">Active Investigation</h1>
-              <p className="text-gray-400 mb-6">{caseData.title}</p>
+              <div className="flex items-start justify-between mb-6">
+                <div>
+                  <h1 className="text-3xl font-bold text-white mb-2">Active Investigation</h1>
+                  <p className="text-gray-400">{caseData.title}</p>
+                </div>
+                
+                {/* Final Verdict Button */}
+                <button
+                  onClick={() => router.push(`/dashboard/investigate/${resolvedParams.caseId}/final-verdict`)}
+                  className="group relative px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-xl hover:shadow-red-500/25 border border-red-400/30"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                  <div className="relative flex items-center space-x-2">
+                    <AlertCircle className="w-5 h-5" />
+                    <span>Final Verdict</span>
+                  </div>
+                  <div className="absolute inset-0 ring-2 ring-red-400/50 rounded-lg group-hover:ring-red-300 transition-colors" />
+                </button>
+              </div>
               
               {/* Daily Status */}
               <div className="grid md:grid-cols-2 gap-4">
