@@ -236,12 +236,52 @@ export default function CaseFilePage({ params }: CaseFilePageProps) {
               </div>
               
               <div className="space-y-6">
+                {/* Victim Information with Portrait */}
                 <div>
-                  <h3 className="text-white font-semibold mb-2">Victim Information</h3>
-                  <div className="bg-white/5 rounded-lg p-4 space-y-2">
-                    <p className="text-gray-300"><span className="text-gray-400">Name:</span> {caseData.caseIntro.displayData.victimName}</p>
-                    <p className="text-gray-300"><span className="text-gray-400">Last Known Location:</span> {caseData.caseIntro.displayData.lastKnownLocation}</p>
-                    <p className="text-gray-300"><span className="text-gray-400">Cause of Death:</span> {caseData.caseIntro.displayData.causeOfDeath}</p>
+                  <h3 className="text-white font-semibold mb-4">Victim Information</h3>
+                  <div className="bg-white/5 rounded-lg p-6">
+                    <div className="flex gap-6 mb-4">
+                      {/* Victim Portrait - Case File Style */}
+                      <div className="flex-shrink-0">
+                        <div className="relative">
+                          {/* Case file photo frame */}
+                          <div className="w-32 h-40 bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden">
+                            {caseData.story.victim.portrait ? (
+                              <Image
+                                src={caseData.story.victim.portrait}
+                                alt={`${caseData.story.victim.name} - Victim`}
+                                fill
+                                className="object-cover filter sepia-[0.3] contrast-[1.1] saturate-[0.8]"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                                <User className="w-12 h-12 text-gray-500" />
+                              </div>
+                            )}
+                            {/* Photo corner clips */}
+                            <div className="absolute -top-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                            <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                          </div>
+                          {/* Case file label */}
+                          <div className="absolute -bottom-6 left-0 right-0 text-center">
+                            <div className="inline-block bg-red-900/80 text-red-200 text-xs px-2 py-1 rounded border border-red-700">
+                              DECEASED
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Victim Details */}
+                      <div className="flex-1 space-y-3">
+                        <p className="text-gray-300"><span className="text-gray-400">Name:</span> {caseData.caseIntro.displayData.victimName}</p>
+                        <p className="text-gray-300"><span className="text-gray-400">Profession:</span> {caseData.story.victim.profession}</p>
+                        <p className="text-gray-300"><span className="text-gray-400">Last Known Location:</span> {caseData.caseIntro.displayData.lastKnownLocation}</p>
+                        <p className="text-gray-300"><span className="text-gray-400">Time of Death:</span> {caseData.story.victim.deathTimeEstimate}</p>
+                        <p className="text-gray-300"><span className="text-gray-400">Cause of Death:</span> {caseData.caseIntro.displayData.causeOfDeath}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

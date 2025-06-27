@@ -10,18 +10,22 @@ import {
   Home,
   Eye,
   Award,
-  Target
+  Target,
+  Users,
+  Gavel
 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import Navbar from '@/components/navbar';
 import { useEffect, useState, Suspense } from 'react';
+import Image from 'next/image';
 
 function VerdictResultContent() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [showConfetti, setShowConfetti] = useState(false);
+  const [verdictData, setVerdictData] = useState<any>(null);
   
   const correct = searchParams.get('correct') === 'true';
   const score = parseInt(searchParams.get('score') || '0');
@@ -31,10 +35,27 @@ function VerdictResultContent() {
       router.push('/login');
     }
     
+    // Load verdict data from sessionStorage
+    const storedResult = sessionStorage.getItem('verdictResult');
+    if (storedResult) {
+      try {
+        const parsedResult = JSON.parse(storedResult);
+        console.log("Parsed Result: ", parsedResult);
+        setVerdictData(parsedResult);
+      } catch (error) {
+        console.error('Error parsing verdict result:', error);
+      }
+    }
+    
     if (correct) {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
     }
+    
+    // Cleanup function to remove sessionStorage data
+    return () => {
+      sessionStorage.removeItem('verdictResult');
+    };
   }, [user, loading, router, correct]);
 
   const getScoreColor = (score: number) => {
@@ -58,7 +79,7 @@ function VerdictResultContent() {
 
   const getPerformanceMessage = (score: number, correct: boolean) => {
     if (correct) {
-      if (score >= 400) return "Outstanding Detective Work! You've mastered the art of investigation.";
+                    if (score >= 400) return "Outstanding Detective Work! You&apos;ve mastered the art of investigation.";
       if (score >= 300) return "Excellent Investigation! Your attention to detail is impressive.";
       if (score >= 200) return "Good Detective Work! You successfully cracked the case.";
       return "Case Solved! You identified the correct culprit.";
@@ -155,7 +176,7 @@ function VerdictResultContent() {
             </h1>
             
             <p className="text-gray-300 text-lg mb-6">
-              {getPerformanceMessage(score, correct)}
+              {verdictData?.explanation || getPerformanceMessage(score, correct)}
             </p>
             
             {/* Score Display */}
@@ -177,11 +198,293 @@ function VerdictResultContent() {
             </div>
           </motion.div>
 
+          {/* AI Analysis Results */}
+          {verdictData?.aiAnalysis && (
+            <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <Award className="w-6 h-6 text-teal-400" />
+                AI Detective Analysis
+              </h2>
+              
+              {/* Individual Score Categories */}
+              <div className="space-y-4 mb-8">
+                <h3 className="text-xl font-semibold text-white mb-4">Score Breakdown by Category</h3>
+                
+                {/* Name Accuracy */}
+                <div className="bg-white/5 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-400 rounded-lg flex items-center justify-center">
+                        <Target className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold">Suspect Identification</h4>
+                        <p className="text-gray-400 text-sm">Did you identify the correct suspect?</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-red-400">
+                        Success!
+                      </div>
+                      {/* <div className="text-sm text-gray-400">out of 160 pts</div> */}
+                    </div>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-red-500 to-red-400 h-2 rounded-full transition-all duration-1000"
+                      style={{ width: `${verdictData.aiAnalysis.nameCorrect ? 100 : 0}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Motive Understanding */}
+                <div className="bg-white/5 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-400 rounded-lg flex items-center justify-center">
+                        <Eye className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold">Motive Understanding</h4>
+                        <p className="text-gray-400 text-sm">How well you understood the killer's motives</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-blue-400">
+                        {Math.round(verdictData.aiAnalysis.motiveAccuracy)} pts
+                      </div>
+                      <div className="text-sm text-gray-400">out of 100 pts</div>
+                    </div>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full transition-all duration-1000"
+                      style={{ width: `${verdictData.aiAnalysis.motiveAccuracy}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Evidence Quality */}
+                <div className="bg-white/5 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-400 rounded-lg flex items-center justify-center">
+                        <Award className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold">Evidence Quality</h4>
+                        <p className="text-gray-400 text-sm">Strength of your logical deduction</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-purple-400">
+                        {Math.round(verdictData.aiAnalysis.evidenceQuality)} pts
+                      </div>
+                      <div className="text-sm text-gray-400">out of 100 pts</div>
+                    </div>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-purple-500 to-purple-400 h-2 rounded-full transition-all duration-1000"
+                      style={{ width: `${verdictData.aiAnalysis.evidenceQuality}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Detail & Insight */}
+                <div className="bg-white/5 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-400 rounded-lg flex items-center justify-center">
+                        <Star className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold">Detail & Insight</h4>
+                        <p className="text-gray-400 text-sm">Thoroughness of your analysis</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-green-400">
+                        {Math.round(verdictData.aiAnalysis.detailScore)} pts
+                      </div>
+                      <div className="text-sm text-gray-400">out of 100 pts</div>
+                    </div>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full transition-all duration-1000"
+                      style={{ width: `${verdictData.aiAnalysis.detailScore}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Total AI Score */}
+                <div className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-400/30 rounded-lg p-6 mt-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                        <Trophy className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-lg">Overall AI Analysis Score</h4>
+                        <p className="text-gray-300 text-sm">Combined performance across all categories</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-3xl font-bold text-teal-400">
+                        {Math.round(verdictData.aiAnalysis.totalScore)} pts
+                      </div>
+                      <div className="text-sm text-gray-400">out of 100 pts</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* AI Feedback */}
+              <div className="bg-white/5 rounded-lg p-6 mb-6">
+                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-teal-400" />
+                  Detective Assessment
+                </h3>
+                <p className="text-gray-300 leading-relaxed">
+                  {verdictData.aiAnalysis.feedback}
+                </p>
+              </div>
+              
+              {/* Key Insights */}
+              {verdictData.aiAnalysis.keyInsights && verdictData.aiAnalysis.keyInsights.length > 0 && (
+                <div className="bg-white/5 rounded-lg p-6">
+                  <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Star className="w-5 h-5 text-yellow-400" />
+                    Key Insights
+                  </h3>
+                  <ul className="space-y-2">
+                    {verdictData.aiAnalysis.keyInsights.map((insight: string, index: number) => (
+                      <li key={index} className="text-gray-300 flex items-start gap-2">
+                        <span className="text-teal-400 mt-1">•</span>
+                        <span>{insight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* Case Resolution - Victim and Killer Portraits */}
+          {verdictData && (
+            <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <Eye className="w-6 h-6 text-teal-400" />
+                Case Resolution
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Victim Section */}
+                <div className="text-center">
+                  <h3 className="text-white font-semibold mb-4 text-lg">The Victim</h3>
+                  <div className="relative inline-block">
+                    {/* Large victim portrait */}
+                    <div className="w-48 h-60 bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden mx-auto">
+                      {verdictData.victim?.portrait ? (
+                        <Image
+                          src={verdictData.victim.portrait}
+                          alt={`${verdictData.victim.name} - Victim`}
+                          fill
+                          className="object-cover filter sepia-[0.3] contrast-[1.1] saturate-[0.8]"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                          <Users className="w-16 h-16 text-gray-500" />
+                        </div>
+                      )}
+                      {/* Photo corner clips */}
+                      <div className="absolute -top-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                    </div>
+                    {/* Victim file label */}
+                    <div className="mt-4">
+                      <div className="inline-block bg-red-900/80 text-red-200 text-sm px-4 py-2 rounded border border-red-700">
+                        DECEASED
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    <p className="text-white font-semibold text-lg">{verdictData.victim?.name}</p>
+                    <p className="text-gray-400">{verdictData.victim?.profession}</p>
+                    <p className="text-gray-300 text-sm">Cause: {verdictData.victim?.causeOfDeath}</p>
+                    <p className="text-gray-300 text-sm">Time: {verdictData.victim?.deathTimeEstimate}</p>
+                  </div>
+                </div>
+
+                {/* Killer Section */}
+                <div className="text-center">
+                  <h3 className="text-white font-semibold mb-4 text-lg">The {correct ? 'Convicted' : 'Real'} Killer</h3>
+                  <div className="relative inline-block">
+                    {/* Large killer portrait */}
+                    <div className="w-48 h-60 bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden mx-auto">
+                      {verdictData.realKiller?.portrait ? (
+                        <Image
+                          src={verdictData.realKiller.portrait}
+                          alt={`${verdictData.realKiller.name} - Killer`}
+                          fill
+                          className="object-cover filter sepia-[0.2] contrast-[1.05] saturate-[0.9]"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                          <Users className="w-16 h-16 text-gray-500" />
+                        </div>
+                      )}
+                      {/* Photo corner clips */}
+                      <div className="absolute -top-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                    </div>
+                    {/* Killer file label */}
+                    <div className="mt-4">
+                      <div className={`inline-block text-sm px-4 py-2 rounded border ${
+                        correct 
+                          ? 'bg-green-900/80 text-green-200 border-green-700'
+                          : 'bg-red-900/80 text-red-200 border-red-700'
+                      }`}>
+                        {correct ? 'CONVICTED' : 'REAL KILLER'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    <p className="text-white font-semibold text-lg">{verdictData.realKiller?.name}</p>
+                    <p className="text-gray-400">{verdictData.realKiller?.role}</p>
+                    {!correct && (
+                      <div className="bg-red-500/10 border border-red-400/20 rounded-lg p-3 mt-3">
+                        <p className="text-red-300 text-sm font-medium">True Killer Revealed</p>
+                        <p className="text-gray-300 text-xs">You accused: {verdictData.accusedSuspect}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Case Summary */}
+              <div className="mt-8 bg-white/5 rounded-lg p-6">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Gavel className="w-5 h-5 text-yellow-400" />
+                  Case Summary
+                </h4>
+                <p className="text-gray-300 leading-relaxed">
+                  {verdictData.caseSummary || `In this case, ${verdictData.victim?.name} was murdered by ${verdictData.realKiller?.name}. ${correct ? 'Your investigation successfully identified the correct perpetrator.' : `You identified ${verdictData.accusedSuspect} as the killer, but the real murderer was ${verdictData.realKiller?.name}.`}`}
+                </p>
+              </div>
+            </motion.div>
+          )}
+
           {/* Score Breakdown */}
           <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-              <Award className="w-6 h-6 text-teal-400" />
-              Performance Analysis
+              <Trophy className="w-6 h-6 text-yellow-400" />
+              Score Breakdown
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6">
@@ -189,10 +492,10 @@ function VerdictResultContent() {
                 <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
                   <div className="flex items-center gap-3">
                     <Target className="w-5 h-5 text-blue-400" />
-                    <span className="text-gray-300">Base Score</span>
+                    <span className="text-gray-300">AI Analysis Score</span>
                   </div>
                   <span className="text-white font-semibold">
-                    {correct ? '100' : '20'} pts
+                    {verdictData?.aiAnalysis ? Math.round(verdictData.aiAnalysis.totalScore * 4) : (correct ? 280 : 80)} pts
                   </span>
                 </div>
                 
@@ -202,7 +505,10 @@ function VerdictResultContent() {
                     <span className="text-gray-300">Investigation Bonus</span>
                   </div>
                   <span className="text-white font-semibold">
-                    {correct ? Math.max(0, score - 100) : Math.max(0, score - 20)} pts
+                    {verdictData?.aiAnalysis ? 
+                      Math.max(0, score - Math.round(verdictData.aiAnalysis.totalScore * 4)) : 
+                      Math.max(0, score - (correct ? 280 : 80))
+                    } pts
                   </span>
                 </div>
               </div>
@@ -211,11 +517,13 @@ function VerdictResultContent() {
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h3 className="text-white font-semibold mb-2">Score Factors</h3>
                   <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Correct suspect identification</li>
-                    <li>• Locations visited thoroughly</li>
+                    <li>• Suspect identification accuracy</li>
+                    <li>• Motive understanding depth</li>
+                    <li>• Evidence quality & logic</li>
+                    <li>• Analysis detail & insight</li>
+                    <li>• Locations visited</li>
                     <li>• Suspects interrogated</li>
                     <li>• Clues discovered</li>
-                    <li>• Quality of reasoning</li>
                     <li>• Time efficiency</li>
                   </ul>
                 </div>

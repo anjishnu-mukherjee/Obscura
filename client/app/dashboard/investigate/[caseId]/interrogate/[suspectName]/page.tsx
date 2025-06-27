@@ -24,6 +24,7 @@ import { canInterrogateSuspect } from "@/lib/investigationUtils";
 import { Suspect } from "@/functions/types";
 import FloatingNotepad from "@/components/FloatingNotepad";
 import FloatingWatson from "@/components/FloatingWatson";
+import Image from "next/image";
 
 interface InterrogatePageProps {
   params: Promise<{
@@ -61,8 +62,6 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
       router.push("/login");
     }
   }, [user, loading, router]);
-
-
 
   const addQuestion = () => {
     if (questions.length < 10) {
@@ -363,8 +362,6 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
     );
   }
 
-
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900">
       <Navbar />
@@ -389,15 +386,52 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
             </button>
 
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-400 rounded-xl flex items-center justify-center">
-                  <User className="w-8 h-8 text-white" />
+              <div className="flex items-center gap-6 mb-6">
+                {/* Suspect Portrait - Case File Style */}
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    {/* Case file photo frame */}
+                                         <div className="w-20 h-28 bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden">
+                      {suspect.portrait ? (
+                        <Image
+                          src={suspect.portrait}
+                          alt={`${suspect.name} - Suspect`}
+                          fill
+                          className="object-cover filter sepia-[0.2] contrast-[1.05] saturate-[0.9]"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                          <User className="w-8 h-8 text-gray-500" />
+                        </div>
+                      )}
+                      {/* Photo corner clips */}
+                      <div className="absolute -top-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -bottom-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                      <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                    </div>
+                    {/* Case file label */}
+                    <div className="absolute -bottom-5 left-0 right-0 text-center">
+                      <div className="inline-block bg-yellow-900/80 text-yellow-200 text-xs px-2 py-1 rounded border border-yellow-700">
+                        SUSPECT
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="text-3xl font-bold text-white">
-                    {suspect.name}
-                  </h1>
-                  <p className="text-gray-400">{suspect.role}</p>
+                
+                {/* Header Content */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-400 rounded-lg flex items-center justify-center">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h1 className="text-3xl font-bold text-white">
+                        {suspect.name}
+                      </h1>
+                      <p className="text-gray-400">{suspect.role}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -431,35 +465,83 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
               Suspect Profile
             </h2>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-white font-semibold mb-3">Background</h3>
-                <div className="space-y-3">
-                  <div className="bg-white/5 rounded-lg p-4">
-                    <p className="text-gray-400 text-sm mb-1">Role</p>
-                    <p className="text-white">{suspect.role}</p>
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Large Portrait Section */}
+              <div className="md:col-span-1">
+                <h3 className="text-white font-semibold mb-4">Case File Photo</h3>
+                <div className="relative">
+                  {/* Large case file photo frame */}
+                  <div className="w-full aspect-[3/4] bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden">
+                    {suspect.portrait ? (
+                      <Image
+                        src={suspect.portrait}
+                        alt={`${suspect.name} - Suspect File Photo`}
+                        fill
+                        className="object-cover filter sepia-[0.2] contrast-[1.05] saturate-[0.9]"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                        <User className="w-16 h-16 text-gray-500" />
+                      </div>
+                    )}
+                    {/* Photo corner clips */}
+                    <div className="absolute -top-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                    <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
+                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rotate-45 transform origin-center"></div>
                   </div>
-                  <div className="bg-white/5 rounded-lg p-4">
-                    <p className="text-gray-400 text-sm mb-1">Personality</p>
-                    <p className="text-white">{suspect.personality}</p>
-                  </div>
-                  <div className="bg-white/5 rounded-lg p-4">
-                    <p className="text-gray-400 text-sm mb-1">Alibi</p>
-                    <p className="text-white">{suspect.alibi}</p>
+                  {/* Case file stamps and labels */}
+                  <div className="mt-4 space-y-2">
+                    <div className="flex justify-center">
+                      <div className="bg-red-900/80 text-red-200 text-xs px-3 py-1 rounded border border-red-700">
+                        CONFIDENTIAL
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-400 text-xs">FILE: {suspect.name.toUpperCase()}</p>
+                      <p className="text-gray-500 text-xs">CLASSIFICATION: SUSPECT</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-white font-semibold mb-3">
-                  Potential Motives
-                </h3>
-                <div className="space-y-2">
-                  {suspect.motives.map((motive: string, index: number) => (
-                    <div key={index} className="bg-white/5 rounded-lg p-3">
-                      <p className="text-gray-300 text-sm">{motive}</p>
+              {/* Background Information */}
+              <div className="md:col-span-2">
+                <div className="grid gap-6">
+                  <div>
+                    <h3 className="text-white font-semibold mb-3">Background</h3>
+                    <div className="space-y-3">
+                      <div className="bg-white/5 rounded-lg p-4">
+                        <p className="text-gray-400 text-sm mb-1">Role</p>
+                        <p className="text-white">{suspect.role}</p>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-4">
+                        <p className="text-gray-400 text-sm mb-1">Personality</p>
+                        <p className="text-white">{suspect.personality}</p>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-4">
+                        <p className="text-gray-400 text-sm mb-1">Alibi</p>
+                        <p className="text-white">{suspect.alibi}</p>
+                      </div>
                     </div>
-                  ))}
+                  </div>
+
+                  <div>
+                    <h3 className="text-white font-semibold mb-3">
+                      Potential Motives
+                    </h3>
+                    <div className="space-y-2">
+                      {suspect.motives?.map((motive: string, index: number) => (
+                        <div key={index} className="bg-white/5 rounded-lg p-3">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
+                            <span className="text-gray-400 text-xs uppercase tracking-wide">Motive {index + 1}</span>
+                          </div>
+                          <p className="text-gray-300 text-sm">{motive}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

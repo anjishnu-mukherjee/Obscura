@@ -4,6 +4,7 @@ export interface Victim {
     lastKnownLocation: string;
     deathTimeEstimate: string;
     causeOfDeath: string;
+    portrait: string;
 }
 
 export interface Suspect {
@@ -14,6 +15,7 @@ export interface Suspect {
     isKiller: boolean;
     personality: string;
     cluesTriggers?: ClueWithTrigger[];
+    portrait: string;
 }
 
 export interface TimelineEvent {

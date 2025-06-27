@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCase, getInvestigationFindings, getNotepadEntries, getOverallFindings } from "@/lib/gameDb";
+import { getCase, getInvestigationFindings, getNotepadEntries } from "@/lib/gameDb";
 import { generate } from "@/functions/generate";
 
 export async function POST(request: NextRequest) {
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     const findings = findingsResult.findings || [];
     const notes = notesResult.entries || [];
 
-    const overallFindings = await getOverallFindings(caseId);
+    const overallFindings = await getInvestigationFindings(caseId);
 
     const revealedClues = caseData.story.suspects.flatMap(suspect => 
       suspect.cluesTriggers

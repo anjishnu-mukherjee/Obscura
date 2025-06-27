@@ -76,14 +76,15 @@ ${earlyEvents.map(e => `${e.time}: ${e.event}`).join('\n')}
 
 Requirements:
 1. Write 3-5 paragraphs in ${style} style
-2. Start with a strong atmospheric opening about the setting and crime
-3. Introduce the victim's death with intrigue (hint at their work or secrets)
-4. Mention the key suspects with subtle hints about their possible involvement
-5. End with a sense of urgency or impending complications
-6. Use rich, sensory language appropriate to the setting
-7. Don't reveal who the killer is
-8. Include specific details from the timeline and setting
-${playerName ? `9. Address the narrative to Detective ${playerName} where appropriate` : ''}
+2. The story is set in an Indian setting.
+3. Start with a strong atmospheric opening about the setting and crime
+4. Introduce the victim's death with intrigue (hint at their work or secrets)
+5. Mention the key suspects with subtle hints about their possible involvement
+6. End with a sense of urgency or impending complications
+7. Use rich, sensory language appropriate to the setting
+8. Don't reveal who the killer is
+9. Include specific details from the timeline and setting
+${playerName ? `10. Address the narrative to Detective ${playerName} where appropriate` : ''}
 
 Complexity Level: ${complexityLevel}
 
@@ -117,10 +118,11 @@ Case Urgency: ${difficultyModifier}
 Requirements:
 1. First sentence: State the core fact of the murder and any key circumstance
 2. Second sentence: State the investigative challenge or time pressure
-3. Use ${style} genre-appropriate language
-4. Be direct and impactful
-5. Create a sense of urgency appropriate to the difficulty level
-${playerName ? `6. Make it personal to Detective ${playerName}` : ''}
+3. The story is set in an Indian setting.
+4. Use ${style} genre-appropriate language
+5. Be direct and impactful
+6. Create a sense of urgency appropriate to the difficulty level
+${playerName ? `7. Make it personal to Detective ${playerName}` : ''}
 
 Format as two clear sentences that would appear in a detective's journal.`;
 

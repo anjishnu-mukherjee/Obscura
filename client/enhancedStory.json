@@ -1,244 +1,249 @@
 {
-  "title": "Desert Mirage: A High Roller's Deadly Game",
-  "setting": "Desert Oasis Casino",
+  "title": "Saffron Betrayal: A Shady Indian Village Murder",
+  "setting": "Shady Indian Village",
   "victim": {
-    "name": "Isabella \"Izzy\" Rodriguez",
-    "profession": "Head Cocktail Waitress, High Rollers Lounge",
-    "lastKnownLocation": "The \"Mirage\" Suite, Desert Oasis Casino Penthouse",
-    "deathTimeEstimate": "02:47",
-    "causeOfDeath": "Strangulation with a silk scarf, followed by blunt force trauma to the head with a crystal ice bucket."
+    "name": "Lakshmi Kant Sharma",
+    "profession": "Village Panchayat Secretary",
+    "lastKnownLocation": "Sharma Tea Stall, near the Banyan Tree",
+    "deathTimeEstimate": "23:15",
+    "causeOfDeath": "Strangulation with a saffron silk scarf",
+    "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062370/obscura/victims/obscura/victims/Lakshmi%20Kant%20Sharma_portrait.jpg"
   },
   "suspects": [
     {
-      "name": "Ricardo \"Ricky\" Vargas",
-      "role": "Professional Gambler, High-Roller",
-      "alibi": "Ricky claims to have been in a high-stakes poker game in the Pharaoh's Room from 21:00 until 03:30. He states that he only left the table once at 01:00 for a bathroom break, and another time at 02:00 for a quick smoke in the designated area outside the Pharaoh's Room. Security camera footage confirms he was present in the Pharaoh's Room during those times, but the angles don't offer a clear view of his movements within the room, nor his presence in the smoking area. Several other high rollers can confirm he was at the game but none saw him between 02:00 and 02:30.",
+      "name": "Anjali Reddy",
+      "role": "Owner of \"Anjali's Tea Stall\", Village Gossip",
+      "alibi": "Anjali claims she was closing up her tea stall at 23:00 and walked home, a 20-minute journey, reaching her house around 23:20. She says her husband, Ravi, a rickshaw puller, was already asleep and can't corroborate her story. She mentions seeing a shadowy figure near the Panchayat office earlier that evening, around 21:00, but couldn't identify them.",
       "motives": [
-        "Romantic Obsession: Ricky was deeply infatuated with Izzy and had proposed marriage several times. She repeatedly rejected him, claiming she wasn't interested in his lifestyle. He felt humiliated and rejected, seeing her rejections as a personal attack.",
-        "Financial Strain: Ricky is heavily in debt to some unsavory characters. Izzy was aware of his financial troubles and had refused to loan him money, leading to heated arguments in the past. He believed she was deliberately withholding assistance.",
-        "Delusional Belief: Ricky convinced himself that Izzy was secretly in love with him but was being influenced by someone else (potentially Javier). He might have believed that removing Izzy from this perceived influence would finally allow her to embrace his love."
+        "Lakshmi Kant Sharma was blackmailing her about a past affair that, if revealed, would destroy her marriage and reputation in the conservative village. He demanded increasingly large sums of money to keep quiet.",
+        "Anjali’s tea stall was facing closure due to Lakshmi Kant Sharma's refusal to grant her the necessary permits, ostensibly due to 'bureaucratic hurdles', but in reality, because she refused his advances.",
+        "Anjali has a deep-seated resentment towards authority figures, stemming from her father being unfairly treated by the local government years ago. She sees Lakshmi Kant as a symbol of this corruption."
+      ],
+      "isKiller": false,
+      "personality": "Anjali is outwardly friendly and chatty, the classic village gossip. Beneath the surface, she's shrewd, observant, and fiercely protective of her family. She carries a lot of anger and resentment, carefully hidden behind a veneer of pleasantness. She has a sharp wit and isn't afraid to speak her mind when provoked, but usually prefers to manipulate situations from the shadows. She compulsively cleans her tea stall, a way of controlling her anxiety.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062390/obscura/suspects/obscura/suspects/Anjali%20Reddy_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Oh, that Lakshmi Kant... always causing trouble. He was seen arguing loudly with Rajesh Kumar Verma just outside the Panchayat office around 8 PM the night of the murder. It was quite a scene, lots of shouting about money, I think.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Offer Anjali a cup of tea and engage in casual conversation about Lakshmi Kant Sharma and village happenings. Show genuine interest in her perspective and build rapport.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": " (Visibly uncomfortable, fidgeting with her saree) I... I saw someone near the Panchayat office earlier that evening, around 9 PM. It was dark, and they were just a shadow. I couldn't make out who it was, honestly. Maybe they were just relieving themselves.",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Challenge her alibi directly, pointing out the inconsistencies in her story about seeing a shadowy figure versus her stated timeline. Emphasize the seriousness of withholding information.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": " (After repeated questioning about her finances, she snaps) Look, running a tea stall isn't exactly a gold mine! It's enough to keep Ravi and me fed. And yes, I had to take out a small loan from the local moneylender to repair the roof after the last monsoon. Lakshmi Kant wasn't involved in that. It was settled ages ago! ",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Accuse her directly of being in debt to Lakshmi Kant and imply that the debt was a motive for murder. Use a loud and accusatory tone.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": " (Softly, after expressing sympathy for her struggles) Lakshmi Kant... he made things very difficult for me. He kept putting obstacles in the way of my permits. He knew the tea stall was my livelihood. He... he implied that if I were 'nicer' to him, things would be easier. But I didn't want anything to do with him! How dare he!",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Express empathy for Anjali's situation as a small business owner struggling with bureaucracy. Gently inquire about any difficulties she faced with Lakshmi Kant Sharma and the permits.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": " (Under intense pressure about her alibi and whereabouts after closing, she says, almost defensively) I told you, I walked home! What else do you want me to say? It's not my fault Ravi was asleep! He's tired after pulling his rickshaw all day! If you want to find the killer, ask Divya Sharma. She and Lakshmi Kant were always arguing about village land! Everyone knows that!",
+          "triggerType": "pressing",
+          "triggerLevel": 5,
+          "triggerDescription": "Intensely scrutinize her alibi, highlighting the lack of corroboration and pressing her for specific details about her movements between the tea stall and her home. Focus on time discrepancies.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Rajesh Kumar Verma",
+      "role": "Unemployed Graduate, Aspiring Politician",
+      "alibi": "Rajesh states he was at the village temple praying for a government job from 22:30 to 23:30. He claims the temple priest, Pandit Joshi, can vouch for him, but Pandit Joshi vaguely remembers him being there, saying many people come and go at that hour. He admits he left the temple for about five minutes around 23:10 to buy a packet of cigarettes from a nearby paan shop.",
+      "motives": [
+        "Lakshmi Kant Sharma promised Rajesh a government job within the Panchayat in exchange for his support in the upcoming elections. When Lakshmi Kant backtracked and gave the job to someone else, Rajesh felt betrayed and humiliated.",
+        "Rajesh discovered that Lakshmi Kant Sharma was embezzling funds meant for the village school, a project that Rajesh was heavily involved in promoting. He threatened to expose Lakshmi Kant, but was ignored.",
+        "Rajesh suffers from narcissistic personality disorder. He believes he is destined for greatness and views obstacles, like Lakshmi Kant, as personal affronts that must be removed. He seeks validation and power above all else."
+      ],
+      "isKiller": false,
+      "personality": "Rajesh is ambitious, charismatic, and prone to grand pronouncements about his future. He's desperate to escape the poverty and stagnation of Shady Indian Village. He is easily frustrated when things don't go his way and has a strong sense of entitlement. He is often seen practicing speeches in front of a mirror and is overly concerned with his appearance.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062389/obscura/suspects/obscura/suspects/Rajesh%20Kumar%20Verma_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Lakshmi Kant was a *snake*. Promised me a position in the Panchayat, said he admired my...vision for the village. Then he gave it to that idiot Vikram! Said I lacked 'experience'. Experience! I practically built this village's school project with my own two hands!",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Expressing general sympathy for Rajesh's ambitions and disappointments.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "I saw Anjali Reddy arguing with Lakshmi Kant near the school construction site earlier that day. It was…heated. I couldn't make out what they were saying, but she looked very angry. I thought she was going to slap him!",
+          "triggerType": "gentle",
+          "triggerLevel": 3,
+          "triggerDescription": "Asking about his observations of Lakshmi Kant's relationships with other villagers.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Look, I might have called him a few names, but murder? I’m not a barbarian! I need Lakshmi Kant alive so I can show him how wrong he was! I'll be running this village one day, and he'll be begging for *my* favor!",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Presenting evidence that suggests Rajesh had a strong motive to harm Lakshmi Kant, such as bank statements showing his financial distress.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Fine! So, after I left the temple to buy cigarettes, the paan shop was closed. Can you believe it? So, I walked a bit further down the road, towards the old mill, and found one open, bought the cigarettes and walked straight back to the temple.",
+          "triggerType": "specific_question",
+          "triggerLevel": 5,
+          "triggerDescription": "Directly questioning the precise route he took after leaving the temple, pressing for details.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Embezzling? Lakshmi Kant? That old fool wouldn't know how to embezzle if his life depended on it! If anyone was embezzling from the school, it was that Rathore! He always had his hands in everything.",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Accusing Rajesh of knowing about Lakshmi Kant's embezzlement, forcing him to deflect.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Divya Sharma",
+      "role": "Lakshmi Kant Sharma's Wife, Homemaker",
+      "alibi": "Divya claims she was asleep in her room from 22:00 onwards. She says she took a sleeping pill due to a severe headache and didn't wake up until the next morning. The family servant, Meena, confirms that Divya was in her room when she brought her dinner at 21:30, but Meena doesn't know if she was asleep or awake later in the night. Meena lives in the outhouse on the property and wouldn't hear anything through the house.",
+      "motives": [
+        "Lakshmi Kant Sharma was having an affair with a woman from a neighboring village, and Divya knew about it. The affair had been ongoing for months, and Divya was humiliated and heartbroken. She was planning to leave him and feared being left destitute.",
+        "Lakshmi Kant Sharma was verbally and emotionally abusive towards Divya. He constantly belittled her and controlled every aspect of her life. She felt trapped and powerless.",
+        "Divya is struggling with severe depression and anxiety, exacerbated by her husband's behavior. She has a history of passive-aggressive behavior and repressed anger, culminating in a single act of rage."
       ],
       "isKiller": true,
-      "personality": "Ricky is a charismatic but volatile gambler. He exudes an air of confidence that masks deep insecurities and a tendency towards obsessive behavior. He's prone to dramatic outbursts when things don't go his way, especially in matters of love and money. He has a grandiose view of himself, often exaggerating his achievements and downplaying his failures. He's also possessive and controlling, displaying red flags about those he loves.",
+      "personality": "Divya is a quiet, reserved woman who appears submissive on the surface. She has endured years of emotional abuse and carries a deep well of suppressed anger and resentment. She is intelligent and observant, but her spirit has been crushed by her husband's domineering personality. She often daydreams of a different life and finds solace in reading religious texts. She bites her nails unconsciously when nervous.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062390/obscura/suspects/obscura/suspects/Divya%20Sharma_portrait.jpg",
       "cluesTriggers": [
         {
-          "clue": "Yeah, Izzy was a real firecracker. Beautiful, but… complicated. She always had guys chasing after her, you know? Javi was always hanging around, like a lovesick puppy. But she always brushed him off. Always.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Ask about Izzy's relationship with Javier.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Look, I'm not going to lie, I was in love with Izzy. Head over heels. I would have given her the world. But she just didn't see it. Kept saying she didn't want my 'lifestyle.' It hurt, okay? It hurt a lot! But I would NEVER hurt her. Never!",
+          "clue": "He... he was a difficult man to live with. Always demanding, always critical. It was like walking on eggshells.",
           "triggerType": "sympathetic",
-          "triggerLevel": 3,
-          "triggerDescription": "Express sympathy for his unrequited love for Izzy.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "That poker game? It was brutal. I was up, then down, then… damn it! I kept losing. Lost a LOT. I couldn't afford to lose that much. That's why I needed to step away for a bit. I swear, I was just outside smoking a cigarette and stewing in my failure. I was gone for maybe 30 minutes, tops!",
-          "triggerType": "pressing",
-          "triggerLevel": 4,
-          "triggerDescription": "Confront him about the time discrepancy between his alibi and witness accounts regarding his smoking break.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        },
-        {
-          "clue": "Izzy? Money? She acted like she was too good for it, like she didn’t care about fortunes. But she was always talking about Charlie and Vicky's penthouse and how much money that family had. She liked nice things... she just didn't want to admit it.",
-          "triggerType": "aggressive",
-          "triggerLevel": 2,
-          "triggerDescription": "Accuse him of lying about Izzy not caring about money and bring up the Sterlings' wealth.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Okay, fine! I... I was angry! She kept rejecting me, kept looking down on me. She knew I was in trouble, with... certain people. She could have helped, but she just laughed in my face! So, yeah, I said some things. I told her she'd regret it. But that's all! I didn't mean anything by it! I was just venting, you understand? Venting!",
-          "triggerType": "aggressive",
-          "triggerLevel": 5,
-          "triggerDescription": "Directly accuse him of threatening Izzy due to her refusal to help him with his debts. Show evidence of his financial troubles.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Javier \"Javi\" Mendoza",
-      "role": "Head Bartender, High Rollers Lounge",
-      "alibi": "Javier states he was cleaning and stocking the bar in the High Rollers Lounge from 02:00 until 03:00. He claims he didn't see Izzy at any point during that hour. He acknowledges that he took a short break to grab a coffee from the staff break room around 02:30, but only for a few minutes. Co-worker Maria Garcia states that she saw him in the break room at 02:30, he stayed for about 7 minutes, and seemed nervous.",
-      "motives": [
-        "Secret Affair: Javier and Izzy were rumored to be having a secret affair. If Izzy was planning to end the relationship, Javier may have acted out of jealousy or fear of exposure.",
-        "Professional Jealousy: Javier resented Izzy's popularity and perceived her as stealing the spotlight in the High Rollers Lounge. He felt that her charisma overshadowed his bartending skills, and that she would receive better tips than he did.",
-        "Desperation for Money: Javier is struggling to support his family and is facing eviction. Izzy knew of his financial troubles and had confided in him about money worries of her own. He may have snapped at her and attempted to ask her for a loan, with the conversation escalating. "
-      ],
-      "isKiller": false,
-      "personality": "Javier is a brooding and cynical bartender. He's generally quiet and observant, but harbors a deep-seated resentment towards those he perceives as more successful than him. He's a hard worker but feels underappreciated and trapped in his current life. He's prone to bouts of depression and often self-medicates with alcohol. He's a good listener but rarely shares his own feelings, making him appear enigmatic and untrustworthy.",
-      "cluesTriggers": [
-        {
-          "clue": "Look, I know things between Izzy and I...weren't *strictly* professional. But it was nothing serious. Just a few drinks after work, some…shared confidences. She knew I was struggling, alright? She knew about the eviction notice.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Gently express concern for Javier's well-being and acknowledge his hard work and the stresses he's likely under. Ask about his relationship with Izzy in a non-accusatory manner.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "I saw Vargas and Izzy arguing near the service entrance to the kitchens earlier that night, maybe around 11:00? Vargas looked really angry. I didn't hear what they were saying, but his face was like thunder.",
-          "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Press Javier about potential enemies or conflicts Izzy may have had. Suggest that someone else might have had a reason to harm her and see if he'll offer any names.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Seven minutes? Maria said I was in the break room for seven minutes? I… I must have lost track of time. I was just really stressed about the bills. Izzy always seemed so calm, so in control. I guess I was a little jealous. But jealous, not murderous!",
-          "triggerType": "aggressive",
-          "triggerLevel": 4,
-          "triggerDescription": "Confront Javier with Maria's statement about his time in the break room, highlighting the discrepancy in his alibi and suggesting he was lying. Accuse him of downplaying his jealousy.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        },
-        {
-          "clue": "She, Izzy, mentioned something about Charlie Sterling… having a gambling problem again. And that he was borrowing money from everyone. She didn't say who, but… well, it's Charlie Sterling. That's all I know.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 3,
-          "triggerDescription": "Express empathy for Javier's financial situation and suggest that Izzy might have been a source of support or understanding. Ask him if she ever confided in him about other people's problems.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Look, I know I wasn't her favorite person, but I would never hurt Izzy. It's true I wanted to ask her for money, but I didn't get the chance. It was a mistake to even consider asking but I didn't even see her during my shift. I swear.",
-          "triggerType": "specific_question",
-          "triggerLevel": 4,
-          "triggerDescription": "Directly ask Javier if he ever considered asking Izzy for money. If he denies it, present him with the fact that Izzy knew of his financial troubles.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Victoria \"Vicky\" Sterling",
-      "role": "Casino Owner's Wife",
-      "alibi": "Victoria claims she was in her penthouse suite at the Desert Oasis from 23:00 onwards, preparing for a charity gala the next day. She states she went to bed around 00:30 and didn't leave her suite until 08:00. Her personal assistant, Susan Miller, confirms that she saw Victoria in the suite at 23:30, but admits that she didn't see her after that and went to her own room on a different floor.",
-      "motives": [
-        "Jealousy and Betrayal: Victoria suspected her husband, Charles Sterling, was having an affair with Izzy. She had seen them together in the lobby multiple times, and had noticed her husband paying Izzy a lot of attention. Victoria was humiliated and enraged by the perceived betrayal.",
-        "Protecting her Reputation: A scandal involving her husband and a cocktail waitress could damage Victoria's social standing and her husband's casino. She may have felt that eliminating Izzy was the only way to prevent the affair from becoming public.",
-        "Power and Control: Victoria is accustomed to getting her way and is fiercely protective of her position. She saw Izzy as a threat to her authority and social standing, viewing her as a gold digger attempting to take advantage of her family."
-      ],
-      "isKiller": false,
-      "personality": "Victoria is a wealthy and sophisticated socialite. She projects an image of grace and composure, but underneath the surface lies a calculating and ruthless personality. She's accustomed to getting her way and is willing to use her power and influence to achieve her goals. She's highly possessive of her husband and fiercely protective of her social standing. She has a sharp wit and a cutting tongue, often using sarcasm and condescension to belittle others.",
-      "cluesTriggers": [
-        {
-          "clue": "Oh, darling, Izzy? She was... ambitious. Always fluttering around Charles. I'm sure he gave her a generous tip now and again. He's a charitable man, you know.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Casually inquire about Victoria's opinion of the victim, Izzy.",
-          "isRedHerring": false,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "My husband's schedule that night? Honestly, detectives, do you think I keep tabs on his every move? He's a busy man running a casino. He probably had meetings, gambled a little, the usual. I wouldn't know the specifics. It's really not my concern.",
-          "triggerType": "specific_question",
-          "triggerLevel": 3,
-          "triggerDescription": "Directly ask about her husband, Charles Sterling's, whereabouts and activities the night of the murder.",
-          "isRedHerring": true,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Susan, my assistant, is utterly devoted to me. Why would she lie? I assure you, she wouldn't... Unless... Oh, my God. Are you saying someone got to her? Is she in danger?",
-          "triggerType": "pressing",
-          "triggerLevel": 4,
-          "triggerDescription": "Point out inconsistencies in Susan Miller's statement and suggest she might be covering for someone.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        },
-        {
-          "clue": "Listen, this casino is built on reputation, and this whole ordeal is terrible for business. Someone wanted to make us look bad. The new bar manager, Ricardo, was sloppy, Izzy was always complaining about him and the drinks, I bet he had something to do with it. He was probably upset that she was going to complain to my husband about his poor service and his team.",
-          "triggerType": "aggressive",
-          "triggerLevel": 3,
-          "triggerDescription": "Accuse Victoria of trying to protect her husband and the casino's image.",
-          "isRedHerring": true,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Charity Gala preparations? There was a specific guest list item I was trying to finalize. I was on the phone, trying to convince Javi to donate a very rare bottle to the auction. I had a devil of a time getting ahold of him that night, and when I did, he was rather curt and hurried. It was odd, but I didn't think anything of it.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 3,
-          "triggerDescription": "Express empathy for the stress Victoria must be under and gently inquire about the charity gala preparations.",
-          "isRedHerring": false,
-          "importance": "minor",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Charles \"Charlie\" Sterling",
-      "role": "Casino Owner",
-      "alibi": "Charles claims to have been in a meeting with his CFO, David Lee, in his office from 23:00 until 03:00, discussing the casino's quarterly earnings. David confirms the meeting took place but admits that Charles left for approximately 20 minutes around 02:30, stating he needed to take a phone call in private. David couldn't hear the call and didn't see where Charles went.",
-      "motives": [
-        "Avoiding a Damaging Affair: Charles may have been trying to end an affair with Izzy, and she was threatening to expose him if he didn't continue the relationship. The exposure could have led to a scandal damaging the casino's reputation and his marriage.",
-        "Protecting his Business: Izzy may have overheard or witnessed something incriminating related to Charles's business dealings, potentially involving illegal activities. He might have silenced her to prevent her from revealing the information to the authorities.",
-        "Anger and Frustration: Charles is under immense pressure to maintain the casino's profitability and satisfy his demanding wife. He could have lashed out at Izzy during a moment of anger, especially if she was making demands or causing problems."
-      ],
-      "isKiller": false,
-      "personality": "Charles is a powerful and ambitious businessman. He's driven by success and reputation, and he's willing to make difficult decisions to achieve his goals. He maintains a facade of respectability, but he's not above bending the rules when necessary. He's a charismatic leader but can also be ruthless and manipulative. He's under constant stress, and his temper can flare under pressure.",
-      "cluesTriggers": [
-        {
-          "clue": "David is a loyal employee, and I trust him implicitly. He's been with me for years. I would be surprised if he was being fully truthful about our conversation though. He's probably protecting himself.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Show Charles a picture of David and ask about their relationship.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Izzy... she was a cocktail waitress. A good one, brought in tips, the guests liked her. I may have spoken to her a couple times in passing, nothing more. She flirted with everyone, I think.",
-          "triggerType": "gentle",
           "triggerLevel": 1,
-          "triggerDescription": "Casually mention Izzy's name and observe Charles' reaction.",
+          "triggerDescription": "Expressing sympathy for her situation and acknowledging the difficulty of her marriage.",
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
-          "clue": "Look, this casino is my life. My family's life. I've sunk everything into it. Anything that threatens its reputation, anything that could damage it... I'd do anything to protect it. You understand?",
-          "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Press Charles about the importance of the casino's reputation and his potential willingness to protect it at any cost.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Twenty minutes? Fine, yes, maybe I did step out for a smoke. The quarterly reports were giving me a headache, and I needed to clear my head. I went out to the back patio of my office, had a cigarette. Didn't see a soul. What's the big deal?",
+          "clue": "I took the sleeping pill. I swear I did. The doctor prescribed it months ago, for my headaches. I keep it in the nightstand drawer. See? I can show you.",
           "triggerType": "specific_question",
+          "triggerLevel": 2,
+          "triggerDescription": "Directly asking about the sleeping pill and its location, then pressing on verifying its use.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Anjali? Yes, Lakshmi knew her. He... he did business with her sometimes, I think. Something about land deals, near the neighboring village. I don't know the details, I never interfered in his business. Women don't, in these parts.",
+          "triggerType": "gentle",
+          "triggerLevel": 3,
+          "triggerDescription": "Mentioning the name 'Anjali' and observing her reaction.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "I was so angry! So much anger that I almost... I almost burned his favorite dhoti with the iron, just before Meena brought me the dinner. But I stopped myself! I went to lie down instead.",
+          "triggerType": "aggressive",
           "triggerLevel": 4,
-          "triggerDescription": "Directly confront Charles with the discrepancy in David's statement, focusing on the 20-minute absence and asking where he went.",
+          "triggerDescription": "Accusing her of snapping and lashing out, observing for any reaction or admittance. The mention of the dhoti helps to imply intent without the action being related to the murder.",
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
-          "clue": "Someone should really look into Javier Mendoza. He always seemed to have it out for Izzy. Maybe he lost some money because of her one night, I don't remember exactly. But he had a real temper.",
-          "triggerType": "aggressive",
+          "clue": "He threatened to take everything from me, you know. Said he'd leave me with nothing if I ever challenged him. That I'd be out on the streets, begging for scraps. (Nail biting intensifies, eyes dart around the room)",
+          "triggerType": "pressing",
+          "triggerLevel": 5,
+          "triggerDescription": "Repeatedly questioning her about her financial security and vulnerability if Lakshmi left her, stressing that she would be left with nothing. Nail biting and eye darting should be closely watched.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Vikram Singh Rathore",
+      "role": "Landlord, Local Moneylender",
+      "alibi": "Vikram claims he was playing cards with three other men – Kishore, Deepu, and Santosh – at Kishore's house from 22:00 until after midnight. Kishore confirms this, but Deepu and Santosh are known to be heavily indebted to Vikram and are likely to corroborate his story regardless of the truth. Vikram admits he left the game for about 10 minutes around 23:00 to \"stretch his legs\".",
+      "motives": [
+        "Lakshmi Kant Sharma, as Panchayat Secretary, was investigating Vikram's illegal land grabbing activities. If the investigation went further, Vikram would lose a significant portion of his wealth and face criminal charges.",
+        "Vikram lent Lakshmi Kant Sharma a large sum of money for a supposed 'business venture,' but Lakshmi Kant refused to pay it back. Vikram threatened to use forceful means to recover his debt, but Lakshmi Kant remained defiant.",
+        "Vikram is a ruthless and power-hungry individual who enjoys exerting control over others. He saw Lakshmi Kant Sharma as a threat to his influence in the village and wanted to eliminate him to maintain his dominance."
+      ],
+      "isKiller": false,
+      "personality": "Vikram is a powerful and intimidating man with a reputation for ruthlessness. He is used to getting his way and is not afraid to use threats and intimidation to achieve his goals. He is calculating and manipulative, always thinking several steps ahead. He speaks slowly and deliberately, making every word count. He carries a silver-handled cane, which he often uses to emphasize his points.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062391/obscura/suspects/obscura/suspects/Vikram%20Singh%20Rathore_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Sharma was a fool with money. He came to me for a 'business venture,' promised me great returns. He got the money, alright, but never delivered. A regrettable loss, but hardly worth... *this*.",
+          "triggerType": "gentle",
           "triggerLevel": 2,
-          "triggerDescription": "Accuse Charles of not being forthcoming about Izzy and his relationship with her, suggest he's hiding something. Watch for him trying to redirect blame.",
+          "triggerDescription": "Casually ask about Vikram's relationship with Lakshmi Kant Sharma, focusing on any financial dealings.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "That Anjali Reddy... she's got a fiery temper. I saw her arguing with Sharma near the Panchayat office a few days before... you know.",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Accuse Vikram of having a motive related to Sharma's investigation into his land deals. Press him on others who might have had issues with Sharma.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Yes, I admit, I was… *forceful* in my reminders to Sharma about his debt. I may have visited his home earlier that day. But I never harmed him. I merely… *persuaded* him to see reason.",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Present solid evidence that Vikram threatened Sharma. Push him to admit to the specifics of their final interactions.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "I left the card game for about ten minutes. To... relieve myself. The pressure can get to an old man. And those boys, Deepu and Santosh, they are not always watching.",
+          "triggerType": "specific_question",
+          "triggerLevel": 2,
+          "triggerDescription": "Directly ask about the ten minutes he was absent from the card game, emphasizing the lack of reliable witnesses.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": " Sharma was getting in the way of a lot of things. He kept making noise over some land that I had acquired fairly through the appropriate channels.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Express understanding of the difficulties Sharma's investigation created for him, creating a sense of shared frustration.",
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
@@ -246,178 +251,151 @@
       ]
     }
   ],
-  "killer": "Ricardo \"Ricky\" Vargas",
+  "killer": "Divya Sharma",
   "locations": [
-    "The \"Mirage\" Suite, Desert Oasis Casino Penthouse",
-    "Pharaoh's Room, Desert Oasis Casino",
-    "High Rollers Lounge Bar, Desert Oasis Casino",
-    "Designated Smoking Area Outside Pharaoh's Room",
-    "Staff Break Room, Desert Oasis Casino"
+    "Sharma Tea Stall, near the Banyan Tree",
+    "Village Panchayat Office",
+    "Sharma Residence",
+    "Village Temple"
   ],
   "clues": {
-    "The \"Mirage\" Suite, Desert Oasis Casino Penthouse": [
-      "A broken crystal ice bucket lies on the floor near the victim. Fingerprint analysis reveals prints belonging to Izzy, Ricky Vargas, and an unidentified partial print. The handle shows traces of skin and blood.",
-      "A silk scarf, identified as Izzy's (she often wore it at work), is tightly knotted around her neck. Microscopic fiber analysis reveals the presence of expensive wool fibers, consistent with a high-end suit.",
-      "The room's security camera system was deliberately disabled at 02:40. The timestamp on the system logs shows the last person to access the system settings was 'Guest'.",
-      "A half-empty glass of expensive champagne sits on the bedside table. Lip stick on the glass matched that of Izzy's. Analysis of the Champagne shows traces of GHB."
+    "Sharma Tea Stall, near the Banyan Tree": [
+      "A half-empty glass of chai is still on the table where Lakshmi Kant Sharma was last seen. The chai has gone cold, and a small dead fly is floating in it. The glass has a faint lipstick stain on the rim, analyzed to be a common shade of pink, not typically worn by Anjali Reddy, but potentially matching the lipstick Divya Sharma wears.",
+      "Underneath the table, partially obscured by the roots of the Banyan Tree, is a crumpled lottery ticket. It's dated for the previous week and has a few numbers circled. Anjali Reddy confirms Lakshmi Kant bought lottery tickets regularly and often scribbled on them while brooding, but she claims he usually bought them from the stall next to the Panchayat office. Footprints in the dust near the ticket suggest someone stood there for a while recently.",
+      "Anjali Reddy, though initially cooperative, becomes visibly nervous when questioned about Lakshmi Kant's last words. She claims he was just complaining about paperwork, but her hands tremble noticeably when she pours tea. She's wiping the table obsessively, cleaning far beyond what's necessary, possibly trying to remove evidence.",
+      "A faint scent of sandalwood incense lingers in the air, stronger than typically found around the tea stall. Sandalwood incense is commonly used in Hindu religious practices and can be found in the Sharma residence."
     ],
-    "Pharaoh's Room, Desert Oasis Casino": [
-      "Security footage from the Pharaoh's Room entrance shows Ricky Vargas entering at 21:05 and exiting at 01:02 for the bathroom break and again at 02:03 for a cigarette. The second time leaving, the footage is slightly obscured by a strategically placed banner, making it impossible to definitively see his movements within the smoking area.",
-      "A playing card – the Queen of Hearts – is found face down near Ricky Vargas's usual seat at the poker table. The card has a faint smudge of Izzy's signature bright red lipstick on the Queen's face.",
-      "Surveillance shows Ricardo Vargas at 02:01, just before his smoke break, having an intense and hushed conversation with Charles Sterling. Sterling appeared agitated, gesturing with his hands.",
-      "Traces of expensive wool fibers, matching those found on the silk scarf in the Mirage Suite, are discovered on the felt of the poker table, near Ricky's usual seating position."
+    "Village Panchayat Office": [
+      "Lakshmi Kant Sharma's office is locked, but the window has been forced open. The lock mechanism is damaged, suggesting it was picked rather clumsily. Inside, papers are scattered haphazardly, but no obvious documents are missing. A file labeled \"Land Disputes - Rathore\" is conspicuously on top of the pile.",
+      "The office computer shows the last login was at 22:58. The recent history reveals searches for \"poisonous plants common in Shady Indian Village\" and \"saffron dye extraction methods.\" These search entries have been deleted from the browser history, but are recoverable using forensic tools.",
+      "A security camera positioned outside the Panchayat office, pointed toward the entrance, captured footage of someone matching Divya Sharma's description entering the office around 23:05 and leaving around 23:18. Her face is partially obscured by a shawl, but her gait and clothing are recognizable. The camera malfunctions shortly after she leaves, displaying static.",
+      "A small piece of saffron silk fabric is caught in the window latch. It is consistent with the material of the scarf used to strangle Lakshmi Kant Sharma. There's a faint trace of turmeric on the fabric, a common ingredient in Indian cooking."
     ],
-    "High Rollers Lounge Bar, Desert Oasis Casino": [
-      "Javier's fingerprints are all over the glasses, counters, and the blender he uses. However, the usual cleaning cloth is missing from its designated hook. This is highly unusual, as Javier is known for his meticulous cleaning habits.",
-      "A crumpled napkin is found in the trash bin behind the bar. It has a hastily scribbled note: \"Meet me. Mirage Suite. Need to talk. 2:30.\" The handwriting is difficult to decipher, but appears to be feminine.",
-      "The lounge's security camera footage from 02:00 to 03:00 shows Javier nervously pacing behind the bar, occasionally glancing towards the entrance of the High Rollers Lounge. He is seen pouring himself 3 shots of bourbon in a row over the course of about 4 minutes, which is abnormal for him.",
-      "There is a faint smell of bleach cleaner around the bar area, but the cleaning logs do not reflect any additional deep cleaning performed that night outside of the regular schedule."
+    "Sharma Residence": [
+      "In Divya Sharma's room, a bottle of sleeping pills is found on her bedside table. The prescription is valid, but the bottle is nearly empty, even though it was recently filled. The remaining pills are analyzed and found to be less potent than the original prescription suggests they have been diluted.",
+      "Lakshmi Kant Sharma's private study contains a hidden safe behind a bookshelf. The safe is unlocked and empty, but a small, torn piece of paper with Anjali Reddy's name and a monetary amount written on it is found inside.",
+      "Meena, the family servant, mentions that Divya had been acting strangely for weeks, often staring blankly into space and muttering to herself. She also saw Divya burning something in the backyard tandoor (clay oven) late one night last week, but couldn't see what it was.",
+      "A small, almost imperceptible stain of blood is found on the bottom hem of Divya's sari, hidden beneath folds of fabric. Forensic analysis confirms it is Lakshmi Kant Sharma's blood type."
     ],
-    "Designated Smoking Area Outside Pharaoh's Room": [
-      "A discarded cigarette butt of Ricky's preferred brand is found near a surveillance camera post. A faint trace of the same lipstick identified as Izzy's is found on the filter.",
-      "The ground near the ashtray is slightly disturbed, as if someone had been pacing back and forth for an extended period. Footprints are not discernible due to the frequency that the area is used.",
-      "A partially melted crystal of GHB is stuck to the bottom of the ashtray."
-    ],
-    "Staff Break Room, Desert Oasis Casino": [
-      "The security camera in the break room shows Javier entering at 02:29, grabbing a coffee, and leaving at 02:36. He avoids eye contact with Maria Garcia, who is already in the room. He appears anxious and fidgety.",
-      "A discarded tissue is found in the trash bin, stained with what appears to be mascara and faint traces of the same bright red lipstick identified as Izzy's. DNA testing shows that the lipstick belongs to Izzy.",
-      "An invoice from a bespoke suit tailoring company is discovered tucked inside a magazine. The suit was recently purchased and delivered to Ricardo Vargas at the casino."
+    "Village Temple": [
+      "Pandit Joshi, the temple priest, confirms Rajesh Kumar Verma was present at the temple but couldn't recall the exact duration or his activities. He seemed agitated. He mentions Rajesh kept pacing back and forth.",
+      "Near the donation box, a discarded cigarette butt is found. It's a brand that Rajesh Kumar Verma is known to smoke. A faint smear of mud is on the butt, consistent with the mud near the Panchayat office window.",
+      "A small, almost invisible smudge of turmeric powder is found on the temple bell. Turmeric is considered auspicious and is commonly used in Hindu rituals. Rajesh Kumar Verma is known to apply tilak (turmeric paste) on his forehead before visiting the temple."
     ]
   },
   "witnesses": {
-    "The \"Mirage\" Suite, Desert Oasis Casino Penthouse": [],
-    "Pharaoh's Room, Desert Oasis Casino": [
+    "Sharma Tea Stall, near the Banyan Tree": [
       {
-        "name": "Tony \"The Hammer\" Moretti",
-        "role": "High Roller",
-        "background": "A notorious gambler with a reputation for violence and heavy debts. He is known to lend money at exorbitant interest rates.",
-        "testimony": "Claims to have been focused solely on the game and not paying attention to anyone's movements. He seemed nervous when being asked about the timing of when Ricardo Vargas left for his smoke break.",
-        "reliability": "Questionable. Likely to protect his own interests and avoid involvement with the police.",
-        "hiddenAgenda": "Tony is one of the creditors Ricky is indebted to and had threatened Ricky about his late payments."
+        "name": "Deepu",
+        "role": "Local Idler",
+        "background": "Deepu spends most of his days loitering around the tea stall, listening to gossip. He is heavily indebted to Vikram Singh Rathore.",
+        "testimony": "Deepu claims he saw Rajesh Kumar Verma arguing with Lakshmi Kant Sharma earlier that evening, around 21:00. He couldn't hear what they were saying, but their body language was aggressive.",
+        "reliability": "Unreliable. Deepu is easily influenced and known to fabricate stories for attention. His debt to Vikram raises questions about his impartiality.",
+        "hiddenAgenda": "Deepu is afraid of Vikram and likely to say anything that pleases him."
       }
     ],
-    "High Rollers Lounge Bar, Desert Oasis Casino": [
+    "Village Panchayat Office": [
       {
-        "name": "Maria Garcia",
-        "role": "Cocktail Waitress",
-        "background": "A long-time employee of the casino, known for her gossip and sharp observations.",
-        "testimony": "Confirms seeing Javier in the break room around 02:30. She noticed he was unusually quiet and seemed distracted, staring at his hands.",
-        "reliability": "Generally reliable, but prone to exaggeration and embellishment.",
-        "hiddenAgenda": "Maria has a crush on Javier and may be biased in his favor or may be hiding something to protect him."
+        "name": "Sarpanch (Village Head)",
+        "role": "Village Head",
+        "background": "He is the political and administrative head of the village.",
+        "testimony": "Sarpanch recalls Lakshmi Kant confided about receiving veiled threats from Vikram Singh Rathore regarding land encroachment cases. He also mentioned Rajesh Kumar Verma had become increasingly desperate after being denied the Panchayat job.",
+        "reliability": "Somewhat reliable, but his memory might be affected by his age.",
+        "hiddenAgenda": "He might be trying to deflect suspicion from someone closer to him, or even cover up his own involvement in some of the village's darker dealings."
       }
     ],
-    "Designated Smoking Area Outside Pharaoh's Room": [
+    "Sharma Residence": [],
+    "Village Temple": [
       {
-        "name": "Sarah Jenkins",
-        "role": "Security Guard",
-        "background": "A relatively new security guard known to follow procedures by the book.",
-        "testimony": "She recalls seeing a man matching Ricardo Vargas's description smoking a cigarette around 02:10, but didn't pay much attention, as this is a common occurrence. It was exceptionally cold at the time, and she remembers thinking how someone could withstand the cold for long.",
-        "reliability": "Reasonably reliable, but her observations may be limited due to the monotony of her job.",
-        "hiddenAgenda": "Sarah has a tendency to downplay events due to an anxiety condition which causes her to be very self-conscious."
+        "name": "Radha",
+        "role": "Flower Seller",
+        "background": "Radha sells flowers and other religious items outside the temple. She is observant and knows everyone in the village.",
+        "testimony": "Radha says she saw Divya Sharma at the temple earlier that evening, around 20:00. Divya was crying and praying fervently. Radha offered her comfort, but Divya just shook her head and walked away.",
+        "reliability": "Relatively reliable. Radha is a devout woman with no apparent reason to lie.",
+        "hiddenAgenda": "Radha might embellish her stories to make them more interesting or to gain sympathy."
       }
-    ],
-    "Staff Break Room, Desert Oasis Casino": []
+    ]
   },
   "timeline": [
     {
-      "time": "03:00",
-      "event": "Two days prior: Ricky Vargas loses a significant amount of money at the Pharaoh's Room poker table. He is seen arguing with Tony \"The Hammer\" Moretti about extending his credit."
+      "time": "21:00",
+      "event": "Two Days Before: Vikram Singh Rathore calls Lakshmi Kant Sharma demanding immediate repayment of the loan, threatening \"unpleasant consequences\" if Sharma doesn't comply. The call is logged on Sharma's phone records."
     },
     {
       "time": "10:00",
-      "event": "Two days prior: Victoria Sterling schedules a discreet appointment with a private investigator to look into her husband's activities."
+      "event": "One Day Before: Lakshmi Kant Sharma visits Anjali's Tea Stall, demanding 5000 Rupees by the next day to keep her secret about the affair hidden. Anjali feigns agreement but harbors resentment."
+    },
+    {
+      "time": "11:30",
+      "event": "One Day Before: Rajesh Kumar Verma sends a strongly worded WhatsApp message to Lakshmi Kant Sharma, accusing him of betrayal and threatening to expose his corruption. Screenshot saved on Rajesh's phone."
     },
     {
       "time": "14:00",
-      "event": "Two days prior: Javier Mendoza receives an eviction notice. He calls Izzy Rodriguez, visibly distressed, and asks her for lunch to discuss \"something important.\""
+      "event": "One Day Before: Divya Sharma visits the Village Temple, crying and praying. Radha, the flower seller, witnesses this and offers comfort, which is refused. Divya buys a small vial of sleeping pills from a nearby pharmacy (recorded transaction)."
     },
     {
-      "time": "15:30",
-      "event": "Two days prior: Javier and Izzy have lunch at the casino's employee cafeteria. Javier pleads with Izzy for a loan, but she refuses, explaining her own financial concerns. He appears dejected but keeps his cool."
+      "time": "16:00",
+      "event": "One Day Before: Vikram Singh Rathore is seen near the Village Panchayat Office, looking agitated. A local boy, Raju, reports seeing him pacing back and forth. This is considered unreliable hearsay."
+    },
+    {
+      "time": "18:00",
+      "event": "One Day Before: Lakshmi Kant Sharma's affair partner calls him, demanding he leave Divya. Divya overhears the conversation, further fueling her resentment. She secretly searches for 'undetectable poisons' online using Lakshmi Kant Sharma's computer (browser history)."
     },
     {
       "time": "20:00",
-      "event": "One day prior: Ricky Vargas sends Izzy flowers and a diamond bracelet along with a marriage proposal, delivered to her residence. Izzy is visibly annoyed."
+      "event": "Today: Divya Sharma prepares dinner for Lakshmi Kant, including a small amount of sleeping pills in his lassi (yogurt drink). This is subtle and undetectable after a certain period. She also spikes her own food."
+    },
+    {
+      "time": "20:30",
+      "event": "Today: Rajesh Kumar Verma is seen arguing with Lakshmi Kant Sharma at Sharma Tea Stall near the Banyan Tree. Deepu, a local idler, witnesses the argument but cannot hear the conversation. Their body language appears aggressive."
     },
     {
       "time": "21:00",
-      "event": "One day prior: Izzy confides in Maria Garcia about Ricky's unwanted advances and her concerns about Javier's recent behavior. Maria advises her to be careful."
+      "event": "Today: Anjali Reddy is seen walking past the Village Panchayat Office, glancing around nervously. A CCTV camera, usually nonfunctional, captures her image but the quality is poor due to darkness."
+    },
+    {
+      "time": "21:15",
+      "event": "Today: Divya brings Lakshmi Kant his dinner and lassi. He consumes it while working at his desk."
+    },
+    {
+      "time": "21:30",
+      "event": "Today: Meena, the family servant, brings Divya her dinner. She confirms Divya is in her room, although it is not possible to ascertain if she is asleep."
     },
     {
       "time": "22:00",
-      "event": "One day prior: Victoria Sterling receives a preliminary report from the private investigator, confirming her suspicions about Charles's frequent meetings with Izzy in the lobby."
+      "event": "Today: Vikram Singh Rathore begins his card game at Kishore's house. Kishore, Deepu, and Santosh are present."
+    },
+    {
+      "time": "22:30",
+      "event": "Today: Rajesh Kumar Verma arrives at the Village Temple and begins praying. Pandit Joshi, the temple priest, vaguely remembers seeing him."
+    },
+    {
+      "time": "22:45",
+      "event": "Today: Divya Sharma, pretending to be asleep, gets out of bed. She takes a saffron silk scarf belonging to Lakshmi Kant Sharma from his cupboard."
     },
     {
       "time": "23:00",
-      "event": "One day prior: Charles Sterling meets with David Lee in his office to discuss the casino's quarterly earnings. He seems preoccupied and distracted."
+      "event": "Today: Vikram Singh Rathore leaves the card game briefly to \"stretch his legs\". He is gone for approximately 10 minutes."
     },
     {
-      "time": "00:00",
-      "event": "Day of the murder: Izzy begins her shift as head cocktail waitress in the High Rollers Lounge. Javier is already behind the bar, visibly subdued."
+      "time": "23:00",
+      "event": "Today: Anjali Reddy closes up her tea stall and begins her walk home. She claims to see a shadowy figure near the Panchayat office."
     },
     {
-      "time": "20:00",
-      "event": "Ricky arrives at the Pharaoh's Room for a high-stakes poker game. He makes several phone calls throughout the night, pacing nervously outside the room during breaks."
+      "time": "23:10",
+      "event": "Today: Rajesh Kumar Verma leaves the Village Temple for about five minutes to buy a packet of cigarettes from a nearby paan shop, which can be verified with the paan shop owner. The paan shop owner mentions he saw someone who looked like Vikram walking in the distance."
     },
     {
-      "time": "21:00",
-      "event": "Victoria remains in her penthouse suite, ostensibly preparing for the charity gala. She makes several calls to her husband's office and appears increasingly agitated."
-    },
-    {
-      "time": "22:00",
-      "event": "Charles continues his meeting with David Lee, but his attention is elsewhere. He checks his phone frequently and sends a text message: \"Meet me later? Urgent.\""
+      "time": "23:15",
+      "event": "Today: Divya Sharma enters Lakshmi Kant Sharma's study. He is drowsy from the sleeping pills. She strangles him with the saffron silk scarf. The scarf is tightly knotted, leaving ligature marks."
     },
     {
       "time": "23:30",
-      "event": "Victoria's personal assistant, Susan Miller, sees Victoria in her suite. Susan confirms Victoria's alibi for that point in time."
+      "event": "Today: Divya Sharma returns to her room, hides the saffron scarf under her mattress, and pretends to sleep."
     },
     {
-      "time": "01:00",
-      "event": "Ricky leaves the poker table for a bathroom break, as corroborated by other players. He quickly heads to the \"Mirage\" suite, but Izzy is not there."
-    },
-    {
-      "time": "01:15",
-      "event": "Ricky sends Izzy a text message: \"I need to see you. It's important.\" He receives no reply."
-    },
-    {
-      "time": "01:30",
-      "event": "Charles receives a text back, \"Meet me at the usual place in an hour.\""
-    },
-    {
-      "time": "02:00",
-      "event": "Ricky leaves the poker table again, supposedly for a smoke break. Sarah Jenkins, the security guard, sees someone matching his description outside the Pharaoh's Room smoking. Ricky goes to the Mirage Suite. Izzy is there, preparing for bed. He confronts her again about marriage. She again refuses."
-    },
-    {
-      "time": "02:15",
-      "event": "Ricky's rage builds up as he cannot convince Izzy. He grabs a silk scarf on the dresser and strangles her. He panics and grabs the crystal ice bucket and hits her in the head."
-    },
-    {
-      "time": "02:20",
-      "event": "Ricky exits the \"Mirage\" Suite in a hurry, leaving the door slightly ajar. He returns to the Pharaoh's Room and resumes playing poker, attempting to act normally. He disposes of his cigarette butt further from the designated area, in a bush outside the casino."
-    },
-    {
-      "time": "02:25",
-      "event": "Charles tells David Lee he needs to take a private phone call and leaves his office for approximately 20 minutes. The surveillance footage captures him heading toward the penthouse elevators, but the cameras don't show him entering Izzy's suite. He instead is pacing in an adjacent hallway on the penthouse floor."
-    },
-    {
-      "time": "02:30",
-      "event": "Javier takes a break to grab coffee from the staff break room. Maria Garcia sees him there; he is silent and nervous."
-    },
-    {
-      "time": "02:40",
-      "event": "Charles returns to his office, looking visibly shaken. He does not mention the 'urgent' phone call."
-    },
-    {
-      "time": "02:45",
-      "event": "Victoria is awake in her suite, staring out the window."
-    },
-    {
-      "time": "03:30",
-      "event": "The poker game in the Pharaoh's Room ends. Ricky cashes out his winnings, but leaves most of it on the table for Tony 'The Hammer' Moretti. He then nonchalantly leaves the casino."
-    },
-    {
-      "time": "07:00",
-      "event": "A housekeeper discovers Izzy's body in the \"Mirage\" Suite. She immediately calls security, who secure the scene and contact the police."
+      "time": "06:00",
+      "event": "Next Day: Meena, the family servant, discovers Lakshmi Kant Sharma's body in his study and raises the alarm. The murder is reported to the police."
     }
   ]
 }

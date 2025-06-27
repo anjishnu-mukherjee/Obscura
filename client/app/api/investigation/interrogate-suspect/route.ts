@@ -129,7 +129,10 @@ async function POSThandler(request: NextRequest) {
 
 CASE CONTEXT:
 - Victim: ${caseResult.data.story.victim.name} (${caseResult.data.story.victim.profession})
-- Setting: ${caseResult.data.story.setting}
+- Setting and narrative: 
+  ${caseResult.data.story.setting}
+
+  ${caseResult.data.caseIntro.introNarrative}
 - Suspect role: ${suspect.role}
 - Suspect personality: ${suspect.personality}
 - Suspect alibi: ${suspect.alibi}
@@ -137,24 +140,29 @@ CASE CONTEXT:
 - Is suspect the killer: ${suspect.isKiller ? 'YES (but they will NOT confess and will be evasive)' : 'NO (they are innocent but may act nervous)'}
 - Detective's name: ${name}
 
-DETECTIVE'S PLANNED QUESTIONS:
+DETECTIVE'S PLANNED QUESTIONS (these may have poor grammar - convert them to proper Hindi/Hinglish):
 ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}${previousQuestionsText}
 
 INSTRUCTIONS:
 1. Create a natural conversation flow using these questions as a guide
-2. ${name} should ask the questions in a logical order, building on responses
-3. ${suspect.name} should respond authentically based on their personality and guilt status
-4. ${suspect.isKiller ? `${suspect.name} IS the killer but will NOT confess. They should be evasive, defensive, or misleading when pressed.` : `${suspect.name} is INNOCENT and should be helpful but may show nervousness or frustration.`}
-5. Include natural conversation elements like follow-up questions, clarifications, etc.
-6. Include audio cues, pauses and other natural conversation elements that can be conveyed via audio, but do not inclue actions or descriptions of actions.
-7. Keep each response realistic (not too long or short)
-8. End the conversation naturally when ${name} has gathered sufficient information
+2. The story is set in an Indian setting.
+3. The detective and the suspect are Indian. They must speak ONLY in Hindi or Hinglish (mix of Hindi and very few English words as spoken in Indian city streets). NO ENGLISH CONVERSATION AT ALL. Both of them must have a distinct South Indian or North Indian or South Delhi or Bombaywali accent. But the accent should be consistent throughout the conversation for each character.
+4. IMPORTANT: Convert all detective questions from broken English to proper, coherent Hindi/Hinglish questions. The questions given may have bad grammar - you must translate and improve them into natural Hindi conversation.
+5. ${name} should ask the questions in a logical order, building on responses
+6. ${suspect.name} should respond authentically based on their personality and guilt status
+7. ${suspect.isKiller ? `${suspect.name} IS the killer but will NOT confess. They should be evasive, defensive, or misleading when pressed.` : `${suspect.name} is INNOCENT and should be helpful but may show nervousness or frustration.`}
+8. Include natural conversation elements like follow-up questions, clarifications, etc.
+9. Include audio cues, pauses and other natural conversation elements that can be conveyed via audio, but do not include actions or descriptions of actions.
+10. Keep each response realistic (not too long or short)
+11. End the conversation naturally when ${name} has gathered sufficient information
+
+## CRITICAL: The conversation MUST be in Hindi only. If it is a village setting, the people should be completely speaking in village Hindi. If it is a city setting, the people should be speaking in Hinglish. Use slangs and emotions as per the setting. Translate whatever questions that have been planned by the detective into proper Hindi/Hinglish, even if the original questions have poor grammar.
 
 FORMAT:
-${name}: [statement/question]
-${suspect.name}: [response]
-${name}: [follow-up]
-${suspect.name}: [response]
+${name}: [statement/question in Hindi/Hinglish]
+${suspect.name}: [response in Hindi/Hinglish]
+${name}: [follow-up in Hindi/Hinglish]
+${suspect.name}: [response in Hindi/Hinglish]
 ...
 
 There should be no other text before or after the conversation.
@@ -164,6 +172,7 @@ Generate the complete interrogation conversation:`;
     try {
       conversation = await generate(conversationPrompt);
       conversation = conversation.trim();
+      console.log("Conversation:\n", conversation);
     } catch (error) {
       console.error('Error generating conversation:', error);
       
@@ -177,8 +186,8 @@ Generate the complete interrogation conversation:`;
     let audioId: string = "";
     try {
       // Determine voices based on gender detection using LLM
-      const maleVoices = ["Puck", "Charon"];
-      const femaleVoices = ["Zephyr", "Kore"];
+      const maleVoices = ["Puck", "Enceladus", "Iapetus", "Algieba", "Algenib", "Zubenelgenubi"];
+      const femaleVoices = ["Zephyr", "Kore", "Gacrux", "Sulafat", "Leda", "Aoede"];
       
       // Detect genders using LLM
       const detectiveGender = await detectGenderFromName(name); // Give detective a name
@@ -189,9 +198,7 @@ Generate the complete interrogation conversation:`;
         ? maleVoices[Math.floor(Math.random() * maleVoices.length)]
         : femaleVoices[Math.floor(Math.random() * femaleVoices.length)];
         
-      const detectiveVoice = detectiveGender === 'male'
-        ? maleVoices[Math.floor(Math.random() * maleVoices.length)]
-        : femaleVoices[Math.floor(Math.random() * femaleVoices.length)];
+      const detectiveVoice = suspectGender === 'male' ? "Charon" : "Pulcherrima";
 
       const characters = [
         { name: name, voice: detectiveVoice },

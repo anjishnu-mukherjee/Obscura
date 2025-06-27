@@ -17,6 +17,7 @@ import Navbar from '@/components/navbar';
 import { useEffect, useState, use } from 'react';
 import { useCase } from '@/hooks/useCases';
 import { Suspect } from '@/functions/types';
+import Image from 'next/image';
 
 interface FinalVerdictPageProps {
   params: Promise<{
@@ -32,7 +33,6 @@ export default function FinalVerdictPage({ params }: FinalVerdictPageProps) {
   const [selectedSuspect, setSelectedSuspect] = useState<string>('');
   const [reasoning, setReasoning] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -59,9 +59,13 @@ export default function FinalVerdictPage({ params }: FinalVerdictPageProps) {
       });
 
       const result = await response.json();
+
+      console.log("Result: ", result);
       
       if (response.ok) {
-        // Redirect to verdict result page with the result
+        // Store the complete result data in sessionStorage for the result page
+        sessionStorage.setItem('verdictResult', JSON.stringify(result));
+        // Redirect to verdict result page with basic parameters
         router.push(`/dashboard/investigate/${resolvedParams.caseId}/verdict-result?correct=${result.correct}&score=${result.score}`);
       } else {
         alert(result.error || 'Failed to submit verdict');
@@ -198,27 +202,69 @@ export default function FinalVerdictPage({ params }: FinalVerdictPageProps) {
                   }`}
                   onClick={() => setSelectedSuspect(suspect.name)}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                        selectedSuspect === suspect.name
-                          ? 'bg-gradient-to-br from-red-500 to-red-400'
-                          : 'bg-gradient-to-br from-gray-600 to-gray-500'
-                      }`}>
-                        <Users className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-white font-semibold text-lg">{suspect.name}</h3>
-                        <p className="text-gray-400 text-sm mb-1">{suspect.role}</p>
-                        <p className="text-gray-300 text-sm">{suspect.personality}</p>
+                  <div className="flex items-center gap-6">
+                    {/* Suspect Portrait - Case File Style */}
+                    <div className="flex-shrink-0">
+                      <div className="relative">
+                        {/* Case file photo frame */}
+                        <div className="w-24 h-32 bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden">
+                          {suspect.portrait ? (
+                            <Image
+                              src={suspect.portrait}
+                              alt={`${suspect.name} - Suspect`}
+                              fill
+                              className="object-cover filter sepia-[0.2] contrast-[1.05] saturate-[0.9]"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                              <Users className="w-8 h-8 text-gray-500" />
+                            </div>
+                          )}
+                          {/* Photo corner clips */}
+                          <div className="absolute -top-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                          <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                          <div className="absolute -bottom-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                          <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                        </div>
+                        {/* Case file label */}
+                        <div className="absolute -bottom-5 left-0 right-0 text-center">
+                          <div className={`inline-block text-xs px-2 py-1 rounded border ${
+                            selectedSuspect === suspect.name
+                              ? 'bg-red-900/80 text-red-200 border-red-700'
+                              : 'bg-yellow-900/80 text-yellow-200 border-yellow-700'
+                          }`}>
+                            {selectedSuspect === suspect.name ? 'ACCUSED' : 'SUSPECT'}
+                          </div>
+                        </div>
                       </div>
                     </div>
                     
-                    {selectedSuspect === suspect.name && (
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-6 h-6 text-red-400" />
+                    {/* Suspect Information */}
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-white font-semibold text-lg">{suspect.name}</h3>
+                          <p className="text-gray-400 text-sm mb-2">{suspect.role}</p>
+                          <p className="text-gray-300 text-sm line-clamp-2">{suspect.personality}</p>
+                        </div>
+                        
+                        <div className="flex items-center gap-3">
+                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+                            selectedSuspect === suspect.name
+                              ? 'bg-gradient-to-br from-red-500 to-red-400'
+                              : 'bg-gradient-to-br from-gray-600 to-gray-500'
+                          }`}>
+                            <Users className="w-6 h-6 text-white" />
+                          </div>
+                          
+                          {selectedSuspect === suspect.name && (
+                            <div className="flex items-center gap-2">
+                              <CheckCircle className="w-6 h-6 text-red-400" />
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 </motion.div>
               ))}
