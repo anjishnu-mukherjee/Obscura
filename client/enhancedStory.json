@@ -1,185 +1,67 @@
 {
-  "title": "The Beaumont Betrayal: A Blackwood Inheritance",
-  "setting": "Victorian Manor",
+  "title": "Desert Mirage: A High Roller's Deadly Game",
+  "setting": "Desert Oasis Casino",
   "victim": {
-    "name": "Alistair Humphrey Beaumont, Esquire",
-    "profession": "Solicitor and Executor of the Beaumont Estate",
-    "lastKnownLocation": "The Beaumont Estate Library, near the fireplace",
-    "deathTimeEstimate": "23:17",
-    "causeOfDeath": "Stabbed in the back with a letter opener, presumed from his own desk; likely a single, precise thrust severing the spinal cord."
+    "name": "Isabella \"Izzy\" Rodriguez",
+    "profession": "Head Cocktail Waitress, High Rollers Lounge",
+    "lastKnownLocation": "The \"Mirage\" Suite, Desert Oasis Casino Penthouse",
+    "deathTimeEstimate": "02:47",
+    "causeOfDeath": "Strangulation with a silk scarf, followed by blunt force trauma to the head with a crystal ice bucket."
   },
   "suspects": [
     {
-      "name": "Eleanor Beatrice Beaumont",
-      "role": "Alistair's younger sister and one of the heirs to the Beaumont Estate",
-      "alibi": "Eleanor claims to have been in the conservatory from 22:45 onwards, sketching orchids. She states she didn't leave the conservatory, and that the only light came from the moon. She remembers the grandfather clock in the hall chiming 23:00. The gardener, Mr. Davies, saw her through the conservatory window around 22:50 and can corroborate her presence there then. However, Davies admits the window was partially fogged, and he could only make out a figure.",
+      "name": "Ricardo \"Ricky\" Vargas",
+      "role": "Professional Gambler, High-Roller",
+      "alibi": "Ricky claims to have been in a high-stakes poker game in the Pharaoh's Room from 21:00 until 03:30. He states that he only left the table once at 01:00 for a bathroom break, and another time at 02:00 for a quick smoke in the designated area outside the Pharaoh's Room. Security camera footage confirms he was present in the Pharaoh's Room during those times, but the angles don't offer a clear view of his movements within the room, nor his presence in the smoking area. Several other high rollers can confirm he was at the game but none saw him between 02:00 and 02:30.",
       "motives": [
-        "Resentment over Alistair's perceived favoritism from their late father, who always treated her artistic pursuits as frivolous compared to Alistair's legal career. Alistair was appointed executor despite Eleanor being older.",
-        "Financial desperation: Eleanor has accumulated significant debts due to her lavish spending habits and a string of failed art exhibitions. The inheritance is her only hope for solvency.",
-        "Suppressed rage: Eleanor has always been described as \"delicate\" and \"refined\", but underneath simmers a deep resentment at being confined by societal expectations and her brother's condescending attitude towards her."
-      ],
-      "isKiller": false,
-      "personality": "Eleanor presents a picture of delicate fragility and artistic sensitivity. She's quick to tears and often employs dramatic sighs. However, beneath the surface lies a sharp intellect and a fierce will. She is prone to passive-aggressive behavior, veiled insults, and subtle manipulations. She collects exotic orchids and is deeply invested in maintaining the facade of a perfect Victorian lady. She secretly reads scandalous novels.",
-      "cluesTriggers": [
-        {
-          "clue": "I do recall hearing a rather… *robust* argument coming from Alistair's study earlier that evening. Around 10, I believe? It sounded like Professor Blackwood. They were discussing something quite loudly, though I couldn't make out the subject. Alistair's voice was definitely raised, which was unusual for him. He usually kept himself quite collected.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "A gentle inquiry about the atmosphere in the house earlier that evening, expressing concern for her well-being and asking if she noticed anything unusual.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": " (Eyes darting nervously) The orchids… yes, I was sketching my 'Queen of the Night' orchid. A most demanding flower, requires the utmost attention. (She nervously adjusts the lace on her sleeve). And, well, they only bloom at night, you know. That's why I was there so late. Honestly, my art is all I have, detective.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 3,
-          "triggerDescription": "Expressing sympathy for her artistic struggles and validating her passion for orchids, while gently pressing for details about her activity in the conservatory.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": " (A sharp intake of breath, followed by a dramatic sigh) You imply I might have… I couldn't possibly! Alistair, despite his… *failings*, was still my brother. Though... (A pause, almost imperceptible) He did have a gambling problem. Always betting on horses, you know? He lost a considerable sum recently, I overheard him on the telephone speaking to…someone about it. I think he was in a great deal of debt.",
-          "triggerType": "aggressive",
-          "triggerLevel": 4,
-          "triggerDescription": "Directly accusing her of having a motive, emphasizing her financial struggles and Alistair's role as executor of the estate, then stepping back to observe her reaction.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "The fog, you say? On the windows? Yes, of course. It was incredibly humid in the conservatory that night. I remember having to wipe the condensation from my spectacles several times. It made sketching quite difficult, really. But, Detective, orchids *require* humidity. One simply *must* put up with it, if one is to appreciate their beauty.",
-          "triggerType": "specific_question",
-          "triggerLevel": 2,
-          "triggerDescription": "Specifically asking about the fog in the conservatory and its impact on her sketching.",
-          "isRedHerring": false,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Mr. Davies is mistaken about the time. He couldn't have seen me at 22:50. I was there much earlier. I was struggling to capture the right light for my sketch, and the moon wasn't at the right angle until much later - around 23:30, perhaps even closer to midnight. So, no, Mr. Davies is simply mistaken. I'm sure that's what he'll tell you as well if you press him on it. He's rather forgetful, you know.",
-          "triggerType": "pressing",
-          "triggerLevel": 5,
-          "triggerDescription": "Directly confronting her with Davies' testimony and highlighting the discrepancy in the timing, pushing her to explain the inconsistency.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Professor Thaddeus Blackwood",
-      "role": "Alistair's longtime friend and family physician, also a self-proclaimed scholar of obscure history and antiquities.",
-      "alibi": "Blackwood claims to have been in the library from 22:00 onwards, researching a rare medical text. He states he was completely engrossed in his reading and did not hear anything unusual. He adds that he \"nodded off\" around 23:00 and woke up some time later, unsure exactly when. He admits he did not see anyone else, and because he was reading, no one else saw him during that time.",
-      "motives": [
-        "Alistair discovered that Blackwood had been embezzling funds from the Beaumont estate for years, using his position as family physician to siphon money into his antiquities collecting habit. Alistair was threatening to expose him.",
-        "Blackwood has a gambling problem, and has accrued a lot of debt, which Alistair was aware of.",
-        "Alistair and Blackwood were childhood friends, but in the last few years, have become estranged. Blackwood claims it's because of Alistair's growing arrogance and condescension towards him."
+        "Romantic Obsession: Ricky was deeply infatuated with Izzy and had proposed marriage several times. She repeatedly rejected him, claiming she wasn't interested in his lifestyle. He felt humiliated and rejected, seeing her rejections as a personal attack.",
+        "Financial Strain: Ricky is heavily in debt to some unsavory characters. Izzy was aware of his financial troubles and had refused to loan him money, leading to heated arguments in the past. He believed she was deliberately withholding assistance.",
+        "Delusional Belief: Ricky convinced himself that Izzy was secretly in love with him but was being influenced by someone else (potentially Javier). He might have believed that removing Izzy from this perceived influence would finally allow her to embrace his love."
       ],
       "isKiller": true,
-      "personality": "Blackwood is a portly man with a florid complexion and a booming voice. He affects an air of erudition and authority, often quoting Latin phrases and dispensing unsolicited medical advice. He has a fondness for brandy and cigars and is easily flustered when questioned directly. He is prone to fits of temper when challenged and secretly harbors a deep-seated insecurity about his intellectual abilities and moral standing. He is also secretly in love with Eleanor.",
+      "personality": "Ricky is a charismatic but volatile gambler. He exudes an air of confidence that masks deep insecurities and a tendency towards obsessive behavior. He's prone to dramatic outbursts when things don't go his way, especially in matters of love and money. He has a grandiose view of himself, often exaggerating his achievements and downplaying his failures. He's also possessive and controlling, displaying red flags about those he loves.",
       "cluesTriggers": [
         {
-          "clue": "\"Alistair and I... we had disagreements, of course. All friends do. But to suggest I'd *harm* him? Preposterous! He was becoming... insufferable, always lording his perceived superiority over me. But murder? Unthinkable!\"",
+          "clue": "Yeah, Izzy was a real firecracker. Beautiful, but… complicated. She always had guys chasing after her, you know? Javi was always hanging around, like a lovesick puppy. But she always brushed him off. Always.",
           "triggerType": "gentle",
-          "triggerLevel": 1,
-          "triggerDescription": "A general, open-ended question about his relationship with Alistair.",
+          "triggerLevel": 2,
+          "triggerDescription": "Ask about Izzy's relationship with Javier.",
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
         },
         {
-          "clue": "\"Embezzling? From Alistair? That's absurd! I have been *compensated* for my services as his physician and advisor. If there were any... *discrepancies*, they were purely accidental. Perhaps a clerical error? I am, after all, merely a man of medicine, not an accountant. Besides, he had enough money to keep the entire county afloat, what difference would my 'minor' withdrawals make?\"",
-          "triggerType": "aggressive",
-          "triggerLevel": 4,
-          "triggerDescription": "Direct accusation of embezzlement with specific evidence of financial irregularities.",
+          "clue": "Look, I'm not going to lie, I was in love with Izzy. Head over heels. I would have given her the world. But she just didn't see it. Kept saying she didn't want my 'lifestyle.' It hurt, okay? It hurt a lot! But I would NEVER hurt her. Never!",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Express sympathy for his unrequited love for Izzy.",
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
-          "clue": "\"The library? Yes, I was there. Immersed in *De morbo gallico*... a fascinating treatise on... *coughs*... remedies. I dozed off, as I said. It was late, and I was fatigued. The fire was roaring, and the room was incredibly warm and inviting. It must have been the heat that affected my memory of the hours that passed.\"",
+          "clue": "That poker game? It was brutal. I was up, then down, then… damn it! I kept losing. Lost a LOT. I couldn't afford to lose that much. That's why I needed to step away for a bit. I swear, I was just outside smoking a cigarette and stewing in my failure. I was gone for maybe 30 minutes, tops!",
           "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Repeatedly question the exact timeline he was in the library, pointing out inconsistencies and asking for specific details. Mention the lack of a fire in the library that night.",
+          "triggerLevel": 4,
+          "triggerDescription": "Confront him about the time discrepancy between his alibi and witness accounts regarding his smoking break.",
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
-          "clue": "\"Eleanor... a remarkable woman. Intelligent, graceful, possessed of a certain... *je ne sais quoi*. Alistair, bless his soul, never truly appreciated her. He was often so dismissive of her opinions, treated her like a mere ornament. A terrible waste, if you ask me... such beauty and kindness...\" *He pauses, realizing he has said too much and attempts to cover it with a cough and a readjustment of his spectacles.*",
-          "triggerType": "sympathetic",
-          "triggerLevel": 2,
-          "triggerDescription": "Inquire about Eleanor, expressing concern for her well-being after Alistair's death.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "\"The Beaumont Estate's accounting records? I can't be certain, but I do recall Alistair mentioning a new, more thorough system was being implemented. He seemed rather pleased with it, stated that it would put an end to 'sloppy record-keeping' and 'unaccountable expenditures.' He was considering letting Mr. Croft go, actually! A risky gamble on his part. \"",
-          "triggerType": "specific_question",
-          "triggerLevel": 4,
-          "triggerDescription": "Question him directly about any changes Alistair was making to the estate's financial management. Ask about new accounting systems and personnel decisions.",
-          "isRedHerring": true,
-          "importance": "important",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Mr. Silas Croft",
-      "role": "The Beaumont Estate's Head Gardener and distant relative of the Beaumont Family by marriage.",
-      "alibi": "Croft claims to have been patrolling the grounds to deter poachers, starting at 22:00. He claims he was near the rose garden at 23:17. He asserts that he saw no one suspicious, but the grounds are extensive, and it was a moonless night. He had a brief conversation with the stablehand, Thomas, around 22:30 near the stables, who can confirm Croft was on his rounds at that time. However, the stable is a distance from where the crime occured.",
-      "motives": [
-        "Croft's wife, Martha, was Alistair's former lover, and their affair ended badly. Croft has harbored a deep-seated resentment towards Alistair for years, believing that he ruined his marriage and Martha's reputation.",
-        "Croft believed that Alistair was planning to sell off parts of the Beaumont Estate gardens, which would have meant Croft lost his job and home and the land he loved would be destroyed. Croft has been the gardener at the Beaumont estate his entire life.",
-        "Croft is a quiet, brooding man with a reputation for having a violent temper when provoked. He struggles with anger management."
-      ],
-      "isKiller": false,
-      "personality": "Croft is a taciturn and gruff man with calloused hands and weathered features. He speaks sparingly and avoids eye contact. He is fiercely protective of the Beaumont Estate gardens and takes great pride in his work. He has a quiet, watchful demeanor and a deep knowledge of the land. He is prone to fits of silent rage and is rumored to have a history of brawling.",
-      "cluesTriggers": [
-        {
-          "clue": "The roses were Alistair's pride and joy. He'd spend hours out there, even at night. Said the moonlight did 'em good. More like he was avoiding his wife, if you ask me.",
-          "triggerType": "gentle",
-          "triggerLevel": 1,
-          "triggerDescription": "General conversation about the Beaumont estate and Alistair's habits.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Martha? She was always a kind soul, though troubled. Alistair... well, he had a way of getting under a man's skin. I won't speak ill of the dead, but he wasn't always a gentleman, especially where women were concerned.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 2,
-          "triggerDescription": "Showing empathy towards Martha and gently probing the relationship between her and Alistair.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Poachers, I tell you! Always sneaking about. They don't care about the estate, the beauty of it all. Just greedy hands grabbing what isn't theirs. I shouted at someone near the north gate around... around 11 pm. Couldn't see their face, just a dark figure.",
-          "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Questioning the details of his alibi and pressing him on whether he saw anyone on the grounds.",
-          "isRedHerring": true,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Sell the gardens? He wouldn't... would he? I heard whispers... a new development. But he promised... If he had sold it off, that man deserved everything he got.",
+          "clue": "Izzy? Money? She acted like she was too good for it, like she didn’t care about fortunes. But she was always talking about Charlie and Vicky's penthouse and how much money that family had. She liked nice things... she just didn't want to admit it.",
           "triggerType": "aggressive",
-          "triggerLevel": 4,
-          "triggerDescription": "Accusation that he knew about Alistair's plan to sell the gardens and linking it to a motive.",
-          "isRedHerring": false,
-          "importance": "critical",
+          "triggerLevel": 2,
+          "triggerDescription": "Accuse him of lying about Izzy not caring about money and bring up the Sterlings' wealth.",
+          "isRedHerring": true,
+          "importance": "minor",
           "revealed": false
         },
         {
-          "clue": "The… the pruning shears. They weren't where they should have been, near the potting shed, that morning. Found them later...near the maze. Cleaned, polished. Out of place.",
-          "triggerType": "specific_question",
+          "clue": "Okay, fine! I... I was angry! She kept rejecting me, kept looking down on me. She knew I was in trouble, with... certain people. She could have helped, but she just laughed in my face! So, yeah, I said some things. I told her she'd regret it. But that's all! I didn't mean anything by it! I was just venting, you understand? Venting!",
+          "triggerType": "aggressive",
           "triggerLevel": 5,
-          "triggerDescription": "Directly ask if he noticed anything out of place or any missing tools, then maintain focus on what he says no matter how much he tries to deflect.",
+          "triggerDescription": "Directly accuse him of threatening Izzy due to her refusal to help him with his debts. Show evidence of his financial troubles.",
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
@@ -187,227 +69,355 @@
       ]
     },
     {
-      "name": "Miss Seraphina Bellweather",
-      "role": "Alistair's Fiancée.",
-      "alibi": "Miss Bellweather claims she was in her room, number 7, preparing for bed starting from 22:00. She states she had a headache and took laudanum. She says she drifted to sleep. She didn't leave her room. The maid, Agnes, brought her a cup of tea at 21:45. Agnes saw the laudanum bottle out. The maid confirms that Seraphina complained of a headache and was already in her night clothes when she brought the tea.",
+      "name": "Javier \"Javi\" Mendoza",
+      "role": "Head Bartender, High Rollers Lounge",
+      "alibi": "Javier states he was cleaning and stocking the bar in the High Rollers Lounge from 02:00 until 03:00. He claims he didn't see Izzy at any point during that hour. He acknowledges that he took a short break to grab a coffee from the staff break room around 02:30, but only for a few minutes. Co-worker Maria Garcia states that she saw him in the break room at 02:30, he stayed for about 7 minutes, and seemed nervous.",
       "motives": [
-        "Seraphina stood to gain a substantial inheritance and social standing through her marriage to Alistair, but she had recently discovered that Alistair was deeply in debt, and her marriage would mean absorbing that debt. This was a secret she has kept until now.",
-        "Seraphina had a secret lover (the stablehand, Thomas), and Alistair had discovered their affair. Alistair threatened to expose Seraphina, ruining her reputation and social standing. Seraphina also could not have Thomas and any of her inheritance.",
-        "Seraphina is a compulsive liar and has been known to manipulate people to get what she wants. She is used to getting her own way, but with Alistair, things were not going according to plan."
+        "Secret Affair: Javier and Izzy were rumored to be having a secret affair. If Izzy was planning to end the relationship, Javier may have acted out of jealousy or fear of exposure.",
+        "Professional Jealousy: Javier resented Izzy's popularity and perceived her as stealing the spotlight in the High Rollers Lounge. He felt that her charisma overshadowed his bartending skills, and that she would receive better tips than he did.",
+        "Desperation for Money: Javier is struggling to support his family and is facing eviction. Izzy knew of his financial troubles and had confided in him about money worries of her own. He may have snapped at her and attempted to ask her for a loan, with the conversation escalating. "
       ],
       "isKiller": false,
-      "personality": "Seraphina is a beautiful and ambitious young woman with a charming smile and a keen eye for fashion. She is skilled at social maneuvering and knows how to use her beauty to her advantage. She is highly materialistic and cares deeply about her social status. She is prone to bouts of jealousy and has a hidden ruthlessness beneath her polished exterior. She can be cruel and manipulative when crossed.",
+      "personality": "Javier is a brooding and cynical bartender. He's generally quiet and observant, but harbors a deep-seated resentment towards those he perceives as more successful than him. He's a hard worker but feels underappreciated and trapped in his current life. He's prone to bouts of depression and often self-medicates with alcohol. He's a good listener but rarely shares his own feelings, making him appear enigmatic and untrustworthy.",
       "cluesTriggers": [
         {
-          "clue": "Alistair was acting strangely in the days leading up to his death. He seemed…distracted, almost fearful. He kept muttering about \"exposure\" and \"ruin,\" but wouldn't tell me what he meant. I assumed it was business-related; he often had dealings I didn't fully understand.",
+          "clue": "Look, I know things between Izzy and I...weren't *strictly* professional. But it was nothing serious. Just a few drinks after work, some…shared confidences. She knew I was struggling, alright? She knew about the eviction notice.",
           "triggerType": "gentle",
           "triggerLevel": 2,
-          "triggerDescription": "A general inquiry about Alistair's demeanor before his death, asked with a tone of concern and seeking understanding.",
+          "triggerDescription": "Gently express concern for Javier's well-being and acknowledge his hard work and the stresses he's likely under. Ask about his relationship with Izzy in a non-accusatory manner.",
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
-          "clue": "Yes, Agnes brought me tea. I barely remember it, though. The laudanum was already taking effect. It was a very strong dose, perhaps too strong. It did the trick though because I was out like a light. Usually, I do not take such a large dose. But my head was pounding.",
+          "clue": "I saw Vargas and Izzy arguing near the service entrance to the kitchens earlier that night, maybe around 11:00? Vargas looked really angry. I didn't hear what they were saying, but his face was like thunder.",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Press Javier about potential enemies or conflicts Izzy may have had. Suggest that someone else might have had a reason to harm her and see if he'll offer any names.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Seven minutes? Maria said I was in the break room for seven minutes? I… I must have lost track of time. I was just really stressed about the bills. Izzy always seemed so calm, so in control. I guess I was a little jealous. But jealous, not murderous!",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Confront Javier with Maria's statement about his time in the break room, highlighting the discrepancy in his alibi and suggesting he was lying. Accuse him of downplaying his jealousy.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "She, Izzy, mentioned something about Charlie Sterling… having a gambling problem again. And that he was borrowing money from everyone. She didn't say who, but… well, it's Charlie Sterling. That's all I know.",
           "triggerType": "sympathetic",
           "triggerLevel": 3,
-          "triggerDescription": "Expressing concern for Miss Bellweather's wellbeing and the intensity of her headache, prompting her to elaborate on her condition and laudanum use.",
+          "triggerDescription": "Express empathy for Javier's financial situation and suggest that Izzy might have been a source of support or understanding. Ask him if she ever confided in him about other people's problems.",
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
         },
         {
-          "clue": "Of course, I loved Alistair! Why would I want him dead? He was… he was my future. Our families had been planning this union for years. It would give me the security I have always wanted.",
-          "triggerType": "aggressive",
-          "triggerLevel": 1,
-          "triggerDescription": "Directly accusing her of having a motive, then watch for inconsistencies in her denial and force the truth.",
+          "clue": "Look, I know I wasn't her favorite person, but I would never hurt Izzy. It's true I wanted to ask her for money, but I didn't get the chance. It was a mistake to even consider asking but I didn't even see her during my shift. I swear.",
+          "triggerType": "specific_question",
+          "triggerLevel": 4,
+          "triggerDescription": "Directly ask Javier if he ever considered asking Izzy for money. If he denies it, present him with the fact that Izzy knew of his financial troubles.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Victoria \"Vicky\" Sterling",
+      "role": "Casino Owner's Wife",
+      "alibi": "Victoria claims she was in her penthouse suite at the Desert Oasis from 23:00 onwards, preparing for a charity gala the next day. She states she went to bed around 00:30 and didn't leave her suite until 08:00. Her personal assistant, Susan Miller, confirms that she saw Victoria in the suite at 23:30, but admits that she didn't see her after that and went to her own room on a different floor.",
+      "motives": [
+        "Jealousy and Betrayal: Victoria suspected her husband, Charles Sterling, was having an affair with Izzy. She had seen them together in the lobby multiple times, and had noticed her husband paying Izzy a lot of attention. Victoria was humiliated and enraged by the perceived betrayal.",
+        "Protecting her Reputation: A scandal involving her husband and a cocktail waitress could damage Victoria's social standing and her husband's casino. She may have felt that eliminating Izzy was the only way to prevent the affair from becoming public.",
+        "Power and Control: Victoria is accustomed to getting her way and is fiercely protective of her position. She saw Izzy as a threat to her authority and social standing, viewing her as a gold digger attempting to take advantage of her family."
+      ],
+      "isKiller": false,
+      "personality": "Victoria is a wealthy and sophisticated socialite. She projects an image of grace and composure, but underneath the surface lies a calculating and ruthless personality. She's accustomed to getting her way and is willing to use her power and influence to achieve her goals. She's highly possessive of her husband and fiercely protective of her social standing. She has a sharp wit and a cutting tongue, often using sarcasm and condescension to belittle others.",
+      "cluesTriggers": [
+        {
+          "clue": "Oh, darling, Izzy? She was... ambitious. Always fluttering around Charles. I'm sure he gave her a generous tip now and again. He's a charitable man, you know.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Casually inquire about Victoria's opinion of the victim, Izzy.",
           "isRedHerring": false,
           "importance": "minor",
           "revealed": false
         },
         {
-          "clue": "(Visibly agitated) How dare you? Implying that I, Seraphina Bellweather, would soil my hands… with a stablehand! The thought is utterly preposterous! Thomas is…just someone who does not make my skin crawl. He is a person I can talk to about simple things without having to worry about society or anything like that. We are not lovers!",
+          "clue": "My husband's schedule that night? Honestly, detectives, do you think I keep tabs on his every move? He's a busy man running a casino. He probably had meetings, gambled a little, the usual. I wouldn't know the specifics. It's really not my concern.",
+          "triggerType": "specific_question",
+          "triggerLevel": 3,
+          "triggerDescription": "Directly ask about her husband, Charles Sterling's, whereabouts and activities the night of the murder.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Susan, my assistant, is utterly devoted to me. Why would she lie? I assure you, she wouldn't... Unless... Oh, my God. Are you saying someone got to her? Is she in danger?",
           "triggerType": "pressing",
           "triggerLevel": 4,
-          "triggerDescription": "Presenting evidence of a romantic relationship with the stablehand, such as a witness statement or a found love letter, and observing her reaction.",
+          "triggerDescription": "Point out inconsistencies in Susan Miller's statement and suggest she might be covering for someone.",
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
-          "clue": "Alistair had debts. Significant ones, I recently discovered. He…he didn't tell me himself, of course. I overheard him arguing with someone in his study a few days ago. He was desperate and spoke of some investments going wrong. He must have been keeping it from me, not wanting to worry me before the wedding. The fool!",
+          "clue": "Listen, this casino is built on reputation, and this whole ordeal is terrible for business. Someone wanted to make us look bad. The new bar manager, Ricardo, was sloppy, Izzy was always complaining about him and the drinks, I bet he had something to do with it. He was probably upset that she was going to complain to my husband about his poor service and his team.",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Accuse Victoria of trying to protect her husband and the casino's image.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Charity Gala preparations? There was a specific guest list item I was trying to finalize. I was on the phone, trying to convince Javi to donate a very rare bottle to the auction. I had a devil of a time getting ahold of him that night, and when I did, he was rather curt and hurried. It was odd, but I didn't think anything of it.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Express empathy for the stress Victoria must be under and gently inquire about the charity gala preparations.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Charles \"Charlie\" Sterling",
+      "role": "Casino Owner",
+      "alibi": "Charles claims to have been in a meeting with his CFO, David Lee, in his office from 23:00 until 03:00, discussing the casino's quarterly earnings. David confirms the meeting took place but admits that Charles left for approximately 20 minutes around 02:30, stating he needed to take a phone call in private. David couldn't hear the call and didn't see where Charles went.",
+      "motives": [
+        "Avoiding a Damaging Affair: Charles may have been trying to end an affair with Izzy, and she was threatening to expose him if he didn't continue the relationship. The exposure could have led to a scandal damaging the casino's reputation and his marriage.",
+        "Protecting his Business: Izzy may have overheard or witnessed something incriminating related to Charles's business dealings, potentially involving illegal activities. He might have silenced her to prevent her from revealing the information to the authorities.",
+        "Anger and Frustration: Charles is under immense pressure to maintain the casino's profitability and satisfy his demanding wife. He could have lashed out at Izzy during a moment of anger, especially if she was making demands or causing problems."
+      ],
+      "isKiller": false,
+      "personality": "Charles is a powerful and ambitious businessman. He's driven by success and reputation, and he's willing to make difficult decisions to achieve his goals. He maintains a facade of respectability, but he's not above bending the rules when necessary. He's a charismatic leader but can also be ruthless and manipulative. He's under constant stress, and his temper can flare under pressure.",
+      "cluesTriggers": [
+        {
+          "clue": "David is a loyal employee, and I trust him implicitly. He's been with me for years. I would be surprised if he was being fully truthful about our conversation though. He's probably protecting himself.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Show Charles a picture of David and ask about their relationship.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Izzy... she was a cocktail waitress. A good one, brought in tips, the guests liked her. I may have spoken to her a couple times in passing, nothing more. She flirted with everyone, I think.",
+          "triggerType": "gentle",
+          "triggerLevel": 1,
+          "triggerDescription": "Casually mention Izzy's name and observe Charles' reaction.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Look, this casino is my life. My family's life. I've sunk everything into it. Anything that threatens its reputation, anything that could damage it... I'd do anything to protect it. You understand?",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Press Charles about the importance of the casino's reputation and his potential willingness to protect it at any cost.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Twenty minutes? Fine, yes, maybe I did step out for a smoke. The quarterly reports were giving me a headache, and I needed to clear my head. I went out to the back patio of my office, had a cigarette. Didn't see a soul. What's the big deal?",
           "triggerType": "specific_question",
-          "triggerLevel": 5,
-          "triggerDescription": "Specifically asking Miss Bellweather about Alistair's financial situation and any knowledge she had of his debts, based on information you already know to be true.",
+          "triggerLevel": 4,
+          "triggerDescription": "Directly confront Charles with the discrepancy in David's statement, focusing on the 20-minute absence and asking where he went.",
           "isRedHerring": false,
           "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "Someone should really look into Javier Mendoza. He always seemed to have it out for Izzy. Maybe he lost some money because of her one night, I don't remember exactly. But he had a real temper.",
+          "triggerType": "aggressive",
+          "triggerLevel": 2,
+          "triggerDescription": "Accuse Charles of not being forthcoming about Izzy and his relationship with her, suggest he's hiding something. Watch for him trying to redirect blame.",
+          "isRedHerring": true,
+          "importance": "minor",
           "revealed": false
         }
       ]
     }
   ],
-  "killer": "Professor Thaddeus Blackwood",
+  "killer": "Ricardo \"Ricky\" Vargas",
   "locations": [
-    "The Beaumont Estate Library",
-    "The Conservatory",
-    "Professor Blackwood's Study",
-    "The Beaumont Estate Gardens",
-    "Miss Bellweather's Room (Room 7)"
+    "The \"Mirage\" Suite, Desert Oasis Casino Penthouse",
+    "Pharaoh's Room, Desert Oasis Casino",
+    "High Rollers Lounge Bar, Desert Oasis Casino",
+    "Designated Smoking Area Outside Pharaoh's Room",
+    "Staff Break Room, Desert Oasis Casino"
   ],
   "clues": {
-    "The Beaumont Estate Library": [
-      "The letter opener, identified as belonging to Alistair's desk set, lies near his body. Traces of blood are present, matching Alistair's blood type (confirmed O-negative). Initial examination suggests the blade was wiped clean, but faint traces of a second blood type (A-positive) are detected using luminol. This second blood type matches Professor Blackwood.",
-      "A half-finished glass of brandy sits on a side table near the fireplace. The glass bears Professor Blackwood's fingerprints and a faint residue of his preferred brand of brandy, “Hennessy VSOP.”",
-      "Alistair's diary is open on his desk. The last entry, dated today, reads: \"Thaddeus's indiscretions...cannot be ignored. Meeting him tonight to discuss...matter of grave importance...must be resolved.\" The entry is abruptly cut off.",
-      "A torn piece of paper lies crumpled near the bookshelf. When pieced together, it appears to be a fragment of a bill from an antiquities dealer in London. The bill mentions the purchase of a rare Egyptian artifact and is addressed to \"T. Blackwood, Esq.\" The amount due is considerable (1500 pounds)."
+    "The \"Mirage\" Suite, Desert Oasis Casino Penthouse": [
+      "A broken crystal ice bucket lies on the floor near the victim. Fingerprint analysis reveals prints belonging to Izzy, Ricky Vargas, and an unidentified partial print. The handle shows traces of skin and blood.",
+      "A silk scarf, identified as Izzy's (she often wore it at work), is tightly knotted around her neck. Microscopic fiber analysis reveals the presence of expensive wool fibers, consistent with a high-end suit.",
+      "The room's security camera system was deliberately disabled at 02:40. The timestamp on the system logs shows the last person to access the system settings was 'Guest'.",
+      "A half-empty glass of expensive champagne sits on the bedside table. Lip stick on the glass matched that of Izzy's. Analysis of the Champagne shows traces of GHB."
     ],
-    "The Conservatory": [
-      "Eleanor Beaumont's sketchbook is on a small table. The last sketch is of a specific orchid, *Paphiopedilum rothschildianum*, dated 22:50. The sketch is incomplete, suggesting it was interrupted.",
-      "A broken orchid pot lies on the floor, near the French doors leading to the gardens. The soil is damp and contains traces of mud consistent with the soil found in the rose garden.",
-      "A small, almost imperceptible smudge of blood (O-negative) is found on one of the glass panes of the French doors. It is positioned high enough that it could only have been placed there by someone of Alistair’s height or by someone standing on something.",
-      "Mr. Davies reports that he saw Eleanor Beaumont in the conservatory, but that he briefly glanced away when a cat passed by the window, meaning that she could have left the room unnoticed."
+    "Pharaoh's Room, Desert Oasis Casino": [
+      "Security footage from the Pharaoh's Room entrance shows Ricky Vargas entering at 21:05 and exiting at 01:02 for the bathroom break and again at 02:03 for a cigarette. The second time leaving, the footage is slightly obscured by a strategically placed banner, making it impossible to definitively see his movements within the smoking area.",
+      "A playing card – the Queen of Hearts – is found face down near Ricky Vargas's usual seat at the poker table. The card has a faint smudge of Izzy's signature bright red lipstick on the Queen's face.",
+      "Surveillance shows Ricardo Vargas at 02:01, just before his smoke break, having an intense and hushed conversation with Charles Sterling. Sterling appeared agitated, gesturing with his hands.",
+      "Traces of expensive wool fibers, matching those found on the silk scarf in the Mirage Suite, are discovered on the felt of the poker table, near Ricky's usual seating position."
     ],
-    "Professor Blackwood's Study": [
-      "A half-empty bottle of laudanum is on Blackwood's desk. The label indicates it was recently prescribed to Miss Seraphina Bellweather. The prescription date is one week prior.",
-      "A hidden compartment behind a bookshelf reveals a collection of rare antiquities, including a tarnished silver letter opener bearing the Beaumont family crest. It is missing from Alistair's desk set. Close examination reveals traces of blood in the crevices, cleaned, but present. The blood matches Alistair's type, O-negative.",
-      "Blackwood's ledger reveals a series of suspicious transactions, including large withdrawals from the Beaumont estate account, disguised as payments for medical supplies and consultations. Several entries are dated around the time Blackwood purchased expensive artifacts.",
-      "There is a book about botany open on his desk, with a pressed orchid between the pages. It's *Paphiopedilum rothschildianum*. The pressed flower's stalk is broken and has the same damage pattern as damage to one of Eleanor's orchids."
+    "High Rollers Lounge Bar, Desert Oasis Casino": [
+      "Javier's fingerprints are all over the glasses, counters, and the blender he uses. However, the usual cleaning cloth is missing from its designated hook. This is highly unusual, as Javier is known for his meticulous cleaning habits.",
+      "A crumpled napkin is found in the trash bin behind the bar. It has a hastily scribbled note: \"Meet me. Mirage Suite. Need to talk. 2:30.\" The handwriting is difficult to decipher, but appears to be feminine.",
+      "The lounge's security camera footage from 02:00 to 03:00 shows Javier nervously pacing behind the bar, occasionally glancing towards the entrance of the High Rollers Lounge. He is seen pouring himself 3 shots of bourbon in a row over the course of about 4 minutes, which is abnormal for him.",
+      "There is a faint smell of bleach cleaner around the bar area, but the cleaning logs do not reflect any additional deep cleaning performed that night outside of the regular schedule."
     ],
-    "The Beaumont Estate Gardens": [
-      "Footprints are found leading from the conservatory to the rose garden and back. The footprints match the size and tread pattern of Professor Blackwood's boots. The soil composition matches that found on the broken orchid pot in the conservatory.",
-      "Near the rose bushes, a discarded cigar butt is found. It is Professor Blackwood's preferred brand and the cigar has a faint lipstick stain. Seraphina Bellweather wears the same brand of lipstick.",
-      "Mr. Croft is seen cleaning blood from his gardening shears but claims that it's from a rosebush that he cut earlier that day. The blood type is tested, and is animal blood from a deer.",
-      "A muddy handkerchief is found tucked into the roots of a rosebush. It is embroidered with the initials \"E.B.\""
+    "Designated Smoking Area Outside Pharaoh's Room": [
+      "A discarded cigarette butt of Ricky's preferred brand is found near a surveillance camera post. A faint trace of the same lipstick identified as Izzy's is found on the filter.",
+      "The ground near the ashtray is slightly disturbed, as if someone had been pacing back and forth for an extended period. Footprints are not discernible due to the frequency that the area is used.",
+      "A partially melted crystal of GHB is stuck to the bottom of the ashtray."
     ],
-    "Miss Bellweather's Room (Room 7)": [
-      "An empty vial of laudanum is found in her wastepaper basket, but it doesn't account for the laudanum that should still be in the other bottle on Blackwood's desk. She claims to have disposed of it yesterday, but the vial is clean.",
-      "Underneath her mattress, a love letter is discovered from Thomas, the stablehand. The letter confesses their affair and discusses plans to run away together if Alistair refuses to give Seraphina a divorce.",
-      "A receipt from a pawn shop is found hidden in her jewelry box. The receipt shows that she pawned a diamond necklace (a gift from Alistair) for a substantial sum. The date is one week prior to the murder.",
-      "There is mud on her shoes consistent with soil from the rose garden."
+    "Staff Break Room, Desert Oasis Casino": [
+      "The security camera in the break room shows Javier entering at 02:29, grabbing a coffee, and leaving at 02:36. He avoids eye contact with Maria Garcia, who is already in the room. He appears anxious and fidgety.",
+      "A discarded tissue is found in the trash bin, stained with what appears to be mascara and faint traces of the same bright red lipstick identified as Izzy's. DNA testing shows that the lipstick belongs to Izzy.",
+      "An invoice from a bespoke suit tailoring company is discovered tucked inside a magazine. The suit was recently purchased and delivered to Ricardo Vargas at the casino."
     ]
   },
   "witnesses": {
-    "The Beaumont Estate Library": [
+    "The \"Mirage\" Suite, Desert Oasis Casino Penthouse": [],
+    "Pharaoh's Room, Desert Oasis Casino": [
       {
-        "name": "Agnes Plumtree",
-        "role": "Housemaid",
-        "background": "A young, impressionable maid who has worked at the Beaumont Estate for six months. She is easily flustered and prone to gossip.",
-        "testimony": "She claims to have heard muffled voices coming from the library around 23:00, but she couldn't make out what was being said. She also claims to have seen Professor Blackwood leaving the library around 23:30, looking agitated.",
-        "reliability": "Potentially unreliable due to her nervousness and tendency to exaggerate.",
-        "hiddenAgenda": "She has a crush on the stablehand, Thomas, and might be trying to protect him or someone he cares about."
+        "name": "Tony \"The Hammer\" Moretti",
+        "role": "High Roller",
+        "background": "A notorious gambler with a reputation for violence and heavy debts. He is known to lend money at exorbitant interest rates.",
+        "testimony": "Claims to have been focused solely on the game and not paying attention to anyone's movements. He seemed nervous when being asked about the timing of when Ricardo Vargas left for his smoke break.",
+        "reliability": "Questionable. Likely to protect his own interests and avoid involvement with the police.",
+        "hiddenAgenda": "Tony is one of the creditors Ricky is indebted to and had threatened Ricky about his late payments."
       }
     ],
-    "The Conservatory": [],
-    "Professor Blackwood's Study": [
+    "High Rollers Lounge Bar, Desert Oasis Casino": [
       {
-        "name": "Edgar Finch",
-        "role": "Bookshop Owner",
-        "background": "Edgar is an eccentric bookshop owner from the nearby village, known for his detailed memory and knowledge of local gossip.",
-        "testimony": "He recalls Professor Blackwood purchasing a specific book on poisonous plants just last week. He remembers the Professor being unusually anxious and distracted during the purchase.",
-        "reliability": "Generally reliable, though prone to exaggeration.",
-        "hiddenAgenda": "None apparent, but he enjoys being involved in local affairs and might embellish his story to make it more interesting."
+        "name": "Maria Garcia",
+        "role": "Cocktail Waitress",
+        "background": "A long-time employee of the casino, known for her gossip and sharp observations.",
+        "testimony": "Confirms seeing Javier in the break room around 02:30. She noticed he was unusually quiet and seemed distracted, staring at his hands.",
+        "reliability": "Generally reliable, but prone to exaggeration and embellishment.",
+        "hiddenAgenda": "Maria has a crush on Javier and may be biased in his favor or may be hiding something to protect him."
       }
     ],
-    "The Beaumont Estate Gardens": [
+    "Designated Smoking Area Outside Pharaoh's Room": [
       {
-        "name": "Thomas Bartlett",
-        "role": "Stablehand",
-        "background": "Thomas has been working at the Beaumont Estate for several years and is known for his quiet demeanor and strong work ethic. He has a reputation for being discreet.",
-        "testimony": "Claims he spoke to Mr. Croft around 22:30. He seemed agitated, muttering about \"greedy parasites ruining everything.\" He also confirms that Miss Bellweather often visited the stables.",
-        "reliability": "Generally reliable, but protective of Miss Bellweather.",
-        "hiddenAgenda": "Is secretly in love with Miss Bellweather."
+        "name": "Sarah Jenkins",
+        "role": "Security Guard",
+        "background": "A relatively new security guard known to follow procedures by the book.",
+        "testimony": "She recalls seeing a man matching Ricardo Vargas's description smoking a cigarette around 02:10, but didn't pay much attention, as this is a common occurrence. It was exceptionally cold at the time, and she remembers thinking how someone could withstand the cold for long.",
+        "reliability": "Reasonably reliable, but her observations may be limited due to the monotony of her job.",
+        "hiddenAgenda": "Sarah has a tendency to downplay events due to an anxiety condition which causes her to be very self-conscious."
       }
     ],
-    "Miss Bellweather's Room (Room 7)": []
+    "Staff Break Room, Desert Oasis Casino": []
   },
   "timeline": [
     {
-      "time": "21:00",
-      "event": "Two days prior to the murder, Professor Blackwood visits Edgar Finch's bookshop and purchases a book on poisonous plants, appearing unusually flustered and distracted. (Professor Blackwood's Study/Edgar Finch's Bookshop)"
+      "time": "03:00",
+      "event": "Two days prior: Ricky Vargas loses a significant amount of money at the Pharaoh's Room poker table. He is seen arguing with Tony \"The Hammer\" Moretti about extending his credit."
     },
     {
       "time": "10:00",
-      "event": "The day before the murder, Alistair confronts Professor Blackwood in the library about the embezzled funds, threatening to expose him to the Beaumont family and authorities. Blackwood pleads for mercy, but Alistair remains resolute. (The Beaumont Estate Library)"
-    },
-    {
-      "time": "11:30",
-      "event": "Eleanor pawns a valuable family heirloom at a local pawnbroker in a desperate attempt to cover her gambling debts. (Off-site, not specified)"
+      "event": "Two days prior: Victoria Sterling schedules a discreet appointment with a private investigator to look into her husband's activities."
     },
     {
       "time": "14:00",
-      "event": "Mr. Croft overhears Alistair discussing the potential sale of a portion of the Beaumont Estate gardens with a prospective buyer. Croft becomes visibly agitated. (The Beaumont Estate Gardens)"
+      "event": "Two days prior: Javier Mendoza receives an eviction notice. He calls Izzy Rodriguez, visibly distressed, and asks her for lunch to discuss \"something important.\""
     },
     {
-      "time": "16:00",
-      "event": "Miss Bellweather meets secretly with Thomas, the stablehand, in the stables. She informs him that her upcoming marriage to Alistair is purely for financial reasons and expresses her unhappiness. (The Beaumont Estate Gardens, near the stables)"
-    },
-    {
-      "time": "18:00",
-      "event": "Alistair has dinner with Miss Bellweather, Eleanor, and Professor Blackwood in the dining room. The atmosphere is tense, with Eleanor making veiled insults towards Alistair and Blackwood remaining unusually quiet. (The Beaumont Estate Dining Room, not specified)"
+      "time": "15:30",
+      "event": "Two days prior: Javier and Izzy have lunch at the casino's employee cafeteria. Javier pleads with Izzy for a loan, but she refuses, explaining her own financial concerns. He appears dejected but keeps his cool."
     },
     {
       "time": "20:00",
-      "event": "Mr. Croft sharpens his gardening shears with unusual intensity in the tool shed. He mutters about \"parasites\" and \"ruining everything\". (The Beaumont Estate Gardens, Tool Shed)"
+      "event": "One day prior: Ricky Vargas sends Izzy flowers and a diamond bracelet along with a marriage proposal, delivered to her residence. Izzy is visibly annoyed."
     },
     {
-      "time": "21:45",
-      "event": "Agnes, the housemaid, brings Miss Bellweather a cup of tea in her room (Room 7). Agnes notes that Miss Bellweather complained of a headache and had already taken laudanum. (Miss Bellweather's Room (Room 7))"
-    },
-    {
-      "time": "22:00",
-      "event": "Professor Blackwood enters the library, claiming to be researching a medical text. (The Beaumont Estate Library)"
+      "time": "21:00",
+      "event": "One day prior: Izzy confides in Maria Garcia about Ricky's unwanted advances and her concerns about Javier's recent behavior. Maria advises her to be careful."
     },
     {
       "time": "22:00",
-      "event": "Mr. Croft begins his rounds patrolling the grounds for poachers. (The Beaumont Estate Gardens)"
+      "event": "One day prior: Victoria Sterling receives a preliminary report from the private investigator, confirming her suspicions about Charles's frequent meetings with Izzy in the lobby."
+    },
+    {
+      "time": "23:00",
+      "event": "One day prior: Charles Sterling meets with David Lee in his office to discuss the casino's quarterly earnings. He seems preoccupied and distracted."
+    },
+    {
+      "time": "00:00",
+      "event": "Day of the murder: Izzy begins her shift as head cocktail waitress in the High Rollers Lounge. Javier is already behind the bar, visibly subdued."
+    },
+    {
+      "time": "20:00",
+      "event": "Ricky arrives at the Pharaoh's Room for a high-stakes poker game. He makes several phone calls throughout the night, pacing nervously outside the room during breaks."
+    },
+    {
+      "time": "21:00",
+      "event": "Victoria remains in her penthouse suite, ostensibly preparing for the charity gala. She makes several calls to her husband's office and appears increasingly agitated."
     },
     {
       "time": "22:00",
-      "event": "Miss Bellweather remains in her room (Room 7), supposedly resting and under the influence of laudanum. (Miss Bellweather's Room (Room 7))"
-    },
-    {
-      "time": "22:30",
-      "event": "Mr. Croft speaks briefly with Thomas, the stablehand, near the stables. Thomas notes that Croft seemed agitated and was muttering about \"greedy parasites ruining everything\". (The Beaumont Estate Gardens, near the stables)"
-    },
-    {
-      "time": "22:45",
-      "event": "Eleanor enters the conservatory, claiming to sketch orchids. (The Conservatory)"
-    },
-    {
-      "time": "22:50",
-      "event": "Mr. Davies, the gardener, claims to see Eleanor through the fogged conservatory window, confirming her presence. However, visibility is poor. (The Conservatory, exterior)"
-    },
-    {
-      "time": "23:00",
-      "event": "Agnes Plumtree, the housemaid, hears muffled voices coming from the library but cannot distinguish the words. (The Beaumont Estate Library, hallway outside)"
-    },
-    {
-      "time": "23:00",
-      "event": "Professor Blackwood claims to have \"nodded off\" in the library while reading. (The Beaumont Estate Library)"
-    },
-    {
-      "time": "23:00",
-      "event": "Eleanor remembers the grandfather clock chiming in the hall. (The Conservatory)"
-    },
-    {
-      "time": "23:10",
-      "event": "Professor Blackwood, having woken up, carefully retrieves the letter opener from Alistair's desk. (The Beaumont Estate Library)"
-    },
-    {
-      "time": "23:15",
-      "event": "Professor Blackwood stabs Alistair in the back with the letter opener while Alistair is reviewing documents near the fireplace. (The Beaumont Estate Library, near the fireplace)"
-    },
-    {
-      "time": "23:17",
-      "event": "Alistair Beaumont, Esquire, dies from a single, precise stab wound to the back, severing his spinal cord. (The Beaumont Estate Library, near the fireplace)"
+      "event": "Charles continues his meeting with David Lee, but his attention is elsewhere. He checks his phone frequently and sends a text message: \"Meet me later? Urgent.\""
     },
     {
       "time": "23:30",
-      "event": "Agnes Plumtree claims to see Professor Blackwood leaving the library, looking agitated. (The Beaumont Estate Library, hallway outside)"
+      "event": "Victoria's personal assistant, Susan Miller, sees Victoria in her suite. Susan confirms Victoria's alibi for that point in time."
+    },
+    {
+      "time": "01:00",
+      "event": "Ricky leaves the poker table for a bathroom break, as corroborated by other players. He quickly heads to the \"Mirage\" suite, but Izzy is not there."
+    },
+    {
+      "time": "01:15",
+      "event": "Ricky sends Izzy a text message: \"I need to see you. It's important.\" He receives no reply."
+    },
+    {
+      "time": "01:30",
+      "event": "Charles receives a text back, \"Meet me at the usual place in an hour.\""
+    },
+    {
+      "time": "02:00",
+      "event": "Ricky leaves the poker table again, supposedly for a smoke break. Sarah Jenkins, the security guard, sees someone matching his description outside the Pharaoh's Room smoking. Ricky goes to the Mirage Suite. Izzy is there, preparing for bed. He confronts her again about marriage. She again refuses."
+    },
+    {
+      "time": "02:15",
+      "event": "Ricky's rage builds up as he cannot convince Izzy. He grabs a silk scarf on the dresser and strangles her. He panics and grabs the crystal ice bucket and hits her in the head."
+    },
+    {
+      "time": "02:20",
+      "event": "Ricky exits the \"Mirage\" Suite in a hurry, leaving the door slightly ajar. He returns to the Pharaoh's Room and resumes playing poker, attempting to act normally. He disposes of his cigarette butt further from the designated area, in a bush outside the casino."
+    },
+    {
+      "time": "02:25",
+      "event": "Charles tells David Lee he needs to take a private phone call and leaves his office for approximately 20 minutes. The surveillance footage captures him heading toward the penthouse elevators, but the cameras don't show him entering Izzy's suite. He instead is pacing in an adjacent hallway on the penthouse floor."
+    },
+    {
+      "time": "02:30",
+      "event": "Javier takes a break to grab coffee from the staff break room. Maria Garcia sees him there; he is silent and nervous."
+    },
+    {
+      "time": "02:40",
+      "event": "Charles returns to his office, looking visibly shaken. He does not mention the 'urgent' phone call."
+    },
+    {
+      "time": "02:45",
+      "event": "Victoria is awake in her suite, staring out the window."
+    },
+    {
+      "time": "03:30",
+      "event": "The poker game in the Pharaoh's Room ends. Ricky cashes out his winnings, but leaves most of it on the table for Tony 'The Hammer' Moretti. He then nonchalantly leaves the casino."
     },
     {
       "time": "07:00",
-      "event": "The following morning, Agnes Plumtree discovers Alistair's body in the library. She screams, alerting the rest of the household. (The Beaumont Estate Library)"
+      "event": "A housekeeper discovers Izzy's body in the \"Mirage\" Suite. She immediately calls security, who secure the scene and contact the police."
     }
   ]
 }

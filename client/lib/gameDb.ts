@@ -594,72 +594,50 @@ export const deleteNotepadEntry = async (entryId: string) => {
 // INVESTIGATION FINDINGS FUNCTIONS
 // ================================
 
-// Add an investigation finding
-export const addInvestigationFinding = async (caseId: string, finding: Omit<InvestigationFinding, 'id' | 'timestamp'>) => {
+// Add investigation finding to the separate findings collection
+export const addInvestigationFinding = async (
+  caseId: string, 
+  finding: {
+    source: 'interrogation' | 'location_visit' | 'clue_discovery';
+    sourceDetails: string;
+    finding: string;
+    importance: 'critical' | 'important' | 'minor';
+    isNew?: boolean;
+  }
+) => {
   try {
     console.log('Adding investigation finding for case:', caseId);
     
-    // Add to findings collection WITH caseId
-    const findingRef = await addDoc(collection(db, 'findings'), {
+    const findingData = {
+      caseId,
       ...finding,
-      caseId, // Important: Include caseId so we can filter findings by case
-      timestamp: serverTimestamp()
-    });
+      timestamp: serverTimestamp(),
+      isNew: finding.isNew !== undefined ? finding.isNew : true
+    };
     
-    // Also add to case's investigation progress
-    const caseResult = await getCase(caseId);
-    if (caseResult.data) {
-      const currentProgress = caseResult.data.investigationProgress || {
-        visitedLocations: {},
-        interrogatedSuspects: {},
-        discoveredClues: [],
-        currentDay: 1,
-        investigationFindings: []
-      };
-      
-      const newFinding: InvestigationFinding = {
-        id: findingRef.id,
-        ...finding,
-        timestamp: serverTimestamp()
-      };
-      
-      const progressUpdate = {
-        investigationFindings: [...currentProgress.investigationFindings, newFinding]
-      };
-      
-      await updateInvestigationProgress(caseId, progressUpdate);
-    }
+    const docRef = await addDoc(collection(db, 'findings'), findingData);
     
-    console.log('Investigation finding added with ID:', findingRef.id);
-    return { findingId: findingRef.id, error: null };
+    console.log('Investigation finding added with ID:', docRef.id);
+    return { findingId: docRef.id, error: null };
   } catch (error) {
     console.error('Error adding investigation finding:', error);
     return { findingId: null, error: 'Failed to add investigation finding' };
   }
 };
 
-export const getOverallFindings = async (caseId: string) => {
+// Mark investigation finding as read (not new)
+export const markFindingAsRead = async (findingId: string) => {
   try {
-    console.log('Fetching overall findings for case:', caseId);
-    
-    // Query the findings collection where caseId matches
-    const findingsQuery = query(
-      collection(db, 'findings'),
-      where('caseId', '==', caseId)
-    );
-    
-    const querySnapshot = await getDocs(findingsQuery);
-    const findings: InvestigationFinding[] = [];
-    
-    querySnapshot.forEach((doc) => {
-      findings.push({ id: doc.id, ...doc.data() } as InvestigationFinding);
+    await updateDoc(doc(db, 'findings', findingId), {
+      isNew: false,
+      updatedAt: serverTimestamp()
     });
     
-    console.log(`Found ${findings.length} overall findings for case ${caseId}`);
-    return { findings, error: null };
+    console.log('Finding marked as read:', findingId);
+    return { error: null };
   } catch (error) {
-    console.error('Error fetching overall findings:', error);
-    return { findings: [], error: 'Failed to fetch overall findings' };
+    console.error('Error marking finding as read:', error);
+    return { error: 'Failed to mark finding as read' };
   }
 };
 
@@ -668,18 +646,62 @@ export const getInvestigationFindings = async (caseId: string) => {
   try {
     console.log('Fetching investigation findings for case:', caseId);
     
-    const caseResult = await getCase(caseId);
-    if (caseResult.error || !caseResult.data) {
-      return { findings: [], error: 'Case not found' };
-    }
+    // Query the separate 'findings' collection with caseId
+    const findingsQuery = query(
+      collection(db, 'findings'),
+      where('caseId', '==', caseId),
+      orderBy('timestamp', 'desc')
+    );
     
-    const findings = caseResult.data.investigationProgress?.investigationFindings || [];
+    const querySnapshot = await getDocs(findingsQuery);
+    const findings: any[] = [];
+    
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log('Found finding:', doc.id, 'for case:', data.caseId);
+      findings.push({ 
+        id: doc.id, 
+        ...data 
+      });
+    });
     
     console.log(`Found ${findings.length} investigation findings for case ${caseId}`);
     return { findings, error: null };
   } catch (error) {
     console.error('Error fetching investigation findings:', error);
-    return { findings: [], error: 'Failed to fetch investigation findings' };
+    
+    // Fallback query without orderBy in case of index issues
+    try {
+      console.log('Trying fallback query without orderBy...');
+      const fallbackQuery = query(
+        collection(db, 'findings'),
+        where('caseId', '==', caseId)
+      );
+      
+      const fallbackSnapshot = await getDocs(fallbackQuery);
+      const fallbackFindings: any[] = [];
+      
+      fallbackSnapshot.forEach((doc) => {
+        const data = doc.data();
+        fallbackFindings.push({ 
+          id: doc.id, 
+          ...data 
+        });
+      });
+      
+      // Sort manually by timestamp if available
+      fallbackFindings.sort((a, b) => {
+        const aTime = a.timestamp?.toDate?.() || new Date(0);
+        const bTime = b.timestamp?.toDate?.() || new Date(0);
+        return bTime.getTime() - aTime.getTime();
+      });
+      
+      console.log(`Fallback found ${fallbackFindings.length} findings`);
+      return { findings: fallbackFindings, error: null };
+    } catch (fallbackError) {
+      console.error('Fallback query also failed:', fallbackError);
+      return { findings: [], error: 'Failed to fetch investigation findings' };
+    }
   }
 };
 
@@ -722,4 +744,4 @@ export const deleteCaseWithImage = async (caseId: string) => {
     console.error('Error deleting case with image:', error);
     return { error: 'Failed to delete case and image' };
   }
-}; 
+};

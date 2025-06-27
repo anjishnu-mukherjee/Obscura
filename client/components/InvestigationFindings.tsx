@@ -23,10 +23,12 @@ interface InvestigationFindingsProps {
 const InvestigationFindings: React.FC<InvestigationFindingsProps> = ({ caseId }) => {
   const [findings, setFindings] = useState<InvestigationFinding[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [filter, setFilter] = useState<'all' | 'critical' | 'important' | 'minor'>('all');
 
   useEffect(() => {
+    console.log('InvestigationFindings: caseId changed to:', caseId);
     if (caseId) {
       fetchFindings();
     }
@@ -34,15 +36,28 @@ const InvestigationFindings: React.FC<InvestigationFindingsProps> = ({ caseId })
 
   const fetchFindings = async () => {
     setIsLoading(true);
+    setError(null);
+    
     try {
+      console.log('InvestigationFindings: Fetching findings for caseId:', caseId);
       const response = await fetch(`/api/investigation/findings?caseId=${caseId}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const result = await response.json();
+      console.log('InvestigationFindings: API result:', result);
       
       if (result.success) {
+        console.log('InvestigationFindings: Setting findings:', result.findings);
         setFindings(result.findings || []);
+      } else {
+        throw new Error(result.error || 'Failed to fetch findings');
       }
     } catch (error) {
-      console.error('Error fetching findings:', error);
+      console.error('InvestigationFindings: Error fetching findings:', error);
+      setError(error instanceof Error ? error.message : 'Failed to fetch findings');
     } finally {
       setIsLoading(false);
     }
@@ -98,6 +113,28 @@ const InvestigationFindings: React.FC<InvestigationFindingsProps> = ({ caseId })
     );
   }
 
+  if (error) {
+    return (
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <Search className="w-5 h-5 text-purple-400" />
+          <h3 className="text-lg font-semibold text-white">Investigation Findings</h3>
+        </div>
+        <div className="text-center py-8">
+          <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-3" />
+          <p className="text-red-400 mb-2">Error loading findings</p>
+          <p className="text-gray-400 text-sm mb-4">{error}</p>
+          <button
+            onClick={fetchFindings}
+            className="px-4 py-2 bg-red-500/20 border border-red-400/30 rounded-lg text-red-400 hover:bg-red-500/30 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (findings.length === 0) {
     return (
       <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
@@ -124,6 +161,9 @@ const InvestigationFindings: React.FC<InvestigationFindingsProps> = ({ caseId })
           <div className="flex items-center gap-3">
             <Search className="w-5 h-5 text-purple-400" />
             <h3 className="text-lg font-semibold text-white">Investigation Findings</h3>
+            {process.env.NODE_ENV === 'development' && (
+              <span className="text-xs text-gray-500 font-mono">({caseId?.slice(-6)})</span>
+            )}
             <div className="flex items-center gap-2">
               {criticalCount > 0 && (
                 <span className="inline-flex items-center gap-1 px-2 py-1 bg-red-500/10 border border-red-400/20 rounded text-red-400 text-xs">
