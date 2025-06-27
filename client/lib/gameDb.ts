@@ -19,7 +19,10 @@ import {
   StoryStructure, 
   CaseIntro, 
   ProcessedClues, 
-  MapStructure 
+  MapStructure,
+  InterrogationSession,
+  InvestigationFinding,
+  NotepadEntry
 } from '@/functions/types';
 import { deleteImageFromCloudinary } from './cloudinary';
 
@@ -35,12 +38,14 @@ export interface InvestigationProgress {
     [suspectName: string]: {
       interrogatedAt: any; // Firestore timestamp
       lastInterrogationDate: string; // ISO date string for IST
-      questionsAsked: string[];
-      responses: string[];
+      questionsAsked: string[]; // Legacy - keeping for compatibility
+      responses: string[]; // Legacy - keeping for compatibility
+      sessions: InterrogationSession[]; // New enhanced format
     };
   };
   discoveredClues: string[];
   currentDay: number; // Days since case started
+  investigationFindings: InvestigationFinding[]; // New: AI-extracted findings
 }
 
 // Interface for storing complete case data
@@ -102,7 +107,8 @@ export const createCase = async (caseData: Omit<CaseData, 'id' | 'createdAt' | '
       visitedLocations: {},
       interrogatedSuspects: {},
       discoveredClues: [],
-      currentDay: 1
+      currentDay: 1,
+      investigationFindings: []
     };
     
     const caseRef = await addDoc(collection(db, 'cases'), {
@@ -139,7 +145,8 @@ export const updateInvestigationProgress = async (
       visitedLocations: {},
       interrogatedSuspects: {},
       discoveredClues: [],
-      currentDay: 1
+      currentDay: 1,
+      investigationFindings: []
     };
     
     // Merge the progress update
@@ -161,8 +168,7 @@ export const updateInvestigationProgress = async (
     };
     
     await updateDoc(caseRef, {
-      investigationProgress: updatedProgress,
-      updatedAt: serverTimestamp()
+      investigationProgress: updatedProgress
     });
     
     console.log('Investigation progress updated successfully');
@@ -214,12 +220,14 @@ export const interrogateSuspect = async (
       visitedLocations: {},
       interrogatedSuspects: {},
       discoveredClues: [],
-      currentDay: 1
+      currentDay: 1,
+      investigationFindings: []
     };
     
     const existingInterrogation = currentProgress.interrogatedSuspects[suspectName] || {
       questionsAsked: [],
-      responses: []
+      responses: [],
+      sessions: []
     };
     
     const progressUpdate = {
@@ -228,7 +236,8 @@ export const interrogateSuspect = async (
           interrogatedAt: serverTimestamp(),
           lastInterrogationDate: today,
           questionsAsked: [...existingInterrogation.questionsAsked, question],
-          responses: [...existingInterrogation.responses, response]
+          responses: [...existingInterrogation.responses, response],
+          sessions: existingInterrogation.sessions || []
         }
       }
     };
@@ -492,6 +501,185 @@ export const getUserCaseStats = async (userId: string) => {
   } catch (error) {
     console.error('Error fetching case statistics:', error);
     return { stats: null, error: 'Failed to fetch case statistics' };
+  }
+};
+
+// ================================
+// NOTEPAD FUNCTIONS
+// ================================
+
+// Create or update a notepad entry
+export const saveNotepadEntry = async (entry: Omit<NotepadEntry, 'id' | 'createdAt' | 'updatedAt'>) => {
+  try {
+    console.log('Saving notepad entry for case:', entry.caseId);
+    
+    const notepadRef = await addDoc(collection(db, 'notepad'), {
+      ...entry,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+    
+    console.log('Notepad entry saved with ID:', notepadRef.id);
+    return { entryId: notepadRef.id, error: null };
+  } catch (error) {
+    console.error('Error saving notepad entry:', error);
+    return { entryId: null, error: 'Failed to save notepad entry' };
+  }
+};
+
+// Update an existing notepad entry
+export const updateNotepadEntry = async (entryId: string, content: string) => {
+  try {
+    console.log('Updating notepad entry:', entryId);
+    
+    await updateDoc(doc(db, 'notepad', entryId), {
+      content,
+      updatedAt: serverTimestamp()
+    });
+    
+    console.log('Notepad entry updated successfully');
+    return { error: null };
+  } catch (error) {
+    console.error('Error updating notepad entry:', error);
+    return { error: 'Failed to update notepad entry' };
+  }
+};
+
+// Get notepad entries for a case
+export const getNotepadEntries = async (caseId: string, page?: number) => {
+  try {
+    console.log('Fetching notepad entries for case:', caseId, 'page:', page);
+    
+    let q = query(
+      collection(db, 'notepad'),
+      where('caseId', '==', caseId),
+      orderBy('createdAt', 'desc')
+    );
+    
+    if (page !== undefined) {
+      q = query(q, where('page', '==', page));
+    }
+    
+    const querySnapshot = await getDocs(q);
+    const entries: NotepadEntry[] = [];
+    
+    querySnapshot.forEach((doc) => {
+      entries.push({ id: doc.id, ...doc.data() } as NotepadEntry);
+    });
+    
+    console.log(`Found ${entries.length} notepad entries for case ${caseId}`);
+    return { entries, error: null };
+  } catch (error) {
+    console.error('Error fetching notepad entries:', error);
+    return { entries: [], error: 'Failed to fetch notepad entries' };
+  }
+};
+
+// Delete a notepad entry
+export const deleteNotepadEntry = async (entryId: string) => {
+  try {
+    console.log('Deleting notepad entry:', entryId);
+    
+    await deleteDoc(doc(db, 'notepad', entryId));
+    
+    console.log('Notepad entry deleted successfully');
+    return { error: null };
+  } catch (error) {
+    console.error('Error deleting notepad entry:', error);
+    return { error: 'Failed to delete notepad entry' };
+  }
+};
+
+// ================================
+// INVESTIGATION FINDINGS FUNCTIONS
+// ================================
+
+// Add an investigation finding
+export const addInvestigationFinding = async (caseId: string, finding: Omit<InvestigationFinding, 'id' | 'timestamp'>) => {
+  try {
+    console.log('Adding investigation finding for case:', caseId);
+    
+    // Add to findings collection WITH caseId
+    const findingRef = await addDoc(collection(db, 'findings'), {
+      ...finding,
+      caseId, // Important: Include caseId so we can filter findings by case
+      timestamp: serverTimestamp()
+    });
+    
+    // Also add to case's investigation progress
+    const caseResult = await getCase(caseId);
+    if (caseResult.data) {
+      const currentProgress = caseResult.data.investigationProgress || {
+        visitedLocations: {},
+        interrogatedSuspects: {},
+        discoveredClues: [],
+        currentDay: 1,
+        investigationFindings: []
+      };
+      
+      const newFinding: InvestigationFinding = {
+        id: findingRef.id,
+        ...finding,
+        timestamp: serverTimestamp()
+      };
+      
+      const progressUpdate = {
+        investigationFindings: [...currentProgress.investigationFindings, newFinding]
+      };
+      
+      await updateInvestigationProgress(caseId, progressUpdate);
+    }
+    
+    console.log('Investigation finding added with ID:', findingRef.id);
+    return { findingId: findingRef.id, error: null };
+  } catch (error) {
+    console.error('Error adding investigation finding:', error);
+    return { findingId: null, error: 'Failed to add investigation finding' };
+  }
+};
+
+export const getOverallFindings = async (caseId: string) => {
+  try {
+    console.log('Fetching overall findings for case:', caseId);
+    
+    // Query the findings collection where caseId matches
+    const findingsQuery = query(
+      collection(db, 'findings'),
+      where('caseId', '==', caseId)
+    );
+    
+    const querySnapshot = await getDocs(findingsQuery);
+    const findings: InvestigationFinding[] = [];
+    
+    querySnapshot.forEach((doc) => {
+      findings.push({ id: doc.id, ...doc.data() } as InvestigationFinding);
+    });
+    
+    console.log(`Found ${findings.length} overall findings for case ${caseId}`);
+    return { findings, error: null };
+  } catch (error) {
+    console.error('Error fetching overall findings:', error);
+    return { findings: [], error: 'Failed to fetch overall findings' };
+  }
+};
+
+// Get investigation findings for a case
+export const getInvestigationFindings = async (caseId: string) => {
+  try {
+    console.log('Fetching investigation findings for case:', caseId);
+    
+    const caseResult = await getCase(caseId);
+    if (caseResult.error || !caseResult.data) {
+      return { findings: [], error: 'Case not found' };
+    }
+    
+    const findings = caseResult.data.investigationProgress?.investigationFindings || [];
+    
+    console.log(`Found ${findings.length} investigation findings for case ${caseId}`);
+    return { findings, error: null };
+  } catch (error) {
+    console.error('Error fetching investigation findings:', error);
+    return { findings: [], error: 'Failed to fetch investigation findings' };
   }
 };
 

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { interrogateSuspect, getCase } from "@/lib/gameDb";
+import { interrogateSuspect, getCase, addInvestigationFinding } from "@/lib/gameDb";
 import { generate, generateAudio } from "@/functions/generate";
 import { uploadAudioFromArrayBuffer } from "@/lib/cloudinary";
+import { analyzeInterrogationTranscript, convertToInvestigationFindings, checkClueRevealedTriggers } from "@/functions/transcriptAnalyzer";
 
 // Helper function to detect gender from name using LLM
 async function detectGenderFromName(name: string): Promise<'male' | 'female'> {
@@ -118,9 +119,10 @@ async function POSThandler(request: NextRequest) {
     console.log("Generating conversation flow...");
 
     // Generate conversation flow
-    const previousQuestions = progress.interrogatedSuspects[suspectName]?.questionsAsked || [];
+    const suspectData = (progress.interrogatedSuspects as any)?.[suspectName];
+    const previousQuestions: string[] = suspectData?.questionsAsked || [];
     const previousQuestionsText = previousQuestions.length > 0 
-      ? `\n\nPrevious questions asked to this suspect:\n${previousQuestions.map((q, i) => `${i + 1}. ${q}`).join('\n')}`
+      ? `\n\nPrevious questions asked to this suspect:\n${previousQuestions.map((q: string, i: number) => `${i + 1}. ${q}`).join('\n')}`
       : '';
 
     const conversationPrompt = `You are creating a realistic interrogation conversation between ${name} and ${suspect.name}, a suspect in a murder investigation.
@@ -144,8 +146,9 @@ INSTRUCTIONS:
 3. ${suspect.name} should respond authentically based on their personality and guilt status
 4. ${suspect.isKiller ? `${suspect.name} IS the killer but will NOT confess. They should be evasive, defensive, or misleading when pressed.` : `${suspect.name} is INNOCENT and should be helpful but may show nervousness or frustration.`}
 5. Include natural conversation elements like follow-up questions, clarifications, etc.
-6. Keep each response realistic (not too long or short)
-7. End the conversation naturally when ${name} has gathered sufficient information
+6. Include audio cues, pauses and other natural conversation elements that can be conveyed via audio, but do not inclue actions or descriptions of actions.
+7. Keep each response realistic (not too long or short)
+8. End the conversation naturally when ${name} has gathered sufficient information
 
 FORMAT:
 ${name}: [statement/question]
@@ -216,6 +219,58 @@ Generate the complete interrogation conversation:`;
     }
 
     console.log("Suspect interrogation successful");
+
+    // Analyze the interrogation transcript for findings
+    try {
+      console.log("Analyzing interrogation transcript...");
+      
+      const caseContext = {
+        victimName: caseResult.data.story.victim.name,
+        setting: caseResult.data.story.setting,
+        timelineEvents: caseResult.data.story.timeline.map((t: any) => `${t.time}: ${t.event}`),
+        existingFindings: caseResult.data.investigationProgress?.investigationFindings?.map((f: any) => f.finding) || [],
+        suspectRole: suspect.role,
+        suspectIsKiller: suspect.isKiller
+      };
+
+      const analysisResult = await analyzeInterrogationTranscript(
+        conversation,
+        suspectName,
+        caseContext
+      );
+
+      // Convert analysis to investigation findings
+      const findings = convertToInvestigationFindings(analysisResult, suspectName, caseId);
+
+      // Save findings to database
+      for (const finding of findings) {
+        try {
+          await addInvestigationFinding(caseId, finding);
+        } catch (error) {
+          console.error('Error saving investigation finding:', error);
+        }
+      }
+
+      // Check for clue triggers if suspect has clues
+      if (suspect.cluesTriggers && suspect.cluesTriggers.length > 0) {
+        console.log("Checking clue triggers...");
+        const revealedClues = await checkClueRevealedTriggers(
+          conversation,
+          suspectName,
+          suspect.cluesTriggers
+        );
+
+        if (revealedClues.length > 0) {
+          console.log(`${revealedClues.length} clues revealed:`, revealedClues);
+          // Mark clues as revealed (this would be implemented later)
+        }
+      }
+
+      console.log(`Analysis complete. Found ${findings.length} new findings.`);
+    } catch (error) {
+      console.error("Error analyzing interrogation:", error);
+      // Don't fail the whole request if analysis fails
+    }
 
     // Fallback: no audio, return JSON
     return NextResponse.json({

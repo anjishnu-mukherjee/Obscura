@@ -13,6 +13,7 @@ export interface Suspect {
     motives: string[];
     isKiller: boolean;
     personality: string;
+    cluesTriggers?: ClueWithTrigger[];
 }
 
 export interface TimelineEvent {
@@ -27,6 +28,7 @@ export interface Witness {
     testimony: string;
     reliability: string;
     hiddenAgenda: string;
+    cluesTriggers?: ClueWithTrigger[];
 }
 
 export interface StoryStructure {
@@ -88,4 +90,55 @@ export interface ProcessedClue {
 
 export interface ProcessedClues {
     [location: string]: ProcessedClue[];
+}
+
+export interface ClueWithTrigger {
+    clue: string;
+    triggerType: 'pressing' | 'gentle' | 'aggressive' | 'sympathetic' | 'specific_question';
+    triggerLevel: 1 | 2 | 3 | 4 | 5;
+    triggerDescription: string;
+    isRedHerring: boolean;
+    importance: 'critical' | 'important' | 'minor';
+    revealed: boolean;
+}
+
+export interface NotepadEntry {
+    id: string;
+    caseId: string;
+    content: string;
+    createdAt: any;
+    updatedAt: any;
+    page: number;
+}
+
+export interface InvestigationFinding {
+    id: string;
+    source: 'interrogation' | 'location_visit' | 'clue_discovery';
+    sourceDetails: string;
+    finding: string;
+    importance: 'critical' | 'important' | 'minor';
+    timestamp: any;
+    isNew: boolean;
+}
+
+export interface InterrogationRecord {
+    interrogatedAt: any;
+    lastInterrogationDate: string;
+    sessions: InterrogationSession[];
+}
+
+export interface InterrogationSession {
+    sessionId: string;
+    timestamp: any;
+    questions: InterrogationQA[];
+    fullTranscript: string;
+    audioId?: string;
+    findings?: string[];
+    cluesRevealed?: string[];
+}
+
+export interface InterrogationQA {
+    question: string;
+    response: string;
+    timestamp: any;
 }

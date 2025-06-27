@@ -1,0 +1,413 @@
+{
+  "title": "The Beaumont Betrayal: A Blackwood Inheritance",
+  "setting": "Victorian Manor",
+  "victim": {
+    "name": "Alistair Humphrey Beaumont, Esquire",
+    "profession": "Solicitor and Executor of the Beaumont Estate",
+    "lastKnownLocation": "The Beaumont Estate Library, near the fireplace",
+    "deathTimeEstimate": "23:17",
+    "causeOfDeath": "Stabbed in the back with a letter opener, presumed from his own desk; likely a single, precise thrust severing the spinal cord."
+  },
+  "suspects": [
+    {
+      "name": "Eleanor Beatrice Beaumont",
+      "role": "Alistair's younger sister and one of the heirs to the Beaumont Estate",
+      "alibi": "Eleanor claims to have been in the conservatory from 22:45 onwards, sketching orchids. She states she didn't leave the conservatory, and that the only light came from the moon. She remembers the grandfather clock in the hall chiming 23:00. The gardener, Mr. Davies, saw her through the conservatory window around 22:50 and can corroborate her presence there then. However, Davies admits the window was partially fogged, and he could only make out a figure.",
+      "motives": [
+        "Resentment over Alistair's perceived favoritism from their late father, who always treated her artistic pursuits as frivolous compared to Alistair's legal career. Alistair was appointed executor despite Eleanor being older.",
+        "Financial desperation: Eleanor has accumulated significant debts due to her lavish spending habits and a string of failed art exhibitions. The inheritance is her only hope for solvency.",
+        "Suppressed rage: Eleanor has always been described as \"delicate\" and \"refined\", but underneath simmers a deep resentment at being confined by societal expectations and her brother's condescending attitude towards her."
+      ],
+      "isKiller": false,
+      "personality": "Eleanor presents a picture of delicate fragility and artistic sensitivity. She's quick to tears and often employs dramatic sighs. However, beneath the surface lies a sharp intellect and a fierce will. She is prone to passive-aggressive behavior, veiled insults, and subtle manipulations. She collects exotic orchids and is deeply invested in maintaining the facade of a perfect Victorian lady. She secretly reads scandalous novels.",
+      "cluesTriggers": [
+        {
+          "clue": "I do recall hearing a rather… *robust* argument coming from Alistair's study earlier that evening. Around 10, I believe? It sounded like Professor Blackwood. They were discussing something quite loudly, though I couldn't make out the subject. Alistair's voice was definitely raised, which was unusual for him. He usually kept himself quite collected.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "A gentle inquiry about the atmosphere in the house earlier that evening, expressing concern for her well-being and asking if she noticed anything unusual.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": " (Eyes darting nervously) The orchids… yes, I was sketching my 'Queen of the Night' orchid. A most demanding flower, requires the utmost attention. (She nervously adjusts the lace on her sleeve). And, well, they only bloom at night, you know. That's why I was there so late. Honestly, my art is all I have, detective.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Expressing sympathy for her artistic struggles and validating her passion for orchids, while gently pressing for details about her activity in the conservatory.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": " (A sharp intake of breath, followed by a dramatic sigh) You imply I might have… I couldn't possibly! Alistair, despite his… *failings*, was still my brother. Though... (A pause, almost imperceptible) He did have a gambling problem. Always betting on horses, you know? He lost a considerable sum recently, I overheard him on the telephone speaking to…someone about it. I think he was in a great deal of debt.",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Directly accusing her of having a motive, emphasizing her financial struggles and Alistair's role as executor of the estate, then stepping back to observe her reaction.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "The fog, you say? On the windows? Yes, of course. It was incredibly humid in the conservatory that night. I remember having to wipe the condensation from my spectacles several times. It made sketching quite difficult, really. But, Detective, orchids *require* humidity. One simply *must* put up with it, if one is to appreciate their beauty.",
+          "triggerType": "specific_question",
+          "triggerLevel": 2,
+          "triggerDescription": "Specifically asking about the fog in the conservatory and its impact on her sketching.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Mr. Davies is mistaken about the time. He couldn't have seen me at 22:50. I was there much earlier. I was struggling to capture the right light for my sketch, and the moon wasn't at the right angle until much later - around 23:30, perhaps even closer to midnight. So, no, Mr. Davies is simply mistaken. I'm sure that's what he'll tell you as well if you press him on it. He's rather forgetful, you know.",
+          "triggerType": "pressing",
+          "triggerLevel": 5,
+          "triggerDescription": "Directly confronting her with Davies' testimony and highlighting the discrepancy in the timing, pushing her to explain the inconsistency.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Professor Thaddeus Blackwood",
+      "role": "Alistair's longtime friend and family physician, also a self-proclaimed scholar of obscure history and antiquities.",
+      "alibi": "Blackwood claims to have been in the library from 22:00 onwards, researching a rare medical text. He states he was completely engrossed in his reading and did not hear anything unusual. He adds that he \"nodded off\" around 23:00 and woke up some time later, unsure exactly when. He admits he did not see anyone else, and because he was reading, no one else saw him during that time.",
+      "motives": [
+        "Alistair discovered that Blackwood had been embezzling funds from the Beaumont estate for years, using his position as family physician to siphon money into his antiquities collecting habit. Alistair was threatening to expose him.",
+        "Blackwood has a gambling problem, and has accrued a lot of debt, which Alistair was aware of.",
+        "Alistair and Blackwood were childhood friends, but in the last few years, have become estranged. Blackwood claims it's because of Alistair's growing arrogance and condescension towards him."
+      ],
+      "isKiller": true,
+      "personality": "Blackwood is a portly man with a florid complexion and a booming voice. He affects an air of erudition and authority, often quoting Latin phrases and dispensing unsolicited medical advice. He has a fondness for brandy and cigars and is easily flustered when questioned directly. He is prone to fits of temper when challenged and secretly harbors a deep-seated insecurity about his intellectual abilities and moral standing. He is also secretly in love with Eleanor.",
+      "cluesTriggers": [
+        {
+          "clue": "\"Alistair and I... we had disagreements, of course. All friends do. But to suggest I'd *harm* him? Preposterous! He was becoming... insufferable, always lording his perceived superiority over me. But murder? Unthinkable!\"",
+          "triggerType": "gentle",
+          "triggerLevel": 1,
+          "triggerDescription": "A general, open-ended question about his relationship with Alistair.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "\"Embezzling? From Alistair? That's absurd! I have been *compensated* for my services as his physician and advisor. If there were any... *discrepancies*, they were purely accidental. Perhaps a clerical error? I am, after all, merely a man of medicine, not an accountant. Besides, he had enough money to keep the entire county afloat, what difference would my 'minor' withdrawals make?\"",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Direct accusation of embezzlement with specific evidence of financial irregularities.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "\"The library? Yes, I was there. Immersed in *De morbo gallico*... a fascinating treatise on... *coughs*... remedies. I dozed off, as I said. It was late, and I was fatigued. The fire was roaring, and the room was incredibly warm and inviting. It must have been the heat that affected my memory of the hours that passed.\"",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Repeatedly question the exact timeline he was in the library, pointing out inconsistencies and asking for specific details. Mention the lack of a fire in the library that night.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "\"Eleanor... a remarkable woman. Intelligent, graceful, possessed of a certain... *je ne sais quoi*. Alistair, bless his soul, never truly appreciated her. He was often so dismissive of her opinions, treated her like a mere ornament. A terrible waste, if you ask me... such beauty and kindness...\" *He pauses, realizing he has said too much and attempts to cover it with a cough and a readjustment of his spectacles.*",
+          "triggerType": "sympathetic",
+          "triggerLevel": 2,
+          "triggerDescription": "Inquire about Eleanor, expressing concern for her well-being after Alistair's death.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "\"The Beaumont Estate's accounting records? I can't be certain, but I do recall Alistair mentioning a new, more thorough system was being implemented. He seemed rather pleased with it, stated that it would put an end to 'sloppy record-keeping' and 'unaccountable expenditures.' He was considering letting Mr. Croft go, actually! A risky gamble on his part. \"",
+          "triggerType": "specific_question",
+          "triggerLevel": 4,
+          "triggerDescription": "Question him directly about any changes Alistair was making to the estate's financial management. Ask about new accounting systems and personnel decisions.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Mr. Silas Croft",
+      "role": "The Beaumont Estate's Head Gardener and distant relative of the Beaumont Family by marriage.",
+      "alibi": "Croft claims to have been patrolling the grounds to deter poachers, starting at 22:00. He claims he was near the rose garden at 23:17. He asserts that he saw no one suspicious, but the grounds are extensive, and it was a moonless night. He had a brief conversation with the stablehand, Thomas, around 22:30 near the stables, who can confirm Croft was on his rounds at that time. However, the stable is a distance from where the crime occured.",
+      "motives": [
+        "Croft's wife, Martha, was Alistair's former lover, and their affair ended badly. Croft has harbored a deep-seated resentment towards Alistair for years, believing that he ruined his marriage and Martha's reputation.",
+        "Croft believed that Alistair was planning to sell off parts of the Beaumont Estate gardens, which would have meant Croft lost his job and home and the land he loved would be destroyed. Croft has been the gardener at the Beaumont estate his entire life.",
+        "Croft is a quiet, brooding man with a reputation for having a violent temper when provoked. He struggles with anger management."
+      ],
+      "isKiller": false,
+      "personality": "Croft is a taciturn and gruff man with calloused hands and weathered features. He speaks sparingly and avoids eye contact. He is fiercely protective of the Beaumont Estate gardens and takes great pride in his work. He has a quiet, watchful demeanor and a deep knowledge of the land. He is prone to fits of silent rage and is rumored to have a history of brawling.",
+      "cluesTriggers": [
+        {
+          "clue": "The roses were Alistair's pride and joy. He'd spend hours out there, even at night. Said the moonlight did 'em good. More like he was avoiding his wife, if you ask me.",
+          "triggerType": "gentle",
+          "triggerLevel": 1,
+          "triggerDescription": "General conversation about the Beaumont estate and Alistair's habits.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Martha? She was always a kind soul, though troubled. Alistair... well, he had a way of getting under a man's skin. I won't speak ill of the dead, but he wasn't always a gentleman, especially where women were concerned.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 2,
+          "triggerDescription": "Showing empathy towards Martha and gently probing the relationship between her and Alistair.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Poachers, I tell you! Always sneaking about. They don't care about the estate, the beauty of it all. Just greedy hands grabbing what isn't theirs. I shouted at someone near the north gate around... around 11 pm. Couldn't see their face, just a dark figure.",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Questioning the details of his alibi and pressing him on whether he saw anyone on the grounds.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Sell the gardens? He wouldn't... would he? I heard whispers... a new development. But he promised... If he had sold it off, that man deserved everything he got.",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Accusation that he knew about Alistair's plan to sell the gardens and linking it to a motive.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "The… the pruning shears. They weren't where they should have been, near the potting shed, that morning. Found them later...near the maze. Cleaned, polished. Out of place.",
+          "triggerType": "specific_question",
+          "triggerLevel": 5,
+          "triggerDescription": "Directly ask if he noticed anything out of place or any missing tools, then maintain focus on what he says no matter how much he tries to deflect.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Miss Seraphina Bellweather",
+      "role": "Alistair's Fiancée.",
+      "alibi": "Miss Bellweather claims she was in her room, number 7, preparing for bed starting from 22:00. She states she had a headache and took laudanum. She says she drifted to sleep. She didn't leave her room. The maid, Agnes, brought her a cup of tea at 21:45. Agnes saw the laudanum bottle out. The maid confirms that Seraphina complained of a headache and was already in her night clothes when she brought the tea.",
+      "motives": [
+        "Seraphina stood to gain a substantial inheritance and social standing through her marriage to Alistair, but she had recently discovered that Alistair was deeply in debt, and her marriage would mean absorbing that debt. This was a secret she has kept until now.",
+        "Seraphina had a secret lover (the stablehand, Thomas), and Alistair had discovered their affair. Alistair threatened to expose Seraphina, ruining her reputation and social standing. Seraphina also could not have Thomas and any of her inheritance.",
+        "Seraphina is a compulsive liar and has been known to manipulate people to get what she wants. She is used to getting her own way, but with Alistair, things were not going according to plan."
+      ],
+      "isKiller": false,
+      "personality": "Seraphina is a beautiful and ambitious young woman with a charming smile and a keen eye for fashion. She is skilled at social maneuvering and knows how to use her beauty to her advantage. She is highly materialistic and cares deeply about her social status. She is prone to bouts of jealousy and has a hidden ruthlessness beneath her polished exterior. She can be cruel and manipulative when crossed.",
+      "cluesTriggers": [
+        {
+          "clue": "Alistair was acting strangely in the days leading up to his death. He seemed…distracted, almost fearful. He kept muttering about \"exposure\" and \"ruin,\" but wouldn't tell me what he meant. I assumed it was business-related; he often had dealings I didn't fully understand.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "A general inquiry about Alistair's demeanor before his death, asked with a tone of concern and seeking understanding.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Yes, Agnes brought me tea. I barely remember it, though. The laudanum was already taking effect. It was a very strong dose, perhaps too strong. It did the trick though because I was out like a light. Usually, I do not take such a large dose. But my head was pounding.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Expressing concern for Miss Bellweather's wellbeing and the intensity of her headache, prompting her to elaborate on her condition and laudanum use.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Of course, I loved Alistair! Why would I want him dead? He was… he was my future. Our families had been planning this union for years. It would give me the security I have always wanted.",
+          "triggerType": "aggressive",
+          "triggerLevel": 1,
+          "triggerDescription": "Directly accusing her of having a motive, then watch for inconsistencies in her denial and force the truth.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "(Visibly agitated) How dare you? Implying that I, Seraphina Bellweather, would soil my hands… with a stablehand! The thought is utterly preposterous! Thomas is…just someone who does not make my skin crawl. He is a person I can talk to about simple things without having to worry about society or anything like that. We are not lovers!",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Presenting evidence of a romantic relationship with the stablehand, such as a witness statement or a found love letter, and observing her reaction.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "Alistair had debts. Significant ones, I recently discovered. He…he didn't tell me himself, of course. I overheard him arguing with someone in his study a few days ago. He was desperate and spoke of some investments going wrong. He must have been keeping it from me, not wanting to worry me before the wedding. The fool!",
+          "triggerType": "specific_question",
+          "triggerLevel": 5,
+          "triggerDescription": "Specifically asking Miss Bellweather about Alistair's financial situation and any knowledge she had of his debts, based on information you already know to be true.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        }
+      ]
+    }
+  ],
+  "killer": "Professor Thaddeus Blackwood",
+  "locations": [
+    "The Beaumont Estate Library",
+    "The Conservatory",
+    "Professor Blackwood's Study",
+    "The Beaumont Estate Gardens",
+    "Miss Bellweather's Room (Room 7)"
+  ],
+  "clues": {
+    "The Beaumont Estate Library": [
+      "The letter opener, identified as belonging to Alistair's desk set, lies near his body. Traces of blood are present, matching Alistair's blood type (confirmed O-negative). Initial examination suggests the blade was wiped clean, but faint traces of a second blood type (A-positive) are detected using luminol. This second blood type matches Professor Blackwood.",
+      "A half-finished glass of brandy sits on a side table near the fireplace. The glass bears Professor Blackwood's fingerprints and a faint residue of his preferred brand of brandy, “Hennessy VSOP.”",
+      "Alistair's diary is open on his desk. The last entry, dated today, reads: \"Thaddeus's indiscretions...cannot be ignored. Meeting him tonight to discuss...matter of grave importance...must be resolved.\" The entry is abruptly cut off.",
+      "A torn piece of paper lies crumpled near the bookshelf. When pieced together, it appears to be a fragment of a bill from an antiquities dealer in London. The bill mentions the purchase of a rare Egyptian artifact and is addressed to \"T. Blackwood, Esq.\" The amount due is considerable (1500 pounds)."
+    ],
+    "The Conservatory": [
+      "Eleanor Beaumont's sketchbook is on a small table. The last sketch is of a specific orchid, *Paphiopedilum rothschildianum*, dated 22:50. The sketch is incomplete, suggesting it was interrupted.",
+      "A broken orchid pot lies on the floor, near the French doors leading to the gardens. The soil is damp and contains traces of mud consistent with the soil found in the rose garden.",
+      "A small, almost imperceptible smudge of blood (O-negative) is found on one of the glass panes of the French doors. It is positioned high enough that it could only have been placed there by someone of Alistair’s height or by someone standing on something.",
+      "Mr. Davies reports that he saw Eleanor Beaumont in the conservatory, but that he briefly glanced away when a cat passed by the window, meaning that she could have left the room unnoticed."
+    ],
+    "Professor Blackwood's Study": [
+      "A half-empty bottle of laudanum is on Blackwood's desk. The label indicates it was recently prescribed to Miss Seraphina Bellweather. The prescription date is one week prior.",
+      "A hidden compartment behind a bookshelf reveals a collection of rare antiquities, including a tarnished silver letter opener bearing the Beaumont family crest. It is missing from Alistair's desk set. Close examination reveals traces of blood in the crevices, cleaned, but present. The blood matches Alistair's type, O-negative.",
+      "Blackwood's ledger reveals a series of suspicious transactions, including large withdrawals from the Beaumont estate account, disguised as payments for medical supplies and consultations. Several entries are dated around the time Blackwood purchased expensive artifacts.",
+      "There is a book about botany open on his desk, with a pressed orchid between the pages. It's *Paphiopedilum rothschildianum*. The pressed flower's stalk is broken and has the same damage pattern as damage to one of Eleanor's orchids."
+    ],
+    "The Beaumont Estate Gardens": [
+      "Footprints are found leading from the conservatory to the rose garden and back. The footprints match the size and tread pattern of Professor Blackwood's boots. The soil composition matches that found on the broken orchid pot in the conservatory.",
+      "Near the rose bushes, a discarded cigar butt is found. It is Professor Blackwood's preferred brand and the cigar has a faint lipstick stain. Seraphina Bellweather wears the same brand of lipstick.",
+      "Mr. Croft is seen cleaning blood from his gardening shears but claims that it's from a rosebush that he cut earlier that day. The blood type is tested, and is animal blood from a deer.",
+      "A muddy handkerchief is found tucked into the roots of a rosebush. It is embroidered with the initials \"E.B.\""
+    ],
+    "Miss Bellweather's Room (Room 7)": [
+      "An empty vial of laudanum is found in her wastepaper basket, but it doesn't account for the laudanum that should still be in the other bottle on Blackwood's desk. She claims to have disposed of it yesterday, but the vial is clean.",
+      "Underneath her mattress, a love letter is discovered from Thomas, the stablehand. The letter confesses their affair and discusses plans to run away together if Alistair refuses to give Seraphina a divorce.",
+      "A receipt from a pawn shop is found hidden in her jewelry box. The receipt shows that she pawned a diamond necklace (a gift from Alistair) for a substantial sum. The date is one week prior to the murder.",
+      "There is mud on her shoes consistent with soil from the rose garden."
+    ]
+  },
+  "witnesses": {
+    "The Beaumont Estate Library": [
+      {
+        "name": "Agnes Plumtree",
+        "role": "Housemaid",
+        "background": "A young, impressionable maid who has worked at the Beaumont Estate for six months. She is easily flustered and prone to gossip.",
+        "testimony": "She claims to have heard muffled voices coming from the library around 23:00, but she couldn't make out what was being said. She also claims to have seen Professor Blackwood leaving the library around 23:30, looking agitated.",
+        "reliability": "Potentially unreliable due to her nervousness and tendency to exaggerate.",
+        "hiddenAgenda": "She has a crush on the stablehand, Thomas, and might be trying to protect him or someone he cares about."
+      }
+    ],
+    "The Conservatory": [],
+    "Professor Blackwood's Study": [
+      {
+        "name": "Edgar Finch",
+        "role": "Bookshop Owner",
+        "background": "Edgar is an eccentric bookshop owner from the nearby village, known for his detailed memory and knowledge of local gossip.",
+        "testimony": "He recalls Professor Blackwood purchasing a specific book on poisonous plants just last week. He remembers the Professor being unusually anxious and distracted during the purchase.",
+        "reliability": "Generally reliable, though prone to exaggeration.",
+        "hiddenAgenda": "None apparent, but he enjoys being involved in local affairs and might embellish his story to make it more interesting."
+      }
+    ],
+    "The Beaumont Estate Gardens": [
+      {
+        "name": "Thomas Bartlett",
+        "role": "Stablehand",
+        "background": "Thomas has been working at the Beaumont Estate for several years and is known for his quiet demeanor and strong work ethic. He has a reputation for being discreet.",
+        "testimony": "Claims he spoke to Mr. Croft around 22:30. He seemed agitated, muttering about \"greedy parasites ruining everything.\" He also confirms that Miss Bellweather often visited the stables.",
+        "reliability": "Generally reliable, but protective of Miss Bellweather.",
+        "hiddenAgenda": "Is secretly in love with Miss Bellweather."
+      }
+    ],
+    "Miss Bellweather's Room (Room 7)": []
+  },
+  "timeline": [
+    {
+      "time": "21:00",
+      "event": "Two days prior to the murder, Professor Blackwood visits Edgar Finch's bookshop and purchases a book on poisonous plants, appearing unusually flustered and distracted. (Professor Blackwood's Study/Edgar Finch's Bookshop)"
+    },
+    {
+      "time": "10:00",
+      "event": "The day before the murder, Alistair confronts Professor Blackwood in the library about the embezzled funds, threatening to expose him to the Beaumont family and authorities. Blackwood pleads for mercy, but Alistair remains resolute. (The Beaumont Estate Library)"
+    },
+    {
+      "time": "11:30",
+      "event": "Eleanor pawns a valuable family heirloom at a local pawnbroker in a desperate attempt to cover her gambling debts. (Off-site, not specified)"
+    },
+    {
+      "time": "14:00",
+      "event": "Mr. Croft overhears Alistair discussing the potential sale of a portion of the Beaumont Estate gardens with a prospective buyer. Croft becomes visibly agitated. (The Beaumont Estate Gardens)"
+    },
+    {
+      "time": "16:00",
+      "event": "Miss Bellweather meets secretly with Thomas, the stablehand, in the stables. She informs him that her upcoming marriage to Alistair is purely for financial reasons and expresses her unhappiness. (The Beaumont Estate Gardens, near the stables)"
+    },
+    {
+      "time": "18:00",
+      "event": "Alistair has dinner with Miss Bellweather, Eleanor, and Professor Blackwood in the dining room. The atmosphere is tense, with Eleanor making veiled insults towards Alistair and Blackwood remaining unusually quiet. (The Beaumont Estate Dining Room, not specified)"
+    },
+    {
+      "time": "20:00",
+      "event": "Mr. Croft sharpens his gardening shears with unusual intensity in the tool shed. He mutters about \"parasites\" and \"ruining everything\". (The Beaumont Estate Gardens, Tool Shed)"
+    },
+    {
+      "time": "21:45",
+      "event": "Agnes, the housemaid, brings Miss Bellweather a cup of tea in her room (Room 7). Agnes notes that Miss Bellweather complained of a headache and had already taken laudanum. (Miss Bellweather's Room (Room 7))"
+    },
+    {
+      "time": "22:00",
+      "event": "Professor Blackwood enters the library, claiming to be researching a medical text. (The Beaumont Estate Library)"
+    },
+    {
+      "time": "22:00",
+      "event": "Mr. Croft begins his rounds patrolling the grounds for poachers. (The Beaumont Estate Gardens)"
+    },
+    {
+      "time": "22:00",
+      "event": "Miss Bellweather remains in her room (Room 7), supposedly resting and under the influence of laudanum. (Miss Bellweather's Room (Room 7))"
+    },
+    {
+      "time": "22:30",
+      "event": "Mr. Croft speaks briefly with Thomas, the stablehand, near the stables. Thomas notes that Croft seemed agitated and was muttering about \"greedy parasites ruining everything\". (The Beaumont Estate Gardens, near the stables)"
+    },
+    {
+      "time": "22:45",
+      "event": "Eleanor enters the conservatory, claiming to sketch orchids. (The Conservatory)"
+    },
+    {
+      "time": "22:50",
+      "event": "Mr. Davies, the gardener, claims to see Eleanor through the fogged conservatory window, confirming her presence. However, visibility is poor. (The Conservatory, exterior)"
+    },
+    {
+      "time": "23:00",
+      "event": "Agnes Plumtree, the housemaid, hears muffled voices coming from the library but cannot distinguish the words. (The Beaumont Estate Library, hallway outside)"
+    },
+    {
+      "time": "23:00",
+      "event": "Professor Blackwood claims to have \"nodded off\" in the library while reading. (The Beaumont Estate Library)"
+    },
+    {
+      "time": "23:00",
+      "event": "Eleanor remembers the grandfather clock chiming in the hall. (The Conservatory)"
+    },
+    {
+      "time": "23:10",
+      "event": "Professor Blackwood, having woken up, carefully retrieves the letter opener from Alistair's desk. (The Beaumont Estate Library)"
+    },
+    {
+      "time": "23:15",
+      "event": "Professor Blackwood stabs Alistair in the back with the letter opener while Alistair is reviewing documents near the fireplace. (The Beaumont Estate Library, near the fireplace)"
+    },
+    {
+      "time": "23:17",
+      "event": "Alistair Beaumont, Esquire, dies from a single, precise stab wound to the back, severing his spinal cord. (The Beaumont Estate Library, near the fireplace)"
+    },
+    {
+      "time": "23:30",
+      "event": "Agnes Plumtree claims to see Professor Blackwood leaving the library, looking agitated. (The Beaumont Estate Library, hallway outside)"
+    },
+    {
+      "time": "07:00",
+      "event": "The following morning, Agnes Plumtree discovers Alistair's body in the library. She screams, alerting the rest of the household. (The Beaumont Estate Library)"
+    }
+  ]
+}

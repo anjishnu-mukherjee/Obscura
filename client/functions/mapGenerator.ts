@@ -48,6 +48,7 @@ Example format:
     ...
 ]
     
+If you are using special characters in any of the fields, make sure to escape them. For example, if you are using a quote, you should escape it with a backslash.
 There should be no other text before or after the JSON in the response.`;
 
     const response = await generate(prompt);
@@ -87,6 +88,8 @@ graph TD
     L2 -- o -- L3["Storage"]
 
 Return only the Mermaid code, no other text.
+
+If you are using special characters in any of the fields, make sure to escape them. For example, if you are using a quote, you should escape it with a backslash.
 
 There should be no other text before or after the Mermaid code in the response.`;
 

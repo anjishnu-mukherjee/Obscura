@@ -18,7 +18,7 @@ import {
 // Import your generation functions (adjust paths as needed)
 import { generateStory } from "@/functions/storyGenerator";
 import { composeCaseIntro } from "@/functions/caseIntroComposer";
-import { generateGameClues } from "@/functions/clueGenerator";
+import { generateGameClues, generateEnhancedStoryWithTriggers } from "@/functions/clueGenerator";
 import { generateLocationMap } from "@/functions/mapGenerator";
 
 export async function POST(request: NextRequest) {
@@ -46,7 +46,12 @@ export async function POST(request: NextRequest) {
     console.log("Generating case content...");
 
     // Generate all case content
-    const story = await generateStory();
+    console.log("Generating basic story...");
+    const basicStory = await generateStory();
+    
+    console.log("Enhancing story with AI-generated clue triggers...");
+    const story = await generateEnhancedStoryWithTriggers(basicStory);
+    
     const caseIntro = await composeCaseIntro(
       story,
       userResult.data.name,

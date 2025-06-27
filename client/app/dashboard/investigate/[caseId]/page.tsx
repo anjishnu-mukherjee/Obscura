@@ -18,6 +18,9 @@ import { useEffect, useState, use } from 'react';
 import { useCase } from '@/hooks/useCases';
 import { canVisitLocation, canInterrogateSuspect, getCurrentISTDate, InvestigationProgress } from '@/lib/investigationUtils';
 import { LocationNode, Suspect } from '@/functions/types';
+import FloatingNotepad from '@/components/FloatingNotepad';
+import FloatingWatson from '@/components/FloatingWatson';
+import InvestigationFindings from '@/components/InvestigationFindings';
 
 interface InvestigatePageProps {
   params: Promise<{
@@ -114,11 +117,6 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
   };
 
   const handleInterrogateSuspect = (suspectName: string) => {
-    if (!canInterrogateSuspect(progress, suspectName)) {
-      alert('You have already interrogated a suspect today. Try again tomorrow at 12 AM IST.');
-      return;
-    }
-
     router.push(`/dashboard/investigate/${resolvedParams.caseId}/interrogate/${encodeURIComponent(suspectName)}`);
   };
 
@@ -241,6 +239,11 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
             </button>
           </motion.div>
 
+          {/* Investigation Findings */}
+          <motion.div variants={fadeInUp}>
+            <InvestigationFindings caseId={resolvedParams.caseId} />
+          </motion.div>
+
           {/* Content */}
           <motion.div variants={fadeInUp}>
             {selectedTab === 'locations' ? (
@@ -315,28 +318,20 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className={`p-6 bg-white/5 backdrop-blur-xl border rounded-xl transition-all duration-300 ${
-                        canInterrogate 
-                          ? 'border-white/10 hover:bg-white/10 cursor-pointer hover:border-teal-400/50' 
-                          : 'border-gray-600/50 opacity-60'
-                      }`}
-                      onClick={() => canInterrogate && handleInterrogateSuspect(suspect.name)}
+                      className="p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl transition-all duration-300 hover:bg-white/10 cursor-pointer hover:border-teal-400/50"
+                      onClick={() => handleInterrogateSuspect(suspect.name)}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
                             isInterrogated 
                               ? 'bg-gradient-to-br from-green-500 to-green-400' 
-                              : canInterrogate
-                                ? 'bg-gradient-to-br from-purple-500 to-purple-400'
-                                : 'bg-gray-600'
+                              : 'bg-gradient-to-br from-purple-500 to-purple-400'
                           }`}>
                             {isInterrogated ? (
                               <CheckCircle className="w-6 h-6 text-white" />
-                            ) : canInterrogate ? (
-                              <Users className="w-6 h-6 text-white" />
                             ) : (
-                              <Lock className="w-6 h-6 text-white" />
+                              <Users className="w-6 h-6 text-white" />
                             )}
                           </div>
                           <div>
@@ -353,8 +348,7 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
                         
                         {!canInterrogate && (
                           <div className="flex items-center gap-2 text-gray-400">
-                            <Clock className="w-4 h-4" />
-                            <span className="text-sm">Resets at 12 AM IST</span>
+                            <span className="text-sm">Already interrogated today</span>
                           </div>
                         )}
                       </div>
@@ -366,6 +360,10 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
           </motion.div>
         </motion.div>
       </main>
+      
+      {/* Floating Components */}
+      <FloatingNotepad caseId={resolvedParams.caseId} />
+      <FloatingWatson caseId={resolvedParams.caseId} />
     </div>
   );
 } 
