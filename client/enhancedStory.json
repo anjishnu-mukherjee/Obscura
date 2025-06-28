@@ -131,6 +131,44 @@
       ]
     },
     {
+<<<<<<< HEAD
+      "name": "Rajkumar Arjun Singh",
+      "role": "Anjali Devi's son, heir to the estate, struggling artist",
+      "alibi": "Arjun states he was in his art studio, located in a separate wing of the manor, painting from 21:00 until 01:00. He claims he was completely absorbed in his work and didn't hear anything unusual. No one can verify his alibi, as his studio is isolated.",
+      "motives": [
+        "Financial Dependence & Control: Arjun resented his mother's tight control over his finances. He desired independence and the freedom to pursue his artistic passions without her constant scrutiny and disapproval.",
+        "Artistic Recognition: Arjun felt his mother belittled his artistic talent, constantly comparing him to his successful cousins and urging him to take up a 'respectable' profession. He yearned for her approval and recognition.",
+        "Secret Debt and Gambling Habit: Arjun has a gambling problem and is in debt to dangerous individuals. He secretly asked his mother for money which she refused to give. This may have spurred him to take drastic actions."
+      ],
+      "isKiller": true,
+      "personality": "Rajkumar Arjun is a sensitive and introspective soul, torn between his artistic ambitions and his familial obligations. He is prone to bouts of depression and self-doubt. He is easily influenced by others and struggles to assert himself. He is passive-aggressive and prone to making sarcastic remarks when frustrated. While he loves his mother, he also resents her controlling nature. He's not the most courageous soul, so he may have hired a hitman to do the job.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140347/obscura/suspects/obscura/suspects/Rajkumar%20Arjun%20Singh_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "I was working on a landscape piece. It's… it's mostly grey. Depressing, I suppose, like my life. The grey reflects the despair I felt because my mother never believed in my art.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 2,
+          "triggerDescription": "Express sympathy for his artistic struggles and lack of parental support. Ask about the emotional content of his art.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Yes, mother and I argued. We always did. She never understood my passion. But murder? That's absurd. I would never! I may have said things in anger, even stormed off that evening, but I was in my studio ALL night, painting. It was a new oil paint. It was hard to wash off... I think.",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Directly accuse him of arguing with his mother and downplaying his emotional reaction. Watch for him over-explain or contradict himself.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Vikram? That pompous ass probably had something to do with it. He's always been jealous of the inheritance. He would have benefited from it.",
+          "triggerType": "gentle",
+          "triggerLevel": 1,
+          "triggerDescription": "Casually inquire about other family members and their potential motives.",
+          "isRedHerring": true,
+=======
       "name": "Divya Sharma",
       "role": "Lakshmi Kant Sharma's Wife, Homemaker",
       "alibi": "Divya claims she was asleep in her room from 22:00 onwards. She says she took a sleeping pill due to a severe headache and didn't wake up until the next morning. The family servant, Meena, confirms that Divya was in her room when she brought her dinner at 21:30, but Meena doesn't know if she was asleep or awake later in the night. Meena lives in the outhouse on the property and wouldn't hear anything through the house.",
@@ -149,10 +187,17 @@
           "triggerLevel": 1,
           "triggerDescription": "Expressing sympathy for her situation and acknowledging the difficulty of her marriage.",
           "isRedHerring": false,
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "importance": "important",
           "revealed": false
         },
         {
+<<<<<<< HEAD
+          "clue": " (After a long pause, fidgeting) I… I borrowed some money. A small sum. It's nothing. It's for art supplies! Experimental materials, you know? She refused to give it to me. But it's not a big deal!",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Confront him directly about his gambling debt and financial situation. Highlight the evidence you have. Observe his reaction and body language.",
+=======
           "clue": "I took the sleeping pill. I swear I did. The doctor prescribed it months ago, for my headaches. I keep it in the nightstand drawer. See? I can show you.",
           "triggerType": "specific_question",
           "triggerLevel": 2,
@@ -175,22 +220,69 @@
           "triggerType": "aggressive",
           "triggerLevel": 4,
           "triggerDescription": "Accusing her of snapping and lashing out, observing for any reaction or admittance. The mention of the dhoti helps to imply intent without the action being related to the murder.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
+<<<<<<< HEAD
+          "clue": " (Barely audible whisper) The… the studio door… sometimes it sticks. You have to… really push it hard to get it fully shut. It's quite loud. And if it's not shut completely, it swings open after a bit.",
+          "triggerType": "specific_question",
+          "triggerLevel": 5,
+          "triggerDescription": "Ask very specific and technical questions about the state of his studio door, and the sound that might be made if it doesn't shut fully. You might also ask about the latch and whether it makes a noise. This is a trigger that will be harder to obtain as it may directly reveal how he sneaked out of the room",
+          "isRedHerring": false,
+          "importance": "critical",
+=======
           "clue": "He threatened to take everything from me, you know. Said he'd leave me with nothing if I ever challenged him. That I'd be out on the streets, begging for scraps. (Nail biting intensifies, eyes dart around the room)",
           "triggerType": "pressing",
           "triggerLevel": 5,
           "triggerDescription": "Repeatedly questioning her about her financial security and vulnerability if Lakshmi left her, stressing that she would be left with nothing. Nail biting and eye darting should be closely watched.",
           "isRedHerring": true,
           "importance": "minor",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "revealed": false
         }
       ]
     },
     {
+<<<<<<< HEAD
+      "name": "Priya Sharma",
+      "role": "Anjali Devi's cousin from the opposing family faction, visiting from Delhi",
+      "alibi": "Priya claims to have been feeling unwell and retired to her room around 21:30. She says she took a sleeping draught and didn't wake up until the following morning. A servant, Devi, confirms bringing her a glass of water and a sleeping draught around 21:45, but no one saw Priya after that.",
+      "motives": [
+        "Land Dispute: The Sharma and Singh families have been locked in a bitter land dispute for generations. Anjali Devi was the primary obstacle to Priya's family claiming what they believe is rightfully theirs.",
+        "Revenge for Father's Humiliation: Priya's father was publicly humiliated by Anjali Devi years ago during a business dealing. Priya vowed to avenge her father's honor.",
+        "Jealousy of Anjali's Status: Priya has always been envious of Anjali Devi's position and influence. Priya felt that Anjali Devi had gotten everything she wanted in life."
+      ],
+      "isKiller": false,
+      "personality": "Priya is a sophisticated and ambitious woman, known for her sharp wit and cunning intellect. She is fiercely loyal to her family and deeply invested in their success. She possesses a calculating mind and is not afraid to use manipulation to achieve her goals. She is outwardly charming and polite, but underneath lies a ruthless determination and a thirst for power. She is also prone to holding grudges and seeking revenge.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140346/obscura/suspects/obscura/suspects/Priya%20Sharma_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "While I wasn't particularly close to Anjali, I did overhear Rana Vikram Singh arguing with her quite vehemently earlier that day near the stables. It sounded like it was about money, something to do with gambling debts.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Expressing general condolences about Anjali's death and creating a safe space for Priya to share any observations, however small.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Devi, the servant, seems awfully nervous. She was practically shaking when she brought me my water and the sleeping draught. I wonder if she knows more than she's letting on?",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Directly accuse Priya of withholding information and suggest she might be protecting someone.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Of course, I was aware of the land dispute. It's been hanging over our families for generations. But honestly, I was more interested in expanding my business in Delhi than acquiring a few acres of land here.",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Confront Priya directly with the motive related to the land dispute and observe her reaction and attempt to downplay its importance to her.",
+=======
       "name": "Vikram Singh Rathore",
       "role": "Landlord, Local Moneylender",
       "alibi": "Vikram claims he was playing cards with three other men – Kishore, Deepu, and Santosh – at Kishore's house from 22:00 until after midnight. Kishore confirms this, but Deepu and Santosh are known to be heavily indebted to Vikram and are likely to corroborate his story regardless of the truth. Vikram admits he left the game for about 10 minutes around 23:00 to \"stretch his legs\".",
@@ -208,11 +300,18 @@
           "triggerType": "gentle",
           "triggerLevel": 2,
           "triggerDescription": "Casually ask about Vikram's relationship with Lakshmi Kant Sharma, focusing on any financial dealings.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
+<<<<<<< HEAD
+          "clue": "The sleeping draught...it had a strange taste. Bitter. I couldn't quite place it, but it wasn't the usual taste. I thought it was perhaps just a bad batch and didn't think much of it.",
+          "triggerType": "specific_question",
+          "triggerLevel": 5,
+          "triggerDescription": "Ask Priya directly about the sleeping draught. Highlight any inconsistencies in her story, focusing on the details.",
+=======
           "clue": "That Anjali Reddy... she's got a fiery temper. I saw her arguing with Sharma near the Panchayat office a few days before... you know.",
           "triggerType": "aggressive",
           "triggerLevel": 3,
@@ -226,11 +325,21 @@
           "triggerType": "pressing",
           "triggerLevel": 4,
           "triggerDescription": "Present solid evidence that Vikram threatened Sharma. Push him to admit to the specifics of their final interactions.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
+<<<<<<< HEAD
+          "clue": "It is true my father was... humiliated. But that was years ago. I'm a businesswoman now, I act with strategy, not petty revenge. Although, I suspect that Lakshmi Bai was more than happy about Anjali's death. She always felt overshadowed by Anjali.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Attempt to build rapport and suggest that you understand Priya's past grievances, creating a space for her to reveal her feelings and potentially implicate others.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+=======
           "clue": "I left the card game for about ten minutes. To... relieve myself. The pressure can get to an old man. And those boys, Deepu and Santosh, they are not always watching.",
           "triggerType": "specific_question",
           "triggerLevel": 2,
@@ -247,10 +356,84 @@
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
         }
       ]
     }
   ],
+<<<<<<< HEAD
+  "killer": "Rajkumar Arjun Singh",
+  "locations": [
+    "The Library",
+    "Arjun's Art Studio",
+    "The Billiards Room",
+    "The Kitchen",
+    "The Estate Gardens"
+  ],
+  "clues": {
+    "The Library": [
+      "The victim's writing desk is in disarray. The ledger she was reviewing is open to a page detailing recent withdrawals from the family trust, with a significant sum marked 'Discretionary Funds - Arjun'. The last entry is dated yesterday. The page is slightly smudged with what appears to be oil paint.",
+      "A silken scarf, identified as belonging to the Sharma family faction (distinct color and pattern), is lying on the floor near the victim. A faint scent of sandalwood is detectable on the scarf.",
+      "A half-empty cup of masala chai sits on the desk. Fingerprints are visible on the cup. Forensic analysis reveals that in addition to Anjali Devi's fingerprints, there are also partial fingerprints that do not match any known residents of the manor but does match a known associate of Arjun's gambling debt.",
+      "The window is slightly ajar, despite the chilly night. Footprints, seemingly made by expensive leather shoes, are visible in the flowerbed outside the window. The footprints lead away from the manor towards the stables."
+    ],
+    "Arjun's Art Studio": [
+      "Arjun's latest painting is a disturbing portrait of his mother, with exaggerated shadows and a palpable sense of unease. The painting is dated today.",
+      "A small, ornate box containing betting slips is hidden behind a canvas. The slips indicate significant gambling debts owed to a known local bookie.",
+      "A tube of sandalwood-scented oil paint is on the easel. The paint is the same brand and color found smudged on the ledger in the library. The tube is almost empty.",
+      "A recently cleaned silk scarf, similar in texture and material to the one found at the crime scene, is drying on a rack. Traces of a cleaning solution are detectable. A faint red stain is barely visible on one corner."
+    ],
+    "The Billiards Room": [
+      "Rana Vikram's cue is lying on the billiards table. It appears recently used. There's a faint smear of what might be blood on the leather grip. Forensics confirms it is human blood and matches Rajkumari Anjali Devi Singh.",
+      "An empty bottle of single-malt scotch sits on the side table, along with a tumbler. Fingerprints on the bottle match Rana Vikram. Traces of sleeping draught are detected in the tumbler.",
+      "A discarded betting slip is crumpled near the waste bin. It shows a substantial loss from a cockfight held earlier that day. The handwriting on the slip is identified as belonging to Rana Vikram.",
+      "The window leading to the back garden is unlocked and ajar. There are faint mud traces on the windowsill, suggesting someone recently climbed in or out. The mud matches soil found in the Estate Gardens, particularly near the Lotus Pond."
+    ],
+    "The Kitchen": [
+      "Lakshmi's knife set is meticulously organized. One knife is missing from its place. It's a small paring knife, commonly used for peeling vegetables. The empty slot is slightly dusty, suggesting the knife hasn't been used in some time but recently was returned.",
+      "A discarded cloth, used for wiping surfaces, is found in the trash. It has traces of a strong cleaning solution and faint traces of sandalwood oil.",
+      "A broken vial labeled \"Sleeping Draught\" is discovered behind the spice rack. The label matches the prescription Devi gave to Priya.",
+      "A freshly made cup of herbal tea sits near the stove. It appears to be Lakshmi's personal blend. A small amount of unidentified white powder is mixed in."
+    ],
+    "The Estate Gardens": [
+      "Footprints leading from the Library window end near the Lotus Pond. The footprints are partially obscured by recent rainfall, but the expensive leather shoe tread is still distinguishable.",
+      "A small, tarnished silver locket is found near the Lotus Pond. The locket contains a miniature portrait of a young woman resembling Lakshmi. An inscription on the back reads, 'Forever Yours, A'.",
+      "Near the stables, a discarded matchbook from a local gambling den is found. The matchbook has fingerprints matching Arjun Singh.",
+      "A discarded piece of canvas with splotches of oil paints lies near the tool shed. A closer examination reveals it was used to clean brushes and the paint colors matches the type used in Arjun’s Art Studio."
+    ]
+  },
+  "witnesses": {
+    "The Library": [],
+    "Arjun's Art Studio": [
+      {
+        "name": "Ramesh, the Gardener",
+        "role": "Gardener",
+        "background": "Ramesh has worked on the estate for over 20 years and is a keen observer. He is loyal to the Singh family, but also holds some disdain towards those who take the family riches for granted.",
+        "testimony": "Ramesh claims he saw Arjun sneaking out of the main house around 23:30, looking agitated. He was heading towards the stables but seemed to be avoiding the main path.",
+        "reliability": "Fairly reliable, as he is generally honest and observant. However, he might be biased due to his respect for Anjali Devi.",
+        "hiddenAgenda": "He might be subtly protecting Lakshmi's son, the stable boy, as he sees him as a hardworking young man led astray."
+      }
+    ],
+    "The Billiards Room": [],
+    "The Kitchen": [
+      {
+        "name": "Devi, the Maid",
+        "role": "Maid",
+        "background": "Devi is a young and ambitious maid, relatively new to the manor. She is eager to please and climb the social ladder within the household. She is very observant and gossipy.",
+        "testimony": "Devi claims she saw Lakshmi arguing with Anjali Devi in the kitchen earlier that evening. She overheard Lakshmi complaining about her son being unfairly accused of theft.",
+        "reliability": "Potentially unreliable, as she might exaggerate or fabricate details to gain favor. She's known to eavesdrop.",
+        "hiddenAgenda": "She is secretly in love with Arjun, but doesn't believe he notices her existence."
+      }
+    ],
+    "The Estate Gardens": [
+      {
+        "name": "Kumar, the Stable Boy",
+        "role": "Stable Boy",
+        "background": "Kumar is a young and hardworking stable boy, son of Lakshmi. He was recently caught stealing from the estate stables but maintains his innocence.",
+        "testimony": "Kumar admits to being near the Lotus Pond earlier that evening, but claims he was just taking a walk. He denies seeing anyone or anything suspicious. He insists that he was framed for the theft from the stables.",
+        "reliability": "Potentially unreliable, as he is trying to protect himself. He could also be covering for someone else.",
+        "hiddenAgenda": "He deeply resents Rana Vikram for his arrogance and mistreatment of the staff. He may know something about Rana Vikram's movements that night but is afraid to speak up."
+=======
   "killer": "Divya Sharma",
   "locations": [
     "Sharma Tea Stall, near the Banyan Tree",
@@ -313,12 +496,92 @@
         "testimony": "Radha says she saw Divya Sharma at the temple earlier that evening, around 20:00. Divya was crying and praying fervently. Radha offered her comfort, but Divya just shook her head and walked away.",
         "reliability": "Relatively reliable. Radha is a devout woman with no apparent reason to lie.",
         "hiddenAgenda": "Radha might embellish her stories to make them more interesting or to gain sympathy."
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
       }
     ]
   },
   "timeline": [
     {
       "time": "21:00",
+<<<<<<< HEAD
+      "event": "Two days prior: Rana Vikram is seen at the Royal Flush Casino in Jaipur, losing a substantial sum of money at a game of Teen Patti. Surveillance footage captures him arguing with a loan shark."
+    },
+    {
+      "time": "10:00",
+      "event": "One day prior: Priya Sharma arrives at Old Indian Victorian Manor from Delhi. She is greeted by Anjali Devi, but the exchange is formal and strained. Devi, the Maid, observes the arrival."
+    },
+    {
+      "time": "12:00",
+      "event": "One day prior: Anjali Devi reviews the family accounts in the library, noticing discrepancies and Vikram's growing debts. She makes a note to confront him."
+    },
+    {
+      "time": "14:00",
+      "event": "One day prior: Lakshmi confronts Anjali Devi in the kitchen about the accusations against her son, Kumar. Devi, the Maid, overhears part of the heated argument. The argument ends with Anjali Devi promising to investigate thoroughly."
+    },
+    {
+      "time": "16:00",
+      "event": "One day prior: Arjun Singh pleads with his mother, Anjali Devi, for money to cover his gambling debts. She refuses, criticizing his artistic pursuits and lack of financial responsibility. This occurs in the Estate Gardens near the Lotus Pond."
+    },
+    {
+      "time": "18:00",
+      "event": "One day prior: Rana Vikram attempts to charm Anjali Devi into granting him a loan. She firmly rejects him, reminding him of his past failures. This takes place in the main hall."
+    },
+    {
+      "time": "19:00",
+      "event": "Evening of the murder: Anjali Devi has dinner with all the suspects. The atmosphere is tense, with veiled insults and subtle power plays. Priya Sharma makes a comment about the land dispute that clearly agitates Anjali Devi."
+    },
+    {
+      "time": "20:00",
+      "event": "Evening of the murder: Arjun is seen pacing nervously outside his art studio by Ramesh, the Gardener. Ramesh wonders aloud if Arjun is feeling alright."
+    },
+    {
+      "time": "20:30",
+      "event": "Evening of the murder: Vikram pours himself a generous serving of whiskey in the billiards room, visibly agitated. He makes a phone call, which cell tower records later show was to an unknown number in Jaipur known for criminal activity."
+    },
+    {
+      "time": "21:00",
+      "event": "Evening of the murder: Lakshmi begins preparing dinner in the kitchen with her staff. She is unusually quiet and withdrawn, according to other kitchen staff."
+    },
+    {
+      "time": "21:15",
+      "event": "Evening of the murder: Priya Sharma complains of a headache and asks Devi, the Maid, for a glass of water and a sleeping draught, retiring to her room."
+    },
+    {
+      "time": "21:30",
+      "event": "Evening of the murder: Arjun enters his art studio. He is carrying a small, wrapped package which he quickly hides behind a canvas. This is later revealed to contain a down payment for a hitman."
+    },
+    {
+      "time": "22:00",
+      "event": "Evening of the murder: Rana Vikram claims to begin practicing billiards alone. The sound of the billiard balls can be faintly heard near the kitchen and Library."
+    },
+    {
+      "time": "22:30",
+      "event": "Evening of the murder: Ramesh, the Gardener, sees Arjun leaving his art studio and sneaking towards the main house through the gardens, trying to avoid the main paths."
+    },
+    {
+      "time": "23:00",
+      "event": "Evening of the murder: Anjali Devi is last seen alive, reviewing ledgers at her writing desk in the library. She makes a final entry about Vikram's suspicious financial activities."
+    },
+    {
+      "time": "23:15",
+      "event": "Evening of the murder: Rajkumar Arjun Singh, having hired a hitman, enters the library. The hitman strangles Anjali Devi with a silk scarf (later determined to be from Rana Vikram's room, stolen earlier by Arjun). Arjun stands watch, panicking."
+    },
+    {
+      "time": "23:30",
+      "event": "Evening of the murder: The hitman, leaves the Manor house unnoticed. Security footage shows him scaling the back wall near the Estate Gardens."
+    },
+    {
+      "time": "23:40",
+      "event": "Evening of the murder: Rana Vikram goes to the kitchen to get water, encountering Lakshmi. She notes that he looks flustered and is sweating profusely. He returns to the billiards room."
+    },
+    {
+      "time": "00:00",
+      "event": "The Following Day: Arjun, visibly shaken, burns the wrapping from the down payment in the art studio's fireplace. The faint smell of smoke lingers in the air."
+    },
+    {
+      "time": "07:00",
+      "event": "The Following Day: Devi, the Maid, discovers Anjali Devi's body in the library during her morning duties. She screams, alerting the rest of the household. The silk scarf remains around Anjali's neck."
+=======
       "event": "Two Days Before: Vikram Singh Rathore calls Lakshmi Kant Sharma demanding immediate repayment of the loan, threatening \"unpleasant consequences\" if Sharma doesn't comply. The call is logged on Sharma's phone records."
     },
     {
@@ -396,6 +659,7 @@
     {
       "time": "06:00",
       "event": "Next Day: Meena, the family servant, discovers Lakshmi Kant Sharma's body in his study and raises the alarm. The murder is reported to the police."
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
     }
   ]
 }
