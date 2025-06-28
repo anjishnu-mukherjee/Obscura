@@ -52,7 +52,6 @@ export default function LocationPage({ params }: LocationPageProps) {
     return caseData.map.nodes.find((node: LocationNode) => node.id === resolvedParams.locationId) || null;
   };
 
-<<<<<<< HEAD
   // Get current date in IST format
   const getCurrentISTDate = () => {
     const now = new Date();
@@ -61,16 +60,14 @@ export default function LocationPage({ params }: LocationPageProps) {
     return istTime.toISOString().split('T')[0]; // YYYY-MM-DD format
   };
 
-  // Check if location was visited today
-  const isVisitedToday = () => {
-    if (!caseData) return false;
-    const progress = caseData.investigationProgress || { visitedLocations: {}, interrogatedSuspects: {}, discoveredClues: [], currentDay: 0 };
-    const locationVisit = progress.visitedLocations[resolvedParams.locationId];
-    return locationVisit?.lastVisitDate === getCurrentISTDate();
-  };
+//   // Check if location was visited today
+//   const isVisitedToday = () => {
+//     if (!caseData) return false;
+//     const progress = caseData.investigationProgress || { visitedLocations: {}, interrogatedSuspects: {}, discoveredClues: [], currentDay: 0 };
+//     const locationVisit = progress.visitedLocations[resolvedParams.locationId];
+//     return locationVisit?.lastVisitDate === getCurrentISTDate();
+//   };
 
-=======
->>>>>>> 124a8f0c3deaa2d5ddf4cdaaef19f775b3ee319b
   // Generate placeholder SVG image
   const generatePlaceholderImage = () => {
     const locationName = getCurrentLocation()?.fullName || "Unknown Location";
