@@ -191,7 +191,7 @@ export default function AudioTestPage() {
       <Card>
         <CardHeader>
           <CardTitle>Code Examples</CardTitle>
-          <CardDescription>Here's how to implement these methods in your components</CardDescription>
+          <CardDescription>Here&apos;s how to implement these methods in your components</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>

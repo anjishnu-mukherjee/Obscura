@@ -270,7 +270,7 @@ export default function Home() {
                       <div className="space-y-2">
                         <div className="text-gray-500">{'>'} analyzing_pattern.exe</div>
                         <div className="text-green-400">{'>'} cipher_key_found: 0xA7B9</div>
-                        <div className="text-yellow-400">{'>'} partial_decode: "The truth lies in..."</div>
+                        <div className="text-yellow-400">{'>'} partial_decode: &quot;The truth lies in...&quot;</div>
                         <motion.div
                           animate={{ opacity: [1, 0, 1] }}
                           transition={{ duration: 1, repeat: Infinity }}

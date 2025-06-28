@@ -301,7 +301,7 @@ export default function FinalVerdictPage({ params }: FinalVerdictPageProps) {
             <div className="text-center">
               <h3 className="text-xl font-bold text-white mb-4">Ready to Submit Your Verdict?</h3>
               <p className="text-gray-400 mb-6">
-                Once submitted, your verdict cannot be changed. Make sure you're confident in your decision.
+                Once submitted, your verdict cannot be changed. Make sure you&apos;re confident in your decision.
               </p>
               
               <div className="flex justify-center gap-4">

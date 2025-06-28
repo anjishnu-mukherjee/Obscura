@@ -246,7 +246,7 @@ function VerdictResultContent() {
                       </div>
                       <div>
                         <h4 className="text-white font-semibold">Motive Understanding</h4>
-                        <p className="text-gray-400 text-sm">How well you understood the killer's motives</p>
+                        <p className="text-gray-400 text-sm">How well you understood the killer&apos;s motives</p>
                       </div>
                     </div>
                     <div className="text-right">

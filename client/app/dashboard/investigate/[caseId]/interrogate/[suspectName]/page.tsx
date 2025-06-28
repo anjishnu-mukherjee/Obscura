@@ -579,7 +579,7 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                             <div className="flex items-center gap-2 mb-2">
                               <User className="w-4 h-4 text-purple-400" />
                               <span className="text-purple-400 font-medium">
-                                {suspect.name}'s Response:
+                                {suspect.name}&apos;s Response:
                               </span>
                             </div>
                             <p className="text-gray-300">

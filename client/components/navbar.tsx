@@ -74,12 +74,7 @@ export default function Navbar() {
             </Link>
             {/* Dashboard user menu */}
             <div className="flex items-center space-x-4">
-              <Link href="/dashboard/notifications" className="p-2 text-gray-400 hover:text-white transition-colors">
-                <Bell className="w-5 h-5" />
-              </Link>
-              <Link href="/dashboard/settings" className="p-2 text-gray-400 hover:text-white transition-colors">
-                <Settings className="w-5 h-5" />
-              </Link>
+              
               <div className="flex items-center space-x-3 px-4 py-2 bg-white/5 rounded-lg">
                 <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-400 rounded-full flex items-center justify-center">
                   <User className="w-4 h-4 text-white" />
