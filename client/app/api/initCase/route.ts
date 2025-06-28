@@ -20,6 +20,7 @@ import { generateStory } from "@/functions/storyGenerator";
 import { composeCaseIntro } from "@/functions/caseIntroComposer";
 import { generateGameClues, generateEnhancedStoryWithTriggers } from "@/functions/clueGenerator";
 import { generateLocationMap } from "@/functions/mapGenerator";
+import { generateImage } from "@/functions/generate";
 
 export async function POST(request: NextRequest) {
   try {
@@ -60,8 +61,64 @@ export async function POST(request: NextRequest) {
     const clues = await generateGameClues(story);
     const map = await generateLocationMap(story);
 
+    // Generate crime scene images for each location
+    console.log("Generating crime scene images for locations...");
+    
+    const locationsWithImages = await Promise.all(
+      map.nodes.map(async (location) => {
+        try {
+          console.log(`Generating image for location: ${location.fullName}`);
+          
+          // Create a detailed prompt for the crime scene image
+          const imagePrompt = `Crime scene investigation at ${location.fullName} in ${story.setting}, India. 
+          Professional forensic photography style. 
+          Location: ${location.fullName}. 
+          Investigation scene with evidence markers, police tape, forensic equipment. 
+          Realistic, professional crime scene documentation. 
+          High detail, photographic quality, investigative atmosphere. 
+          Indian setting and context. 
+          No people visible, focus on the location and investigation setup.
+          Context: This is related to the murder of ${story.victim.name} (${story.victim.profession}).`;
+
+          // Generate the image
+          const imageBlob = await generateImage(imagePrompt);
+          
+          // Convert blob to ArrayBuffer for Cloudinary upload
+          const imageArrayBuffer = await imageBlob.arrayBuffer();
+          
+          // Generate filename for the location image
+          const locationImageFileName = `location_${tempCaseId}_${location.id}_${Date.now()}`;
+          
+          // Upload to Cloudinary
+          const uploadResult = await uploadImageFromArrayBuffer(
+            imageArrayBuffer,
+            locationImageFileName,
+            "obscura/locations"
+          );
+          
+          console.log(`Image uploaded for ${location.fullName}:`, uploadResult.secureUrl);
+          
+          return {
+            ...location,
+            imageUrl: uploadResult.secureUrl,
+            imagePublicId: uploadResult.publicId
+          };
+        } catch (error) {
+          console.error(`Failed to generate/upload image for ${location.fullName}:`, error);
+          // Return location without image if generation fails
+          return location;
+        }
+      })
+    );
+
+    // Update the map with the locations that now have images
+    const updatedMap = {
+      ...map,
+      nodes: locationsWithImages
+    };
+
     // Convert map image to ArrayBuffer
-    const mapImage = await map.mapImage.arrayBuffer();
+    const mapImage = await updatedMap.mapImage.arrayBuffer();
 
     // Generate a temporary case ID for the filename
     const tempCaseId = `temp_${Date.now()}_${Math.random()
@@ -94,7 +151,7 @@ export async function POST(request: NextRequest) {
       story,
       caseIntro,
       clues,
-      map,
+      map: updatedMap,
       mapImageUrl: mapImageUrl ?? "No map image",
       mapImagePublicId: mapImagePublicId ?? "No map image",
     };

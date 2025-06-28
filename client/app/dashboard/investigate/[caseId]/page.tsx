@@ -21,7 +21,6 @@ import { LocationNode, Suspect } from '@/functions/types';
 import FloatingNotepad from '@/components/FloatingNotepad';
 import FloatingWatson from '@/components/FloatingWatson';
 import InvestigationFindings from '@/components/InvestigationFindings';
-import Image from 'next/image';
 
 interface InvestigatePageProps {
   params: Promise<{
@@ -93,27 +92,33 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
   };
 
   const handleVisitLocation = async (locationId: string, locationName: string) => {
-    if (!canVisitLocation(progress, locationId)) {
-      alert('You have already visited a location today. Try again tomorrow at 12 AM IST.');
-      return;
-    }
+    // Check if location was already visited today
+    const hasVisitedToday = progress.visitedLocations[locationId]?.lastVisitDate === getCurrentISTDate();
+    
+    if (hasVisitedToday) {
+      // Already visited today - navigate directly without API call (no new progress recorded)
+      router.push(`/dashboard/investigate/${resolvedParams.caseId}/location/${locationId}`);
+    } else {
+      // First visit today - call API to record progress, then navigate
+      try {
+        const response = await fetch('/api/investigation/visit-location', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ caseId: resolvedParams.caseId, locationId })
+        });
 
-    try {
-      const response = await fetch('/api/investigation/visit-location', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ caseId: resolvedParams.caseId, locationId })
-      });
-
-      if (response.ok) {
+        if (response.ok) {
+          const result = await response.json();
+          router.push(result.redirectTo || `/dashboard/investigate/${resolvedParams.caseId}/location/${locationId}`);
+        } else {
+          // If API fails, still allow navigation but no progress recorded
+          router.push(`/dashboard/investigate/${resolvedParams.caseId}/location/${locationId}`);
+        }
+      } catch (error) {
+        // If network error, still allow navigation but no progress recorded
+        console.error('Error visiting location:', error);
         router.push(`/dashboard/investigate/${resolvedParams.caseId}/location/${locationId}`);
-      } else {
-        const error = await response.json();
-        alert(error.error || 'Failed to visit location');
       }
-    } catch (error) {
-      console.error('Error visiting location:', error);
-      alert('Failed to visit location');
     }
   };
 
@@ -268,7 +273,7 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
               <div className="space-y-4">
                 {caseData.map.nodes.map((location: LocationNode, index: number) => {
                   const isVisited = progress.visitedLocations[location.id];
-                  const canVisit = canVisitLocation(progress, location.id);
+                  const visitedToday = isVisited?.lastVisitDate === getCurrentISTDate();
                   
                   return (
                     <motion.div
@@ -276,47 +281,42 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className={`p-6 bg-white/5 backdrop-blur-xl border rounded-xl transition-all duration-300 ${
-                        canVisit 
-                          ? 'border-white/10 hover:bg-white/10 cursor-pointer hover:border-teal-400/50' 
-                          : 'border-gray-600/50 opacity-60'
-                      }`}
-                      onClick={() => canVisit && handleVisitLocation(location.id, location.fullName)}
+                      className="p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl transition-all duration-300 hover:bg-white/10 cursor-pointer hover:border-teal-400/50"
+                      onClick={() => handleVisitLocation(location.id, location.fullName)}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                            isVisited 
-                              ? 'bg-gradient-to-br from-green-500 to-green-400' 
-                              : canVisit
-                                ? 'bg-gradient-to-br from-teal-500 to-teal-400'
-                                : 'bg-gray-600'
+                            visitedToday
+                              ? 'bg-gradient-to-br from-amber-500 to-amber-400' 
+                              : isVisited 
+                                ? 'bg-gradient-to-br from-green-500 to-green-400' 
+                                : 'bg-gradient-to-br from-teal-500 to-teal-400'
                           }`}>
-                            {isVisited ? (
+                            {visitedToday ? (
+                              <Clock className="w-6 h-6 text-white" />
+                            ) : isVisited ? (
                               <CheckCircle className="w-6 h-6 text-white" />
-                            ) : canVisit ? (
-                              <MapPin className="w-6 h-6 text-white" />
                             ) : (
-                              <Lock className="w-6 h-6 text-white" />
+                              <MapPin className="w-6 h-6 text-white" />
                             )}
                           </div>
                           <div>
                             <h3 className="text-white font-semibold">{location.fullName}</h3>
                             <p className="text-gray-400 text-sm">
-                              {isVisited 
-                                ? `Visited on ${new Date(isVisited.visitedAt.seconds * 1000).toLocaleDateString()}`
-                                : canVisit 
-                                  ? 'Available for investigation'
-                                  : 'Location limit reached for today'
+                              {visitedToday 
+                                ? 'Visited today - Review mode'
+                                : isVisited 
+                                  ? `Last visited: ${new Date(isVisited.visitedAt.seconds * 1000).toLocaleDateString()}`
+                                  : 'Available for investigation'
                               }
                             </p>
                           </div>
                         </div>
                         
-                        {!canVisit && (
-                          <div className="flex items-center gap-2 text-gray-400">
-                            <Clock className="w-4 h-4" />
-                            <span className="text-sm">Resets at 12 AM IST</span>
+                        {visitedToday && (
+                          <div className="flex items-center gap-2 text-amber-400">
+                            <span className="text-sm font-medium">Already visited today</span>
                           </div>
                         )}
                       </div>
@@ -339,88 +339,36 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
                       className="p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl transition-all duration-300 hover:bg-white/10 cursor-pointer hover:border-teal-400/50"
                       onClick={() => handleInterrogateSuspect(suspect.name)}
                     >
-                      <div className="flex items-center gap-6">
-                        {/* Suspect Portrait - Case File Style */}
-                        <div className="flex-shrink-0">
-                          <div className="relative">
-                            {/* Case file photo frame */}
-                            <div className="w-24 h-32 bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden">
-                              {suspect.portrait ? (
-                                <Image
-                                  src={suspect.portrait}
-                                  alt={`${suspect.name} - Suspect`}
-                                  fill
-                                  className="object-cover filter sepia-[0.2] contrast-[1.05] saturate-[0.9]"
-                                />
-                              ) : (
-                                <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                                  <Users className="w-8 h-8 text-gray-500" />
-                                </div>
-                              )}
-                              {/* Photo corner clips */}
-                              <div className="absolute -top-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
-                              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
-                              <div className="absolute -bottom-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
-                              <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
-                            </div>
-                            {/* Case file label */}
-                            <div className="absolute -bottom-5 left-0 right-0 text-center">
-                              <div className="inline-block bg-yellow-900/80 text-yellow-200 text-xs px-2 py-1 rounded border border-yellow-700">
-                                SUSPECT
-                              </div>
-                            </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+                            isInterrogated 
+                              ? 'bg-gradient-to-br from-green-500 to-green-400' 
+                              : 'bg-gradient-to-br from-purple-500 to-purple-400'
+                          }`}>
+                            {isInterrogated ? (
+                              <CheckCircle className="w-6 h-6 text-white" />
+                            ) : (
+                              <Users className="w-6 h-6 text-white" />
+                            )}
+                          </div>
+                          <div>
+                            <h3 className="text-white font-semibold">{suspect.name}</h3>
+                            <p className="text-gray-400 text-sm mb-1">{suspect.role}</p>
+                            <p className="text-gray-300 text-sm">{suspect.personality}</p>
+                            {isInterrogated && (
+                              <p className="text-green-400 text-xs mt-1">
+                                Last interrogated: {new Date(isInterrogated.interrogatedAt.seconds * 1000).toLocaleDateString()}
+                              </p>
+                            )}
                           </div>
                         </div>
                         
-                        {/* Suspect Information */}
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-3">
-                            <div>
-                              <h3 className="text-white font-semibold text-lg">{suspect.name}</h3>
-                              <p className="text-gray-400 text-sm mb-1">{suspect.role}</p>
-                            </div>
-                            
-                            <div className="flex items-center gap-3">
-                              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                                isInterrogated 
-                                  ? 'bg-gradient-to-br from-green-500 to-green-400' 
-                                  : 'bg-gradient-to-br from-purple-500 to-purple-400'
-                              }`}>
-                                {isInterrogated ? (
-                                  <CheckCircle className="w-6 h-6 text-white" />
-                                ) : (
-                                  <Users className="w-6 h-6 text-white" />
-                                )}
-                              </div>
-                              
-                              {!canInterrogate && (
-                                <div className="flex items-center gap-2 text-gray-400">
-                                  <span className="text-sm">Already interrogated today</span>
-                                </div>
-                              )}
-                            </div>
+                        {!canInterrogate && (
+                          <div className="flex items-center gap-2 text-gray-400">
+                            <span className="text-sm">Already interrogated today</span>
                           </div>
-                          
-                          <div className="grid md:grid-cols-2 gap-4">
-                            <div>
-                              <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Personality</p>
-                              <p className="text-gray-300 text-sm line-clamp-2">{suspect.personality}</p>
-                            </div>
-                            <div>
-                              <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Status</p>
-                              <div className="flex items-center gap-2">
-                                {isInterrogated && (
-                                  <p className="text-green-400 text-xs">
-                                    Last interrogated: {new Date(isInterrogated.interrogatedAt.seconds * 1000).toLocaleDateString()}
-                                  </p>
-                                )}
-                                {!isInterrogated && (
-                                  <p className="text-yellow-400 text-xs">Not yet interrogated</p>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        )}
                       </div>
                     </motion.div>
                   );

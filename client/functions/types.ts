@@ -63,6 +63,8 @@ export interface LocationNode {
     id: string;
     fullName: string;
     connections: string[];
+    imageUrl?: string; // Crime scene image URL
+    imagePublicId?: string; // Cloudinary public ID for deletion
 }
 
 export interface MapStructure {
