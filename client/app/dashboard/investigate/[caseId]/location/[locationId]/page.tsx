@@ -7,7 +7,6 @@ import {
   ChevronLeft,
   Eye,
   Search,
-  Clock,
   AlertCircle,
   FileText,
   Lightbulb,
@@ -37,7 +36,6 @@ interface LocationFindings {
   finding: string;
   importance: 'critical' | 'important' | 'minor';
   type: 'physical_evidence' | 'environmental_clue' | 'witness_account' | 'digital_trace';
-  isNew: boolean;
 }
 
 export default function LocationPage({ params }: LocationPageProps) {
@@ -46,30 +44,12 @@ export default function LocationPage({ params }: LocationPageProps) {
   const resolvedParams = use(params);
   const { caseData, loading: isLoading, error } = useCase(resolvedParams.caseId);
   const [locationFindings, setLocationFindings] = useState<LocationFindings[]>([]);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [crimeSceneImage, setCrimeSceneImage] = useState<string | null>(null);
-  const [imageLoading, setImageLoading] = useState(false);
 
-  // Helper functions
+  // Helper function
   const getCurrentLocation = (): LocationNode | null => {
     if (!caseData) return null;
     return caseData.map.nodes.find((node: LocationNode) => node.id === resolvedParams.locationId) || null;
-  };
-
-  // Get current date in IST format
-  const getCurrentISTDate = () => {
-    const now = new Date();
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-    const istTime = new Date(now.getTime() + istOffset);
-    return istTime.toISOString().split('T')[0]; // YYYY-MM-DD format
-  };
-
-  // Check if location was visited today
-  const isVisitedToday = () => {
-    if (!caseData) return false;
-    const progress = caseData.investigationProgress || { visitedLocations: {}, interrogatedSuspects: {}, discoveredClues: [], currentDay: 1 };
-    const locationVisit = progress.visitedLocations[resolvedParams.locationId];
-    return locationVisit?.lastVisitDate === getCurrentISTDate();
   };
 
   // Generate placeholder SVG image
@@ -117,47 +97,32 @@ export default function LocationPage({ params }: LocationPageProps) {
   useEffect(() => {
     if (caseData) {
       const currentLocation = getCurrentLocation();
-      const progress = caseData.investigationProgress || { visitedLocations: {}, interrogatedSuspects: {}, discoveredClues: [], currentDay: 1 };
-      const locationVisit = progress.visitedLocations[resolvedParams.locationId];
       
-      // Get current date in IST format
-      const getCurrentISTDate = () => {
-        const now = new Date();
-        const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
-        const istTime = new Date(now.getTime() + istOffset);
-        return istTime.toISOString().split('T')[0]; // YYYY-MM-DD format
-      };
-      
-      const visitedToday = locationVisit?.lastVisitDate === getCurrentISTDate();
-      
+      // Set static forensic findings
       setLocationFindings([
         {
           id: '1',
           finding: 'Fresh tire tracks found near the entrance, suggesting recent vehicle activity',
           importance: 'important',
-          type: 'physical_evidence',
-          isNew: !visitedToday // Only new if not visited today
+          type: 'physical_evidence'
         },
         {
           id: '2',
           finding: 'Security camera positioned at the northwest corner, potential source of footage',
           importance: 'critical',
-          type: 'digital_trace',
-          isNew: !visitedToday
+          type: 'digital_trace'
         },
         {
           id: '3',
           finding: 'Witnesses report seeing unusual activity around 8:30 PM',
           importance: 'important',
-          type: 'witness_account',
-          isNew: !visitedToday
+          type: 'witness_account'
         },
         {
           id: '4',
           finding: 'Disturbed soil patterns indicating possible evidence burial',
           importance: 'minor',
-          type: 'environmental_clue',
-          isNew: !visitedToday
+          type: 'environmental_clue'
         }
       ]);
 
@@ -295,43 +260,26 @@ export default function LocationPage({ params }: LocationPageProps) {
             
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
               <div className="flex items-center gap-4 mb-6">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                  isVisitedToday() 
-                    ? 'bg-gradient-to-br from-amber-500 to-amber-400' 
-                    : 'bg-gradient-to-br from-teal-500 to-teal-400'
-                }`}>
-                  {isVisitedToday() ? (
-                    <Clock className="w-6 h-6 text-white" />
-                  ) : (
-                    <MapPin className="w-6 h-6 text-white" />
-                  )}
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gradient-to-br from-teal-500 to-teal-400">
+                  <MapPin className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold text-white mb-1">
-                    {isVisitedToday() ? 'Crime Scene Review' : 'Crime Scene Analysis'}
+                    Crime Scene Analysis
                   </h1>
                   <p className="text-gray-400">{currentLocation.fullName}</p>
-                  {isVisitedToday() && (
-                    <p className="text-amber-400 text-sm mt-1">Reviewing evidence from today's investigation</p>
-                  )}
                 </div>
               </div>
               
               <div className="flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-2 text-teal-400">
-                  <Clock className="w-4 h-4" />
-                  <span>Analysis completed at {new Date().toLocaleTimeString()}</span>
+                  <Eye className="w-4 h-4" />
+                  <span>Forensic analysis complete</span>
                 </div>
                 <div className="flex items-center gap-2 text-yellow-400">
                   <Shield className="w-4 h-4" />
                   <span>Secure evidence chain maintained</span>
                 </div>
-                {isVisitedToday() && (
-                  <div className="flex items-center gap-2 text-amber-400">
-                    <Eye className="w-4 h-4" />
-                    <span>Review mode - no new progress recorded</span>
-                  </div>
-                )}
               </div>
             </div>
           </motion.div>
@@ -388,51 +336,36 @@ export default function LocationPage({ params }: LocationPageProps) {
               </div>
             </div>
 
-            {isAnalyzing ? (
-              <div className="text-center py-12">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl mb-4">
-                  <Microscope className="w-8 h-8 text-teal-400 animate-pulse" />
-                </div>
-                <p className="text-white font-medium">Analyzing crime scene...</p>
-                <p className="text-gray-400 text-sm">Processing forensic evidence</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {locationFindings.map((finding, index) => (
-                  <motion.div
-                    key={finding.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className={`p-4 rounded-lg border ${getImportanceColor(finding.importance)}`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 mt-1">
-                        {getTypeIcon(finding.type)}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm font-medium capitalize">
-                            {finding.type.replace('_', ' ')}
-                          </span>
-                          <span className={`text-xs px-2 py-1 rounded-full border ${getImportanceColor(finding.importance)}`}>
-                            {finding.importance.toUpperCase()}
-                          </span>
-                          {finding.isNew && (
-                            <span className="text-xs px-2 py-1 bg-green-500/20 border border-green-400/30 text-green-400 rounded-full">
-                              NEW
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                          {finding.finding}
-                        </p>
-                      </div>
+            <div className="space-y-4">
+              {locationFindings.map((finding, index) => (
+                <motion.div
+                  key={finding.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`p-4 rounded-lg border ${getImportanceColor(finding.importance)}`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 mt-1">
+                      {getTypeIcon(finding.type)}
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-sm font-medium capitalize">
+                          {finding.type.replace('_', ' ')}
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full border ${getImportanceColor(finding.importance)}`}>
+                          {finding.importance.toUpperCase()}
+                        </span>
+                      </div>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        {finding.finding}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Investigation Summary */}

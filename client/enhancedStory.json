@@ -1,404 +1,382 @@
 {
-  "title": "Desert Oasis Revenge: The Priya Sharma Gambit",
-  "setting": "Desert Oasis Goa Casino",
+  "title": "The Singh Legacy: A Killing in the Kothari",
+  "setting": "Old Indian Victorian Manor",
   "victim": {
-    "name": "Priya Sharma",
-    "profession": "High-Stakes Poker Dealer at the Desert Oasis Casino",
-    "lastKnownLocation": "VIP Poker Room, Desert Oasis Casino",
-    "deathTimeEstimate": "03:17",
-    "causeOfDeath": "Asphyxiation; evidence suggests tampering with the oxygen supply to her private dealing booth leading to a sudden, unexpected drop in oxygen levels.",
-    "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751136540/obscura/victims/obscura/victims/Priya%20Sharma_portrait.jpg"
+    "name": "Rajkumari Anjali Devi Singh",
+    "profession": "Estate Manager and Matriarch, Keeper of the Family Accounts",
+    "lastKnownLocation": "The Library, reviewing ledgers at her writing desk",
+    "deathTimeEstimate": "23:15",
+    "causeOfDeath": "Strangulation with a silk scarf, likely belonging to the opposing family faction",
+    "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140327/obscura/victims/obscura/victims/Rajkumari%20Anjali%20Devi%20Singh_portrait.jpg"
   },
   "suspects": [
     {
-      "name": "Vikram 'Vik' Kapoor",
-      "role": "Casino Owner's Son and High Roller",
-      "alibi": "Vik claims he was playing high-stakes Baccarat in the VIP lounge from 01:00 AM to 04:00 AM. He states several other high rollers, including Mr. Sharma (no relation to Priya), and Mr. Desai, can corroborate his presence. He also alleges he was quite drunk and doesn't remember specific hands after 02:30 AM, relying on others' accounts.",
+      "name": "Rana Vikram Singh",
+      "role": "Rajkumari Anjali Devi Singh's younger brother, Disinherited Heir, Aspiring Businessman",
+      "alibi": "Rana Vikram claims to have been in the billiards room from 22:00 onwards, practicing his shots alone. He states that he only left the room at 23:45 to fetch a glass of water from the kitchen, where he encountered the cook, Lakshmi. Lakshmi confirms seeing him briefly, but only for a few minutes after 23:40. No one else corroborates his presence in the billiards room.",
       "motives": [
-        "Revenge for a public humiliation: Priya exposed Vik's card-counting scheme during a televised poker tournament six months ago, costing him a significant amount of money and his reputation among the Goa elite. He swore vengeance in a drunken rage afterwards.",
-        "Protection of his family's reputation: Priya was rumored to be compiling evidence of illegal gambling practices within the casino, potentially implicating Vik and his father.",
-        "Unrequited affection and obsession: Vik was reportedly infatuated with Priya and repeatedly tried to pursue a relationship with her. Her constant rejections fueled resentment and a sense of entitlement."
+        "Resentment over being disinherited: Anjali Devi, as the estate manager, controlled the family finances and had deliberately blocked Vikram's access to the ancestral wealth, favoring investments in agricultural projects he deemed 'peasant-like' and beneath him. He felt entitled to the wealth.",
+        "Business Debt: Vikram had accumulated significant debt due to failed business ventures and was desperate for funds. Anjali Devi consistently refused to bail him out, believing he needed to learn from his mistakes.",
+        "Hidden Affair: Vikram was secretly having an affair with Maya, his sister's maid. Anjali threatened to reveal his affair to his wife, which would ruin his social standing and potentially lead to a messy divorce, further jeopardizing his access to family funds."
+      ],
+      "isKiller": false,
+      "personality": "Rana Vikram is charming and outwardly affable, but underneath lies a simmering resentment and a deep-seated insecurity. He craves validation and feels perpetually overlooked. He is prone to gambling and making rash decisions, often blaming others for his misfortunes. He is also known to be manipulative and capable of using his charm to get what he wants. He is a heavy drinker and prone to fits of rage when provoked. His pride is easily wounded.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140347/obscura/suspects/obscura/suspects/Rana%20Vikram%20Singh_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Yes, Lakshmi did see me, but she's mistaken about the time. It must have been closer to 23:30. I was parched!",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Asked casually about his alibi and Lakshmi's statement.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "My sister… she always treated me like a child! Never trusted me with a rupee, always lecturing me about fiscal responsibility. She thought I was a fool for my business ventures. It's not fair! All I ever wanted was to prove myself!",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Show genuine empathy and understanding towards his feelings of being overlooked.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Billiards requires intense concentration, you know. It's an art form. I was simply trying to perfect my technique.",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Question the improbability of him practicing billiards alone for almost 2 hours on the night of his sister's murder, specifically asking what makes this night more special than others.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Look, I might have… borrowed a few lakhs from the estate a while back to cover some urgent debts, but Anjali never knew. I was planning to pay it back! That's why I was so desperate for my next venture to succeed.",
+          "triggerType": "aggressive",
+          "triggerLevel": 5,
+          "triggerDescription": "Confront him directly with evidence of his mounting debts and potential embezzlement.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "Arjun was at the bar all day. He's been acting very erratic since the argument with Anjali about the property development. He had a lot to lose from it. All that prime real estate, gone!",
+          "triggerType": "specific_question",
+          "triggerLevel": 2,
+          "triggerDescription": "Ask: \"Who would have benefitted the most from Anjali's death?\"",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Lakshmi Bai",
+      "role": "Head Cook for the Singh Family",
+      "alibi": "Lakshmi claims to have been preparing food in the kitchen from 21:00 until past midnight. She says she saw Rana Vikram briefly around 23:40 when he came to get water. Other kitchen staff confirm her presence but no one can fully vouch for her exact movements within the kitchen during the crucial time of the murder.",
+      "motives": [
+        "Longstanding Grudge: Lakshmi's family had served the Singh family for generations, but she believed Anjali Devi was slowly cutting back on the provisions and staffing, reducing their importance and influence within the household.",
+        "Mistreatment: Lakshmi felt Anjali Devi was increasingly critical of her cooking and disrespectful towards her, publicly humiliating her on several occasions in front of other staff.",
+        "Protecting her Son: Lakshmi's son, a stable boy, had recently been caught stealing from the Singh family stables. Anjali Devi threatened to hand him over to the authorities. Lakshmi may have seen Anjali as a threat to her son's future."
+      ],
+      "isKiller": false,
+      "personality": "Lakshmi is a stern and fiercely protective woman, deeply loyal to her family. She possesses a quiet dignity and strong moral compass. She is highly observant and possesses a keen understanding of the household dynamics. While outwardly respectful, she harbors a deep-seated resentment towards those she perceives as exploiting her and her family. She is not afraid to speak her mind, but prefers to do so discreetly.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140346/obscura/suspects/obscura/suspects/Lakshmi%20Bai_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "revealed": false
+        },
+        {
+          "0": "t",
+          "1": "r",
+          "2": "i",
+          "3": "g",
+          "4": "g",
+          "5": "e",
+          "6": "r",
+          "7": "T",
+          "8": "y",
+          "9": "p",
+          "10": "e",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Rajkumar Arjun Singh",
+      "role": "Anjali Devi's son, heir to the estate, struggling artist",
+      "alibi": "Arjun states he was in his art studio, located in a separate wing of the manor, painting from 21:00 until 01:00. He claims he was completely absorbed in his work and didn't hear anything unusual. No one can verify his alibi, as his studio is isolated.",
+      "motives": [
+        "Financial Dependence & Control: Arjun resented his mother's tight control over his finances. He desired independence and the freedom to pursue his artistic passions without her constant scrutiny and disapproval.",
+        "Artistic Recognition: Arjun felt his mother belittled his artistic talent, constantly comparing him to his successful cousins and urging him to take up a 'respectable' profession. He yearned for her approval and recognition.",
+        "Secret Debt and Gambling Habit: Arjun has a gambling problem and is in debt to dangerous individuals. He secretly asked his mother for money which she refused to give. This may have spurred him to take drastic actions."
       ],
       "isKiller": true,
-      "personality": "Arrogant, entitled, and impulsive. Vik is used to getting his way due to his family's wealth and influence. He's a risk-taker, both in gambling and in life, but prone to emotional outbursts and rash decisions when his ego is bruised. He hides his insecurities beneath a veneer of confidence and a charming smile that can quickly turn cold. He has a gambling problem, which exacerbates his poor judgement.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751136567/obscura/suspects/obscura/suspects/Vikram%20%27Vik%27%20Kapoor_portrait.jpg",
+      "personality": "Rajkumar Arjun is a sensitive and introspective soul, torn between his artistic ambitions and his familial obligations. He is prone to bouts of depression and self-doubt. He is easily influenced by others and struggles to assert himself. He is passive-aggressive and prone to making sarcastic remarks when frustrated. While he loves his mother, he also resents her controlling nature. He's not the most courageous soul, so he may have hired a hitman to do the job.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140347/obscura/suspects/obscura/suspects/Rajkumar%20Arjun%20Singh_portrait.jpg",
       "cluesTriggers": [
         {
-          "clue": "Yeah, I was there that night. Baccarat. Lost a fortune, actually. Mr. Sharma can vouch for me. I was plastered, though. Couldn't tell you what time it was, let alone what hands I was playing after a certain point.",
+          "clue": "I was working on a landscape piece. It's… it's mostly grey. Depressing, I suppose, like my life. The grey reflects the despair I felt because my mother never believed in my art.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 2,
+          "triggerDescription": "Express sympathy for his artistic struggles and lack of parental support. Ask about the emotional content of his art.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Yes, mother and I argued. We always did. She never understood my passion. But murder? That's absurd. I would never! I may have said things in anger, even stormed off that evening, but I was in my studio ALL night, painting. It was a new oil paint. It was hard to wash off... I think.",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Directly accuse him of arguing with his mother and downplaying his emotional reaction. Watch for him over-explain or contradict himself.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Vikram? That pompous ass probably had something to do with it. He's always been jealous of the inheritance. He would have benefited from it.",
           "triggerType": "gentle",
           "triggerLevel": 1,
-          "triggerDescription": "Initial, general questioning about his whereabouts on the night of the murder. Establishing his alibi.",
-          "isRedHerring": false,
+          "triggerDescription": "Casually inquire about other family members and their potential motives.",
+          "isRedHerring": true,
           "importance": "important",
           "revealed": false
         },
         {
-          "clue": "Priya? Look, she was… ambitious. Okay? Let's just say she rubbed some people the wrong way. Casino politics, you know? Someone probably didn't like her digging around. I wouldn't be surprised if Deepa had something to do with it, always seemed jealous of Priya's attention from my father.",
-          "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Questioning about Priya's character and potential enemies within the casino. Highlighting the dangers of casino politicking.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Okay, okay, fine! So what if I lost money because of her? It was a stupid poker game! I was drunk! She humiliated me in front of everyone! But I would never… I just yelled at her, okay? I said some things I didn’t mean! Is that a crime now?",
+          "clue": " (After a long pause, fidgeting) I… I borrowed some money. A small sum. It's nothing. It's for art supplies! Experimental materials, you know? She refused to give it to me. But it's not a big deal!",
           "triggerType": "aggressive",
           "triggerLevel": 4,
-          "triggerDescription": "Confronting him directly with the public humiliation and asking specifically about his reaction to it in the immediate aftermath (yelling at Priya).",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "(After repeated denials and being presented with circumstantial evidence) Alright, alright, I saw her that night...earlier, around 12:30, by the pool...we argued. About...about my gambling. She was lecturing me, again. I told her to leave me alone and I went inside. That's it!",
-          "triggerType": "pressing",
-          "triggerLevel": 5,
-          "triggerDescription": "Continual pressure, presenting fabricated evidence (e.g., security footage of someone resembling Vik near the crime scene), and questioning his alibi until he admits to seeing her on the night of the murder.",
+          "triggerDescription": "Confront him directly about his gambling debt and financial situation. Highlight the evidence you have. Observe his reaction and body language.",
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
-          "clue": "Look, I get that it looks bad, okay? Me, drunk, angry... but I swear, I didn't *plan* anything. After we argued, I went to the VIP lounge and drowned my sorrows in Baccarat. I won some back, then lost it all again. Ask Sharma, he saw me. He probably won the rest of my money.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 2,
-          "triggerDescription": "Using a sympathetic approach, suggesting that circumstances might make him look guilty even if he's innocent. This encourages him to elaborate on his actions.",
-          "isRedHerring": true,
-          "importance": "minor",
+          "clue": " (Barely audible whisper) The… the studio door… sometimes it sticks. You have to… really push it hard to get it fully shut. It's quite loud. And if it's not shut completely, it swings open after a bit.",
+          "triggerType": "specific_question",
+          "triggerLevel": 5,
+          "triggerDescription": "Ask very specific and technical questions about the state of his studio door, and the sound that might be made if it doesn't shut fully. You might also ask about the latch and whether it makes a noise. This is a trigger that will be harder to obtain as it may directly reveal how he sneaked out of the room",
+          "isRedHerring": false,
+          "importance": "critical",
           "revealed": false
         }
       ]
     },
     {
-      "name": "Anita Desai",
-      "role": "Head of Security at Desert Oasis Casino",
-      "alibi": "Anita insists she was reviewing security footage in her office from 02:00 AM to 04:00 AM, ensuring the casino's safety during the late-night hours. She states she was alone and focused on the screens, making a point of noting suspicious activity near the cash cage around 02:45 AM, necessitating a brief patrol of the area.",
+      "name": "Priya Sharma",
+      "role": "Anjali Devi's cousin from the opposing family faction, visiting from Delhi",
+      "alibi": "Priya claims to have been feeling unwell and retired to her room around 21:30. She says she took a sleeping draught and didn't wake up until the following morning. A servant, Devi, confirms bringing her a glass of water and a sleeping draught around 21:45, but no one saw Priya after that.",
       "motives": [
-        "Professional Jealousy and ambition: Anita felt Priya's popularity with high-roller clients was overshadowing her own authority and expertise within the casino. She saw Priya as a threat to her career advancement.",
-        "Cover-up of a previous security lapse: Priya was aware of a prior incident where Anita failed to properly secure a high-roller suite, resulting in a minor theft. Priya threatened to report the incident if Anita didn't help her expose the casino's illegal activities.",
-        "Guilt and complicity in illegal activities: Anita has been turning a blind eye to some illegal gambling and laundering activities at the casino at the instruction of Vikram's father for a significant cut of the profits. Priya threatened to expose this which would implicate Anita."
+        "Land Dispute: The Sharma and Singh families have been locked in a bitter land dispute for generations. Anjali Devi was the primary obstacle to Priya's family claiming what they believe is rightfully theirs.",
+        "Revenge for Father's Humiliation: Priya's father was publicly humiliated by Anjali Devi years ago during a business dealing. Priya vowed to avenge her father's honor.",
+        "Jealousy of Anjali's Status: Priya has always been envious of Anjali Devi's position and influence. Priya felt that Anjali Devi had gotten everything she wanted in life."
       ],
       "isKiller": false,
-      "personality": "Disciplined, observant, and fiercely loyal to the casino (at least on the surface). Anita is a highly competent security professional with a sharp mind and a no-nonsense attitude. However, she is also deeply ambitious and willing to compromise her ethics to climb the corporate ladder. She is meticulous and organized, but also secretive and distrustful of others.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751136560/obscura/suspects/obscura/suspects/Anita%20Desai_portrait.jpg",
+      "personality": "Priya is a sophisticated and ambitious woman, known for her sharp wit and cunning intellect. She is fiercely loyal to her family and deeply invested in their success. She possesses a calculating mind and is not afraid to use manipulation to achieve her goals. She is outwardly charming and polite, but underneath lies a ruthless determination and a thirst for power. She is also prone to holding grudges and seeking revenge.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140346/obscura/suspects/obscura/suspects/Priya%20Sharma_portrait.jpg",
       "cluesTriggers": [
         {
-          "clue": "I noticed Rahul arguing with Priya near the roulette tables earlier that evening, around 10 PM. It looked pretty heated, something about debts and favors.",
+          "clue": "While I wasn't particularly close to Anjali, I did overhear Rana Vikram Singh arguing with her quite vehemently earlier that day near the stables. It sounded like it was about money, something to do with gambling debts.",
           "triggerType": "gentle",
           "triggerLevel": 2,
-          "triggerDescription": "Simply express concern about the casino staff's well-being and ask if she noticed any unusual interactions that evening.",
+          "triggerDescription": "Expressing general condolences about Anjali's death and creating a safe space for Priya to share any observations, however small.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Devi, the servant, seems awfully nervous. She was practically shaking when she brought me my water and the sleeping draught. I wonder if she knows more than she's letting on?",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Directly accuse Priya of withholding information and suggest she might be protecting someone.",
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
         },
         {
-          "clue": "Look, I admit, Priya and I weren't exactly friends. She was getting a lot of attention from the VIPs, which… well, it made things competitive. But I wouldn't kill her. I wouldn't risk everything I've worked for.",
+          "clue": "Of course, I was aware of the land dispute. It's been hanging over our families for generations. But honestly, I was more interested in expanding my business in Delhi than acquiring a few acres of land here.",
           "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Directly accuse her of being jealous of Priya and suggest she had a motive.",
+          "triggerLevel": 4,
+          "triggerDescription": "Confront Priya directly with the motive related to the land dispute and observe her reaction and attempt to downplay its importance to her.",
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
-          "clue": "The security cameras... there was an issue with one of the cameras near the service entrance that night. It kept flickering. I filed a report to get it fixed, but you know how maintenance can be. It probably wouldn't have caught anything important anyway.",
+          "clue": "The sleeping draught...it had a strange taste. Bitter. I couldn't quite place it, but it wasn't the usual taste. I thought it was perhaps just a bad batch and didn't think much of it.",
           "triggerType": "specific_question",
-          "triggerLevel": 4,
-          "triggerDescription": "Ask specifically about the reliability of the security cameras and any known issues that night.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        },
-        {
-          "clue": "Vikram's father... he sometimes asks for... certain things to be overlooked. It's nothing illegal, just... favors for valued clients. Priya knew some things about those favors, and she threatened to disclose them if I didn't help her to take down Vikram's father's illegal operation.",
-          "triggerType": "aggressive",
           "triggerLevel": 5,
-          "triggerDescription": "Accuse her of turning a blind eye to illegal activities in the casino for personal gain, and imply Priya was blackmailing her.",
+          "triggerDescription": "Ask Priya directly about the sleeping draught. Highlight any inconsistencies in her story, focusing on the details.",
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
-          "clue": "That night, I was doing my rounds and I saw Deepa acting strangely. She was in the hallway near the victim's office, fidgeting with her hands and looking around as if she was hiding from someone. It was around 3:15 AM.",
+          "clue": "It is true my father was... humiliated. But that was years ago. I'm a businesswoman now, I act with strategy, not petty revenge. Although, I suspect that Lakshmi Bai was more than happy about Anjali's death. She always felt overshadowed by Anjali.",
           "triggerType": "sympathetic",
           "triggerLevel": 3,
-          "triggerDescription": "Express understanding of the pressure she might be under and appeal to her sense of justice to come forward with any information she might have.",
+          "triggerDescription": "Attempt to build rapport and suggest that you understand Priya's past grievances, creating a space for her to reveal her feelings and potentially implicate others.",
           "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Rahul Verma",
-      "role": "Former Security Guard at Desert Oasis Casino, fired 3 months ago",
-      "alibi": "Rahul claims he was at a local dhaba (roadside restaurant) called 'Sharma's Dhaba' from 02:00 AM to 04:00 AM, eating parathas and drinking chai. He states the owner, Mr. Sharma (unrelated to the victim), can vouch for his presence, along with several truckers who frequent the establishment.",
-      "motives": [
-        "Wrongful Termination and resentment: Rahul believes Priya was responsible for his dismissal from the casino three months ago. He was fired for allegedly sleeping on the job, but he claims Priya fabricated the story because he had rebuffed her advances.",
-        "Financial desperation: Rahul is heavily in debt and struggling to find work since his termination. He blames Priya for his misfortunes and believes she ruined his life.",
-        "Stalking and Obsession: Rahul had developed a deep obsession with Priya after her rejecting his advances, leading him to stalk her and constantly harass her for her phone number. Him getting fired for sleeping on the job was directly because he was watching her private booth to try and catch her alone."
-      ],
-      "isKiller": false,
-      "personality": "Paranoid, resentful, and emotionally unstable. Rahul is convinced that the world is against him and that he is a victim of injustice. He is quick to anger and prone to irrational behavior. He is desperate for money and attention, and willing to resort to extreme measures to get what he wants. He is socially awkward and struggles to form meaningful relationships.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751136561/obscura/suspects/obscura/suspects/Rahul%20Verma_portrait.jpg",
-      "cluesTriggers": [
-        {
-          "clue": "I told Priya that if she didn't leave me alone, she would regret it! She was always following me around the casino. I just wanted her to stop!",
-          "triggerType": "aggressive",
-          "triggerLevel": 3,
-          "triggerDescription": "Accuse Rahul of having a volatile relationship with Priya and directly suggest he threatened her. This plays into his paranoia and makes him defensive.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Sharma's Dhaba? Yeah, I was there all night. Had...uh...three parathas, I think? Maybe four? And plenty of chai. Sharma remembers me. He always does. He knows I'm a good customer, even if I didn't have much money that night.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Casually inquire about his alibi and gauge his reaction. The slight hesitation and uncertainty about the number of parathas could indicate nervousness or a fabricated alibi.",
-          "isRedHerring": false,
           "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "It's not fair! They fired me because of her! Sleeping on the job? That's a lie! She set me up! She knew I was watching her booth, and then she told the boss I was sleeping. She was always talking to Vik Kapoor, laughing at me. He probably told her to do it! He's got money, he gets away with everything.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 4,
-          "triggerDescription": "Express sympathy for his situation and suggest that Priya's actions were unfair and might have been motivated by someone else. This will make him speak about Vik Kapoor.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "I saw Anita arguing with Priya a few weeks ago, behind the casino. It looked pretty intense. I couldn't hear what they were saying, but Anita seemed really angry. I was on patrol, so I had to keep moving.",
-          "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Press Rahul about any unusual activity he witnessed at the casino in the weeks leading up to the murder. His desire to appear helpful (and maybe deflect suspicion) might lead him to reveal information about other suspects.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Look, I admit I wasn't thrilled about Priya. But stalking? That's a strong word. I just... admired her. From a distance. Okay, maybe I tried to get her number a few times. But she wouldn't give it to me! It's not a crime to like someone, is it?",
-          "triggerType": "specific_question",
-          "triggerLevel": 2,
-          "triggerDescription": "Directly question him about any incidents where he stalked or harassed Priya. His attempt to downplay his behavior will reveal the extent of his obsession.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Deepa Mukherjee",
-      "role": "Priya's Best Friend and fellow Poker Dealer",
-      "alibi": "Deepa states she was at her apartment from 02:00 AM to 04:00 AM, preparing for an upcoming poker tournament. She claims she was reviewing strategy videos online and practicing her card shuffling techniques. She lives alone and has no witnesses to corroborate her alibi.",
-      "motives": [
-        "Revenge for a betrayal: Priya had an affair with Deepa's fiancé, causing their wedding to be called off. Deepa discovered the affair only a week ago and has been secretly seething with rage ever since.",
-        "Financial incentive: Priya was the beneficiary of a large life insurance policy. Deepa, facing significant debt, knew of the policy and how it would solve all her problems. Priya may have told Deepa some details of the policy which would help Deepa get the money.",
-        "Guilt and Self-Loathing: Deepa felt incredibly guilty about having to betray her best friend, even if Priya had betrayed her first. Deepa loved Priya like a sister, and she might have felt like she had no other choice and might feel horrible about that fact after it happened."
-      ],
-      "isKiller": false,
-      "personality": "Outwardly friendly and supportive, but inwardly harboring deep resentment and insecurity. Deepa is a skilled poker dealer and a talented player, but she lacks the confidence to truly shine. She is often envious of Priya's success and popularity. She is prone to emotional outbursts, but tries to maintain a calm and collected exterior.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751136562/obscura/suspects/obscura/suspects/Deepa%20Mukherjee_portrait.jpg",
-      "cluesTriggers": [
-        {
-          "clue": "I remember Priya mentioning she'd had a disagreement with Vikram earlier that evening, something about a high-stakes poker game and Vik owing her money. She seemed really agitated by it.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Employing a calm and reassuring tone, asking about Priya's relationships with the other staff.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "I was at my apartment practicing card shuffling around that time. It's true. That new tournament is giving me anxiety and I just needed to focus.",
-          "triggerType": "aggressive",
-          "triggerLevel": 3,
-          "triggerDescription": "Repeatedly questioning the validity of her alibi, highlighting the lack of witnesses and potential for fabrication.",
-          "isRedHerring": false,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Priya had confided in me that she recently updated her life insurance policy. She was excited about setting up her family for the future.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 4,
-          "triggerDescription": "Expressing genuine sorrow for Priya's death and appealing to Deepa's sense of empathy.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "I saw Anita with Priya near the pool earlier that night. I don't know what they were talking about, but Anita looked really mad. She was waving her hands around, it seemed heated.",
-          "triggerType": "specific_question",
-          "triggerLevel": 3,
-          "triggerDescription": "Directly asking if Deepa observed any tense or unusual interactions between Priya and other individuals present that night.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "I... I did know about Priya and my ex-fiancé. I found out last week. It was awful, but I would never hurt her. We talked. I yelled, she cried, but it... it was mostly resolved. I was still mad but I could never do that.",
-          "triggerType": "pressing",
-          "triggerLevel": 5,
-          "triggerDescription": "Presenting irrefutable evidence of Deepa's knowledge of the affair and then confronting her with the potential motive of revenge. Watching her for any inconsistencies when she denies committing the crime itself.",
-          "isRedHerring": false,
-          "importance": "critical",
           "revealed": false
         }
       ]
     }
   ],
-  "killer": "Vikram 'Vik' Kapoor",
+  "killer": "Rajkumar Arjun Singh",
   "locations": [
-    "VIP Poker Room, Desert Oasis Casino (Priya's Booth)",
-    "Desert Oasis Casino Security Office",
-    "Sharma's Dhaba (Roadside Restaurant)",
-    "Vikram Kapoor's Private Suite, Desert Oasis Casino",
-    "Desert Oasis Casino Oxygen Supply Room"
+    "The Library",
+    "Arjun's Art Studio",
+    "The Billiards Room",
+    "The Kitchen",
+    "The Estate Gardens"
   ],
   "clues": {
-    "VIP Poker Room, Desert Oasis Casino (Priya's Booth)": [
-      "A faint scent of sandalwood incense, Priya's signature fragrance, lingers in the air, noticeably weaker than usual. Priya always kept a small incense stick burning. An almost burnt out stick of sandalwood incense is found hidden behind Priya's workstation.",
-      "A smudge of bright red lipstick, not Priya's usual matte nude, is on the oxygen supply vent cover inside the booth. It's a shade similar to the one Vik's seen sporting on dates lately.",
-      "Priya's last hand log on the casino's computer system shows a large, unusual bet placed by Vik Kapoor at 03:05 AM. The bet was unusually high and seemingly out of character for the game being played.",
-      "A small, intricately carved silver charm depicting Lord Ganesha is found tucked inside Priya's dealing shoe. It's a common Hindu symbol of good luck and obstacle removal, but Priya wasn't known to be particularly religious. The charm appears recently polished."
+    "The Library": [
+      "The victim's writing desk is in disarray. The ledger she was reviewing is open to a page detailing recent withdrawals from the family trust, with a significant sum marked 'Discretionary Funds - Arjun'. The last entry is dated yesterday. The page is slightly smudged with what appears to be oil paint.",
+      "A silken scarf, identified as belonging to the Sharma family faction (distinct color and pattern), is lying on the floor near the victim. A faint scent of sandalwood is detectable on the scarf.",
+      "A half-empty cup of masala chai sits on the desk. Fingerprints are visible on the cup. Forensic analysis reveals that in addition to Anjali Devi's fingerprints, there are also partial fingerprints that do not match any known residents of the manor but does match a known associate of Arjun's gambling debt.",
+      "The window is slightly ajar, despite the chilly night. Footprints, seemingly made by expensive leather shoes, are visible in the flowerbed outside the window. The footprints lead away from the manor towards the stables."
     ],
-    "Desert Oasis Casino Security Office": [
-      "Security footage from 03:15 AM shows Anita Desai, Head of Security, making a brief, unscheduled visit to the oxygen supply room. She appears to be adjusting something on the wall. The footage quality is slightly grainy, but she is visible.",
-      "Anita's computer has a log file showing she accessed Priya's personnel file at 02:58 AM, specifically focusing on Priya's medical history and emergency contact information. There's also a record of her accessing the casino's HVAC system schematic.",
-      "A discarded coffee cup with Anita's fingerprints on it is found in the trash can. The cup has a lipstick stain matching the bright red shade found in Priya's booth, with the same DNA type present."
+    "Arjun's Art Studio": [
+      "Arjun's latest painting is a disturbing portrait of his mother, with exaggerated shadows and a palpable sense of unease. The painting is dated today.",
+      "A small, ornate box containing betting slips is hidden behind a canvas. The slips indicate significant gambling debts owed to a known local bookie.",
+      "A tube of sandalwood-scented oil paint is on the easel. The paint is the same brand and color found smudged on the ledger in the library. The tube is almost empty.",
+      "A recently cleaned silk scarf, similar in texture and material to the one found at the crime scene, is drying on a rack. Traces of a cleaning solution are detectable. A faint red stain is barely visible on one corner."
     ],
-    "Sharma's Dhaba (Roadside Restaurant)": [
-      "Mr. Sharma, the dhaba owner, confirms that Rahul Verma was at the dhaba between 02:00 AM and 04:00 AM. However, he also mentions Rahul was agitated and kept checking his phone, making several short phone calls outside the dhaba.",
-      "A crumpled receipt from Sharma's Dhaba, dated the night of the murder and time stamped 02:47 AM, is found in Rahul's pocket during a subsequent search. The receipt shows a purchase of one chai and one plate of parathas, a relatively small order.",
-      "Traces of red soil, characteristic of the area surrounding the Desert Oasis Casino, are found embedded in the treads of Rahul's shoes, despite him claiming to have spent the entire night at the dhaba, which is on a paved road."
+    "The Billiards Room": [
+      "Rana Vikram's cue is lying on the billiards table. It appears recently used. There's a faint smear of what might be blood on the leather grip. Forensics confirms it is human blood and matches Rajkumari Anjali Devi Singh.",
+      "An empty bottle of single-malt scotch sits on the side table, along with a tumbler. Fingerprints on the bottle match Rana Vikram. Traces of sleeping draught are detected in the tumbler.",
+      "A discarded betting slip is crumpled near the waste bin. It shows a substantial loss from a cockfight held earlier that day. The handwriting on the slip is identified as belonging to Rana Vikram.",
+      "The window leading to the back garden is unlocked and ajar. There are faint mud traces on the windowsill, suggesting someone recently climbed in or out. The mud matches soil found in the Estate Gardens, particularly near the Lotus Pond."
     ],
-    "Vikram Kapoor's Private Suite, Desert Oasis Casino": [
-      "A half-empty bottle of expensive scotch, Vik's preferred brand, is found in his mini-bar. A fingerprint analysis reveals a faint smudge of sandalwood incense on the bottle's neck.",
-      "Vik's Baccarat scorecard shows inconsistent handwriting and several erasures around the time of the murder (03:00 - 03:30 AM). His winnings are significantly lower than usual for a high-stakes player.",
-      "A torn piece of paper from a Desert Oasis Casino oxygen supply maintenance logbook is found crumpled in the wastebasket. The page lists scheduled maintenance for the VIP poker room oxygen supply on the night of the murder. The technician who made the notation has signed off on it.",
-      "Security footage shows Vik leaving his suite at 03:00 AM, wearing a dark hooded sweatshirt, and returning at 03:25 AM. His gait appears hurried, and he avoids the main casino floor, taking a service elevator instead."
+    "The Kitchen": [
+      "Lakshmi's knife set is meticulously organized. One knife is missing from its place. It's a small paring knife, commonly used for peeling vegetables. The empty slot is slightly dusty, suggesting the knife hasn't been used in some time but recently was returned.",
+      "A discarded cloth, used for wiping surfaces, is found in the trash. It has traces of a strong cleaning solution and faint traces of sandalwood oil.",
+      "A broken vial labeled \"Sleeping Draught\" is discovered behind the spice rack. The label matches the prescription Devi gave to Priya.",
+      "A freshly made cup of herbal tea sits near the stove. It appears to be Lakshmi's personal blend. A small amount of unidentified white powder is mixed in."
     ],
-    "Desert Oasis Casino Oxygen Supply Room": [
-      "The oxygen regulator for Priya's booth has been tampered with. The valve was deliberately set to restrict oxygen flow, causing a gradual reduction in oxygen levels. Fine metal filings are found around the valve, suggesting it was forced open.",
-      "A faint impression of a Baccarat playing card – the Queen of Hearts – is found etched into the dust on the oxygen tank regulator valve. The Queen of Hearts was the card Priya used to expose Vik's cheating in the televised poker tournament.",
-      "A partial footprint, size 11, is found on the floor, near the oxygen tank. The tread pattern matches a limited-edition Italian leather loafer – a style known to be favored by Vikram Kapoor.",
-      "A small CCTV camera is hidden inside the oxygen supply room, disguised as a fire sprinkler. The footage from 03:10 AM to 03:20 AM shows Vik Kapoor tampering with the oxygen regulator, with Anita Desai standing guard at the door."
+    "The Estate Gardens": [
+      "Footprints leading from the Library window end near the Lotus Pond. The footprints are partially obscured by recent rainfall, but the expensive leather shoe tread is still distinguishable.",
+      "A small, tarnished silver locket is found near the Lotus Pond. The locket contains a miniature portrait of a young woman resembling Lakshmi. An inscription on the back reads, 'Forever Yours, A'.",
+      "Near the stables, a discarded matchbook from a local gambling den is found. The matchbook has fingerprints matching Arjun Singh.",
+      "A discarded piece of canvas with splotches of oil paints lies near the tool shed. A closer examination reveals it was used to clean brushes and the paint colors matches the type used in Arjun’s Art Studio."
     ]
   },
   "witnesses": {
-    "VIP Poker Room, Desert Oasis Casino (Priya's Booth)": [
+    "The Library": [],
+    "Arjun's Art Studio": [
       {
-        "name": "Rajesh Mehta",
-        "role": "High-Stakes Poker Player",
-        "background": "A wealthy businessman from Mumbai, known for his impeccable memory and observation skills at the poker table.",
-        "testimony": "Rajesh claims to have seen Vik Kapoor arguing with Priya earlier in the evening, around 11:00 PM. He overheard Vik saying, \"You'll regret crossing me, Priya.\"",
-        "reliability": "High, but Rajesh is a known gossip and enjoys stirring up drama.",
-        "hiddenAgenda": "Rajesh has a history of betting against Vik Kapoor and might be trying to manipulate the investigation to his advantage."
+        "name": "Ramesh, the Gardener",
+        "role": "Gardener",
+        "background": "Ramesh has worked on the estate for over 20 years and is a keen observer. He is loyal to the Singh family, but also holds some disdain towards those who take the family riches for granted.",
+        "testimony": "Ramesh claims he saw Arjun sneaking out of the main house around 23:30, looking agitated. He was heading towards the stables but seemed to be avoiding the main path.",
+        "reliability": "Fairly reliable, as he is generally honest and observant. However, he might be biased due to his respect for Anjali Devi.",
+        "hiddenAgenda": "He might be subtly protecting Lakshmi's son, the stable boy, as he sees him as a hardworking young man led astray."
       }
     ],
-    "Desert Oasis Casino Security Office": [],
-    "Sharma's Dhaba (Roadside Restaurant)": [
+    "The Billiards Room": [],
+    "The Kitchen": [
       {
-        "name": "Lakshmi Bai",
-        "role": "Tea Vendor near Sharma's Dhaba",
-        "background": "Sells chai near Sharma's Dhaba every night. Observant and knows everyone's business.",
-        "testimony": "Lakshmi recalls seeing Rahul walk past her tea stall sometime between 2:30-3:00 AM. She said he looked sweaty and agitated, and she noticed him quickly heading in the direction of the Desert Oasis Casino.",
-        "reliability": "Medium, Lakshmi is known for exaggerating stories.",
-        "hiddenAgenda": "Lakshmi frequently clashes with Mr. Sharma over territory and might be trying to hurt his business by providing misleading information."
+        "name": "Devi, the Maid",
+        "role": "Maid",
+        "background": "Devi is a young and ambitious maid, relatively new to the manor. She is eager to please and climb the social ladder within the household. She is very observant and gossipy.",
+        "testimony": "Devi claims she saw Lakshmi arguing with Anjali Devi in the kitchen earlier that evening. She overheard Lakshmi complaining about her son being unfairly accused of theft.",
+        "reliability": "Potentially unreliable, as she might exaggerate or fabricate details to gain favor. She's known to eavesdrop.",
+        "hiddenAgenda": "She is secretly in love with Arjun, but doesn't believe he notices her existence."
       }
     ],
-    "Vikram Kapoor's Private Suite, Desert Oasis Casino": [
+    "The Estate Gardens": [
       {
-        "name": "Mr. Sharma (no relation to Priya)",
-        "role": "High-Stakes Baccarat Player",
-        "background": "A frequent guest at the casino, known for his stoic demeanor and lack of emotion, regardless of whether he is winning or losing.",
-        "testimony": "Mr. Sharma confirms Vik was at the Baccarat table during the stated time. But when asked about specifics, he states that he was concentrating on his game and did not keep a close watch on Mr. Kapoor during the timeframe he was there.",
-        "reliability": "High, though he may be hesitant to get involved in a police investigation because of his social status.",
-        "hiddenAgenda": "Mr. Sharma might be indebted to the Kapoor family and reluctant to provide information that could incriminate Vik."
+        "name": "Kumar, the Stable Boy",
+        "role": "Stable Boy",
+        "background": "Kumar is a young and hardworking stable boy, son of Lakshmi. He was recently caught stealing from the estate stables but maintains his innocence.",
+        "testimony": "Kumar admits to being near the Lotus Pond earlier that evening, but claims he was just taking a walk. He denies seeing anyone or anything suspicious. He insists that he was framed for the theft from the stables.",
+        "reliability": "Potentially unreliable, as he is trying to protect himself. He could also be covering for someone else.",
+        "hiddenAgenda": "He deeply resents Rana Vikram for his arrogance and mistreatment of the staff. He may know something about Rana Vikram's movements that night but is afraid to speak up."
       }
-    ],
-    "Desert Oasis Casino Oxygen Supply Room": []
+    ]
   },
   "timeline": [
     {
-      "time": "15:30",
-      "event": "Priya Sharma receives a bouquet of red roses at the Desert Oasis Casino's VIP Poker Room, delivered anonymously. A small card reads: \"You can't hide forever.\""
+      "time": "21:00",
+      "event": "Two days prior: Rana Vikram is seen at the Royal Flush Casino in Jaipur, losing a substantial sum of money at a game of Teen Patti. Surveillance footage captures him arguing with a loan shark."
+    },
+    {
+      "time": "10:00",
+      "event": "One day prior: Priya Sharma arrives at Old Indian Victorian Manor from Delhi. She is greeted by Anjali Devi, but the exchange is formal and strained. Devi, the Maid, observes the arrival."
+    },
+    {
+      "time": "12:00",
+      "event": "One day prior: Anjali Devi reviews the family accounts in the library, noticing discrepancies and Vikram's growing debts. She makes a note to confront him."
+    },
+    {
+      "time": "14:00",
+      "event": "One day prior: Lakshmi confronts Anjali Devi in the kitchen about the accusations against her son, Kumar. Devi, the Maid, overhears part of the heated argument. The argument ends with Anjali Devi promising to investigate thoroughly."
     },
     {
       "time": "16:00",
-      "event": "Vikram 'Vik' Kapoor is seen losing a substantial amount of money at a high-stakes poker game in the VIP lounge. He slams his fist on the table and storms off, muttering about \"that Sharma woman\" costing him everything. This is captured on security camera #4 near the VIP lounge entrance."
+      "event": "One day prior: Arjun Singh pleads with his mother, Anjali Devi, for money to cover his gambling debts. She refuses, criticizing his artistic pursuits and lack of financial responsibility. This occurs in the Estate Gardens near the Lotus Pond."
     },
     {
-      "time": "17:45",
-      "event": "Rahul Verma, visibly agitated, calls Priya Sharma's mobile phone. The call goes unanswered and he leaves a rambling voicemail accusing her of ruining his life. Cell tower data places him near the Desert Oasis Casino."
+      "time": "18:00",
+      "event": "One day prior: Rana Vikram attempts to charm Anjali Devi into granting him a loan. She firmly rejects him, reminding him of his past failures. This takes place in the main hall."
     },
     {
-      "time": "18:30",
-      "event": "Anita Desai, Head of Security, conducts a routine security check of the casino's oxygen supply room. She makes a mental note of a slightly loose panel on one of the oxygen tanks, but doesn't report it. This omission will later be revealed to be a critical error, she thought nothing of it."
+      "time": "19:00",
+      "event": "Evening of the murder: Anjali Devi has dinner with all the suspects. The atmosphere is tense, with veiled insults and subtle power plays. Priya Sharma makes a comment about the land dispute that clearly agitates Anjali Devi."
     },
     {
       "time": "20:00",
-      "event": "Priya meets Deepa Mukherjee for dinner at a local restaurant. Deepa subtly probes Priya about her life insurance policy. Priya mentions she recently updated it, but doesn't disclose the beneficiary."
+      "event": "Evening of the murder: Arjun is seen pacing nervously outside his art studio by Ramesh, the Gardener. Ramesh wonders aloud if Arjun is feeling alright."
+    },
+    {
+      "time": "20:30",
+      "event": "Evening of the murder: Vikram pours himself a generous serving of whiskey in the billiards room, visibly agitated. He makes a phone call, which cell tower records later show was to an unknown number in Jaipur known for criminal activity."
+    },
+    {
+      "time": "21:00",
+      "event": "Evening of the murder: Lakshmi begins preparing dinner in the kitchen with her staff. She is unusually quiet and withdrawn, according to other kitchen staff."
+    },
+    {
+      "time": "21:15",
+      "event": "Evening of the murder: Priya Sharma complains of a headache and asks Devi, the Maid, for a glass of water and a sleeping draught, retiring to her room."
     },
     {
       "time": "21:30",
-      "event": "Vik visits Priya's dealing booth. Rajesh Mehta, a high-stakes player, overhears Vik arguing with Priya, saying, \"You'll regret crossing me, Priya.\" This occurs just outside the VIP room, Rajesh says. He reports that a few other patrons heard the argument, but didn't get too close."
+      "event": "Evening of the murder: Arjun enters his art studio. He is carrying a small, wrapped package which he quickly hides behind a canvas. This is later revealed to contain a down payment for a hitman."
     },
     {
       "time": "22:00",
-      "event": "Rahul Verma is spotted by Lakshmi Bai, a tea vendor, loitering outside the Desert Oasis Casino. He appears to be watching the entrance."
+      "event": "Evening of the murder: Rana Vikram claims to begin practicing billiards alone. The sound of the billiard balls can be faintly heard near the kitchen and Library."
     },
     {
       "time": "22:30",
-      "event": "Anita Desai is called to Vik Kapoor's private suite to address a minor security concern. He complains about noise from the hallway. The interaction is brief, but Anita is seen smiling and nodding reassuringly."
+      "event": "Evening of the murder: Ramesh, the Gardener, sees Arjun leaving his art studio and sneaking towards the main house through the gardens, trying to avoid the main paths."
     },
     {
       "time": "23:00",
-      "event": "Priya texts Deepa: \"Something feels off tonight. Vik was acting strange.\""
+      "event": "Evening of the murder: Anjali Devi is last seen alive, reviewing ledgers at her writing desk in the library. She makes a final entry about Vikram's suspicious financial activities."
     },
     {
-      "time": "00:30",
-      "event": "Rahul Verma sends Priya a series of increasingly frantic and obsessive text messages. He demands to know why she won't respond to him and threatens to come to the casino."
+      "time": "23:15",
+      "event": "Evening of the murder: Rajkumar Arjun Singh, having hired a hitman, enters the library. The hitman strangles Anjali Devi with a silk scarf (later determined to be from Rana Vikram's room, stolen earlier by Arjun). Arjun stands watch, panicking."
     },
     {
-      "time": "01:00",
-      "event": "Vik Kapoor begins playing high-stakes Baccarat in the VIP lounge, as per his alibi. Mr. Sharma (no relation to Priya) is among the other players."
+      "time": "23:30",
+      "event": "Evening of the murder: The hitman, leaves the Manor house unnoticed. Security footage shows him scaling the back wall near the Estate Gardens."
     },
     {
-      "time": "01:45",
-      "event": "Vik excuse himself from the Baccarat table, ostensibly to use the restroom, but he is out of view of the security cameras for approximately 7 minutes. He goes to the oxygen supply room and tampers with Priya's booth supply."
+      "time": "23:40",
+      "event": "Evening of the murder: Rana Vikram goes to the kitchen to get water, encountering Lakshmi. She notes that he looks flustered and is sweating profusely. He returns to the billiards room."
     },
     {
-      "time": "02:00",
-      "event": "Anita Desai begins her shift reviewing security footage in her office. She focuses primarily on the cash cage area, as per her alibi."
+      "time": "00:00",
+      "event": "The Following Day: Arjun, visibly shaken, burns the wrapping from the down payment in the art studio's fireplace. The faint smell of smoke lingers in the air."
     },
     {
-      "time": "02:30",
-      "event": "Rahul Verma arrives at Sharma's Dhaba and orders parathas and chai. Mr. Sharma (the dhaba owner) confirms his presence."
-    },
-    {
-      "time": "02:45",
-      "event": "Anita Desai spots suspicious activity near the cash cage on security camera #7 and leaves her office to investigate. She returns approximately 15 minutes later."
-    },
-    {
-      "time": "02:45",
-      "event": "Lakshmi Bai sees Rahul Verma walking quickly past her tea stall, heading in the direction of the Desert Oasis Casino. He is sweating and looks agitated."
-    },
-    {
-      "time": "03:17",
-      "event": "Priya Sharma dies in her private dealing booth in the VIP Poker Room due to asphyxiation. The oxygen level in the booth plummets suddenly."
-    },
-    {
-      "time": "03:25",
-      "event": "Vik returns to the Baccarat table. Mr. Sharma does not notice anything amiss about his demeanor. Vik is clearly winning."
-    },
-    {
-      "time": "04:15",
-      "event": "Deepa Mukherjee arrives at the Desert Oasis Casino for her morning shift. She finds Priya unresponsive in her booth and alerts security."
+      "time": "07:00",
+      "event": "The Following Day: Devi, the Maid, discovers Anjali Devi's body in the library during her morning duties. She screams, alerting the rest of the household. The silk scarf remains around Anjali's neck."
     }
   ]
 }
