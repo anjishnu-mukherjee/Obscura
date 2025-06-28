@@ -67,7 +67,7 @@ export default function LocationPage({ params }: LocationPageProps) {
   // Check if location was visited today
   const isVisitedToday = () => {
     if (!caseData) return false;
-    const progress = caseData.investigationProgress || { visitedLocations: {}, interrogatedSuspects: {}, discoveredClues: [], currentDay: 1 };
+    const progress = caseData.investigationProgress || { visitedLocations: {}, interrogatedSuspects: {}, discoveredClues: [], currentDay: 0 };
     const locationVisit = progress.visitedLocations[resolvedParams.locationId];
     return locationVisit?.lastVisitDate === getCurrentISTDate();
   };
