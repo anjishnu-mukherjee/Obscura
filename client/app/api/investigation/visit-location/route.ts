@@ -71,7 +71,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: "Location visited successfully",
-      progress: result.progress
+      progress: result.progress,
+      redirectTo: `/dashboard/investigate/${caseId}/location/${locationId}`
     });
 
   } catch (error) {
