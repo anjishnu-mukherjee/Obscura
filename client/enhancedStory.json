@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "title": "The Singh Legacy: A Killing in the Kothari",
   "setting": "Old Indian Victorian Manor",
   "victim": {
@@ -37,40 +38,103 @@
           "triggerType": "sympathetic",
           "triggerLevel": 3,
           "triggerDescription": "Show genuine empathy and understanding towards his feelings of being overlooked.",
+=======
+  "title": "Saffron Betrayal: A Shady Indian Village Murder",
+  "setting": "Shady Indian Village",
+  "victim": {
+    "name": "Lakshmi Kant Sharma",
+    "profession": "Village Panchayat Secretary",
+    "lastKnownLocation": "Sharma Tea Stall, near the Banyan Tree",
+    "deathTimeEstimate": "23:15",
+    "causeOfDeath": "Strangulation with a saffron silk scarf",
+    "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062370/obscura/victims/obscura/victims/Lakshmi%20Kant%20Sharma_portrait.jpg"
+  },
+  "suspects": [
+    {
+      "name": "Anjali Reddy",
+      "role": "Owner of \"Anjali's Tea Stall\", Village Gossip",
+      "alibi": "Anjali claims she was closing up her tea stall at 23:00 and walked home, a 20-minute journey, reaching her house around 23:20. She says her husband, Ravi, a rickshaw puller, was already asleep and can't corroborate her story. She mentions seeing a shadowy figure near the Panchayat office earlier that evening, around 21:00, but couldn't identify them.",
+      "motives": [
+        "Lakshmi Kant Sharma was blackmailing her about a past affair that, if revealed, would destroy her marriage and reputation in the conservative village. He demanded increasingly large sums of money to keep quiet.",
+        "Anjali’s tea stall was facing closure due to Lakshmi Kant Sharma's refusal to grant her the necessary permits, ostensibly due to 'bureaucratic hurdles', but in reality, because she refused his advances.",
+        "Anjali has a deep-seated resentment towards authority figures, stemming from her father being unfairly treated by the local government years ago. She sees Lakshmi Kant as a symbol of this corruption."
+      ],
+      "isKiller": false,
+      "personality": "Anjali is outwardly friendly and chatty, the classic village gossip. Beneath the surface, she's shrewd, observant, and fiercely protective of her family. She carries a lot of anger and resentment, carefully hidden behind a veneer of pleasantness. She has a sharp wit and isn't afraid to speak her mind when provoked, but usually prefers to manipulate situations from the shadows. She compulsively cleans her tea stall, a way of controlling her anxiety.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062390/obscura/suspects/obscura/suspects/Anjali%20Reddy_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Oh, that Lakshmi Kant... always causing trouble. He was seen arguing loudly with Rajesh Kumar Verma just outside the Panchayat office around 8 PM the night of the murder. It was quite a scene, lots of shouting about money, I think.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Offer Anjali a cup of tea and engage in casual conversation about Lakshmi Kant Sharma and village happenings. Show genuine interest in her perspective and build rapport.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
+<<<<<<< HEAD
           "clue": "Billiards requires intense concentration, you know. It's an art form. I was simply trying to perfect my technique.",
           "triggerType": "pressing",
           "triggerLevel": 4,
           "triggerDescription": "Question the improbability of him practicing billiards alone for almost 2 hours on the night of his sister's murder, specifically asking what makes this night more special than others.",
+=======
+          "clue": " (Visibly uncomfortable, fidgeting with her saree) I... I saw someone near the Panchayat office earlier that evening, around 9 PM. It was dark, and they were just a shadow. I couldn't make out who it was, honestly. Maybe they were just relieving themselves.",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Challenge her alibi directly, pointing out the inconsistencies in her story about seeing a shadowy figure versus her stated timeline. Emphasize the seriousness of withholding information.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": " (After repeated questioning about her finances, she snaps) Look, running a tea stall isn't exactly a gold mine! It's enough to keep Ravi and me fed. And yes, I had to take out a small loan from the local moneylender to repair the roof after the last monsoon. Lakshmi Kant wasn't involved in that. It was settled ages ago! ",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Accuse her directly of being in debt to Lakshmi Kant and imply that the debt was a motive for murder. Use a loud and accusatory tone.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
         },
         {
+<<<<<<< HEAD
           "clue": "Look, I might have… borrowed a few lakhs from the estate a while back to cover some urgent debts, but Anjali never knew. I was planning to pay it back! That's why I was so desperate for my next venture to succeed.",
           "triggerType": "aggressive",
           "triggerLevel": 5,
           "triggerDescription": "Confront him directly with evidence of his mounting debts and potential embezzlement.",
+=======
+          "clue": " (Softly, after expressing sympathy for her struggles) Lakshmi Kant... he made things very difficult for me. He kept putting obstacles in the way of my permits. He knew the tea stall was my livelihood. He... he implied that if I were 'nicer' to him, things would be easier. But I didn't want anything to do with him! How dare he!",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Express empathy for Anjali's situation as a small business owner struggling with bureaucracy. Gently inquire about any difficulties she faced with Lakshmi Kant Sharma and the permits.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
+<<<<<<< HEAD
           "clue": "Arjun was at the bar all day. He's been acting very erratic since the argument with Anjali about the property development. He had a lot to lose from it. All that prime real estate, gone!",
           "triggerType": "specific_question",
           "triggerLevel": 2,
           "triggerDescription": "Ask: \"Who would have benefitted the most from Anjali's death?\"",
           "isRedHerring": true,
+=======
+          "clue": " (Under intense pressure about her alibi and whereabouts after closing, she says, almost defensively) I told you, I walked home! What else do you want me to say? It's not my fault Ravi was asleep! He's tired after pulling his rickshaw all day! If you want to find the killer, ask Divya Sharma. She and Lakshmi Kant were always arguing about village land! Everyone knows that!",
+          "triggerType": "pressing",
+          "triggerLevel": 5,
+          "triggerDescription": "Intensely scrutinize her alibi, highlighting the lack of corroboration and pressing her for specific details about her movements between the tea stall and her home. Focus on time discrepancies.",
+          "isRedHerring": false,
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "importance": "important",
           "revealed": false
         }
       ]
     },
     {
+<<<<<<< HEAD
       "name": "Lakshmi Bai",
       "role": "Head Cook for the Singh Family",
       "alibi": "Lakshmi claims to have been preparing food in the kitchen from 21:00 until past midnight. She says she saw Rana Vikram briefly around 23:40 when he came to get water. Other kitchen staff confirm her presence but no one can fully vouch for her exact movements within the kitchen during the crucial time of the murder.",
@@ -98,11 +162,69 @@
           "8": "y",
           "9": "p",
           "10": "e",
+=======
+      "name": "Rajesh Kumar Verma",
+      "role": "Unemployed Graduate, Aspiring Politician",
+      "alibi": "Rajesh states he was at the village temple praying for a government job from 22:30 to 23:30. He claims the temple priest, Pandit Joshi, can vouch for him, but Pandit Joshi vaguely remembers him being there, saying many people come and go at that hour. He admits he left the temple for about five minutes around 23:10 to buy a packet of cigarettes from a nearby paan shop.",
+      "motives": [
+        "Lakshmi Kant Sharma promised Rajesh a government job within the Panchayat in exchange for his support in the upcoming elections. When Lakshmi Kant backtracked and gave the job to someone else, Rajesh felt betrayed and humiliated.",
+        "Rajesh discovered that Lakshmi Kant Sharma was embezzling funds meant for the village school, a project that Rajesh was heavily involved in promoting. He threatened to expose Lakshmi Kant, but was ignored.",
+        "Rajesh suffers from narcissistic personality disorder. He believes he is destined for greatness and views obstacles, like Lakshmi Kant, as personal affronts that must be removed. He seeks validation and power above all else."
+      ],
+      "isKiller": false,
+      "personality": "Rajesh is ambitious, charismatic, and prone to grand pronouncements about his future. He's desperate to escape the poverty and stagnation of Shady Indian Village. He is easily frustrated when things don't go his way and has a strong sense of entitlement. He is often seen practicing speeches in front of a mirror and is overly concerned with his appearance.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062389/obscura/suspects/obscura/suspects/Rajesh%20Kumar%20Verma_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Lakshmi Kant was a *snake*. Promised me a position in the Panchayat, said he admired my...vision for the village. Then he gave it to that idiot Vikram! Said I lacked 'experience'. Experience! I practically built this village's school project with my own two hands!",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Expressing general sympathy for Rajesh's ambitions and disappointments.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "I saw Anjali Reddy arguing with Lakshmi Kant near the school construction site earlier that day. It was…heated. I couldn't make out what they were saying, but she looked very angry. I thought she was going to slap him!",
+          "triggerType": "gentle",
+          "triggerLevel": 3,
+          "triggerDescription": "Asking about his observations of Lakshmi Kant's relationships with other villagers.",
+          "isRedHerring": false,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Look, I might have called him a few names, but murder? I’m not a barbarian! I need Lakshmi Kant alive so I can show him how wrong he was! I'll be running this village one day, and he'll be begging for *my* favor!",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Presenting evidence that suggests Rajesh had a strong motive to harm Lakshmi Kant, such as bank statements showing his financial distress.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "Fine! So, after I left the temple to buy cigarettes, the paan shop was closed. Can you believe it? So, I walked a bit further down the road, towards the old mill, and found one open, bought the cigarettes and walked straight back to the temple.",
+          "triggerType": "specific_question",
+          "triggerLevel": 5,
+          "triggerDescription": "Directly questioning the precise route he took after leaving the temple, pressing for details.",
+          "isRedHerring": true,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Embezzling? Lakshmi Kant? That old fool wouldn't know how to embezzle if his life depended on it! If anyone was embezzling from the school, it was that Rathore! He always had his hands in everything.",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Accusing Rajesh of knowing about Lakshmi Kant's embezzlement, forcing him to deflect.",
+          "isRedHerring": false,
+          "importance": "important",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "revealed": false
         }
       ]
     },
     {
+<<<<<<< HEAD
       "name": "Rajkumar Arjun Singh",
       "role": "Anjali Devi's son, heir to the estate, struggling artist",
       "alibi": "Arjun states he was in his art studio, located in a separate wing of the manor, painting from 21:00 until 01:00. He claims he was completely absorbed in his work and didn't hear anything unusual. No one can verify his alibi, as his studio is isolated.",
@@ -139,30 +261,85 @@
           "triggerLevel": 1,
           "triggerDescription": "Casually inquire about other family members and their potential motives.",
           "isRedHerring": true,
+=======
+      "name": "Divya Sharma",
+      "role": "Lakshmi Kant Sharma's Wife, Homemaker",
+      "alibi": "Divya claims she was asleep in her room from 22:00 onwards. She says she took a sleeping pill due to a severe headache and didn't wake up until the next morning. The family servant, Meena, confirms that Divya was in her room when she brought her dinner at 21:30, but Meena doesn't know if she was asleep or awake later in the night. Meena lives in the outhouse on the property and wouldn't hear anything through the house.",
+      "motives": [
+        "Lakshmi Kant Sharma was having an affair with a woman from a neighboring village, and Divya knew about it. The affair had been ongoing for months, and Divya was humiliated and heartbroken. She was planning to leave him and feared being left destitute.",
+        "Lakshmi Kant Sharma was verbally and emotionally abusive towards Divya. He constantly belittled her and controlled every aspect of her life. She felt trapped and powerless.",
+        "Divya is struggling with severe depression and anxiety, exacerbated by her husband's behavior. She has a history of passive-aggressive behavior and repressed anger, culminating in a single act of rage."
+      ],
+      "isKiller": true,
+      "personality": "Divya is a quiet, reserved woman who appears submissive on the surface. She has endured years of emotional abuse and carries a deep well of suppressed anger and resentment. She is intelligent and observant, but her spirit has been crushed by her husband's domineering personality. She often daydreams of a different life and finds solace in reading religious texts. She bites her nails unconsciously when nervous.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062390/obscura/suspects/obscura/suspects/Divya%20Sharma_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "He... he was a difficult man to live with. Always demanding, always critical. It was like walking on eggshells.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 1,
+          "triggerDescription": "Expressing sympathy for her situation and acknowledging the difficulty of her marriage.",
+          "isRedHerring": false,
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "importance": "important",
           "revealed": false
         },
         {
+<<<<<<< HEAD
           "clue": " (After a long pause, fidgeting) I… I borrowed some money. A small sum. It's nothing. It's for art supplies! Experimental materials, you know? She refused to give it to me. But it's not a big deal!",
           "triggerType": "aggressive",
           "triggerLevel": 4,
           "triggerDescription": "Confront him directly about his gambling debt and financial situation. Highlight the evidence you have. Observe his reaction and body language.",
-          "isRedHerring": false,
-          "importance": "critical",
+=======
+          "clue": "I took the sleeping pill. I swear I did. The doctor prescribed it months ago, for my headaches. I keep it in the nightstand drawer. See? I can show you.",
+          "triggerType": "specific_question",
+          "triggerLevel": 2,
+          "triggerDescription": "Directly asking about the sleeping pill and its location, then pressing on verifying its use.",
+          "isRedHerring": true,
+          "importance": "minor",
           "revealed": false
         },
         {
+          "clue": "Anjali? Yes, Lakshmi knew her. He... he did business with her sometimes, I think. Something about land deals, near the neighboring village. I don't know the details, I never interfered in his business. Women don't, in these parts.",
+          "triggerType": "gentle",
+          "triggerLevel": 3,
+          "triggerDescription": "Mentioning the name 'Anjali' and observing her reaction.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "I was so angry! So much anger that I almost... I almost burned his favorite dhoti with the iron, just before Meena brought me the dinner. But I stopped myself! I went to lie down instead.",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Accusing her of snapping and lashing out, observing for any reaction or admittance. The mention of the dhoti helps to imply intent without the action being related to the murder.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+<<<<<<< HEAD
           "clue": " (Barely audible whisper) The… the studio door… sometimes it sticks. You have to… really push it hard to get it fully shut. It's quite loud. And if it's not shut completely, it swings open after a bit.",
           "triggerType": "specific_question",
           "triggerLevel": 5,
           "triggerDescription": "Ask very specific and technical questions about the state of his studio door, and the sound that might be made if it doesn't shut fully. You might also ask about the latch and whether it makes a noise. This is a trigger that will be harder to obtain as it may directly reveal how he sneaked out of the room",
           "isRedHerring": false,
           "importance": "critical",
+=======
+          "clue": "He threatened to take everything from me, you know. Said he'd leave me with nothing if I ever challenged him. That I'd be out on the streets, begging for scraps. (Nail biting intensifies, eyes dart around the room)",
+          "triggerType": "pressing",
+          "triggerLevel": 5,
+          "triggerDescription": "Repeatedly questioning her about her financial security and vulnerability if Lakshmi left her, stressing that she would be left with nothing. Nail biting and eye darting should be closely watched.",
+          "isRedHerring": true,
+          "importance": "minor",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "revealed": false
         }
       ]
     },
     {
+<<<<<<< HEAD
       "name": "Priya Sharma",
       "role": "Anjali Devi's cousin from the opposing family faction, visiting from Delhi",
       "alibi": "Priya claims to have been feeling unwell and retired to her room around 21:30. She says she took a sleeping draught and didn't wake up until the following morning. A servant, Devi, confirms bringing her a glass of water and a sleeping draught around 21:45, but no one saw Priya after that.",
@@ -198,20 +375,56 @@
           "triggerType": "pressing",
           "triggerLevel": 4,
           "triggerDescription": "Confront Priya directly with the motive related to the land dispute and observe her reaction and attempt to downplay its importance to her.",
+=======
+      "name": "Vikram Singh Rathore",
+      "role": "Landlord, Local Moneylender",
+      "alibi": "Vikram claims he was playing cards with three other men – Kishore, Deepu, and Santosh – at Kishore's house from 22:00 until after midnight. Kishore confirms this, but Deepu and Santosh are known to be heavily indebted to Vikram and are likely to corroborate his story regardless of the truth. Vikram admits he left the game for about 10 minutes around 23:00 to \"stretch his legs\".",
+      "motives": [
+        "Lakshmi Kant Sharma, as Panchayat Secretary, was investigating Vikram's illegal land grabbing activities. If the investigation went further, Vikram would lose a significant portion of his wealth and face criminal charges.",
+        "Vikram lent Lakshmi Kant Sharma a large sum of money for a supposed 'business venture,' but Lakshmi Kant refused to pay it back. Vikram threatened to use forceful means to recover his debt, but Lakshmi Kant remained defiant.",
+        "Vikram is a ruthless and power-hungry individual who enjoys exerting control over others. He saw Lakshmi Kant Sharma as a threat to his influence in the village and wanted to eliminate him to maintain his dominance."
+      ],
+      "isKiller": false,
+      "personality": "Vikram is a powerful and intimidating man with a reputation for ruthlessness. He is used to getting his way and is not afraid to use threats and intimidation to achieve his goals. He is calculating and manipulative, always thinking several steps ahead. He speaks slowly and deliberately, making every word count. He carries a silver-handled cane, which he often uses to emphasize his points.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062391/obscura/suspects/obscura/suspects/Vikram%20Singh%20Rathore_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Sharma was a fool with money. He came to me for a 'business venture,' promised me great returns. He got the money, alright, but never delivered. A regrettable loss, but hardly worth... *this*.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Casually ask about Vikram's relationship with Lakshmi Kant Sharma, focusing on any financial dealings.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
+<<<<<<< HEAD
           "clue": "The sleeping draught...it had a strange taste. Bitter. I couldn't quite place it, but it wasn't the usual taste. I thought it was perhaps just a bad batch and didn't think much of it.",
           "triggerType": "specific_question",
           "triggerLevel": 5,
           "triggerDescription": "Ask Priya directly about the sleeping draught. Highlight any inconsistencies in her story, focusing on the details.",
+=======
+          "clue": "That Anjali Reddy... she's got a fiery temper. I saw her arguing with Sharma near the Panchayat office a few days before... you know.",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Accuse Vikram of having a motive related to Sharma's investigation into his land deals. Press him on others who might have had issues with Sharma.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Yes, I admit, I was… *forceful* in my reminders to Sharma about his debt. I may have visited his home earlier that day. But I never harmed him. I merely… *persuaded* him to see reason.",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Present solid evidence that Vikram threatened Sharma. Push him to admit to the specifics of their final interactions.",
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
+<<<<<<< HEAD
           "clue": "It is true my father was... humiliated. But that was years ago. I'm a businesswoman now, I act with strategy, not petty revenge. Although, I suspect that Lakshmi Bai was more than happy about Anjali's death. She always felt overshadowed by Anjali.",
           "triggerType": "sympathetic",
           "triggerLevel": 3,
@@ -219,10 +432,29 @@
           "isRedHerring": true,
           "importance": "important",
           "revealed": false
+=======
+          "clue": "I left the card game for about ten minutes. To... relieve myself. The pressure can get to an old man. And those boys, Deepu and Santosh, they are not always watching.",
+          "triggerType": "specific_question",
+          "triggerLevel": 2,
+          "triggerDescription": "Directly ask about the ten minutes he was absent from the card game, emphasizing the lack of reliable witnesses.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": " Sharma was getting in the way of a lot of things. He kept making noise over some land that I had acquired fairly through the appropriate channels.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 3,
+          "triggerDescription": "Express understanding of the difficulties Sharma's investigation created for him, creating a sense of shared frustration.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
         }
       ]
     }
   ],
+<<<<<<< HEAD
   "killer": "Rajkumar Arjun Singh",
   "locations": [
     "The Library",
@@ -294,12 +526,77 @@
         "testimony": "Kumar admits to being near the Lotus Pond earlier that evening, but claims he was just taking a walk. He denies seeing anyone or anything suspicious. He insists that he was framed for the theft from the stables.",
         "reliability": "Potentially unreliable, as he is trying to protect himself. He could also be covering for someone else.",
         "hiddenAgenda": "He deeply resents Rana Vikram for his arrogance and mistreatment of the staff. He may know something about Rana Vikram's movements that night but is afraid to speak up."
+=======
+  "killer": "Divya Sharma",
+  "locations": [
+    "Sharma Tea Stall, near the Banyan Tree",
+    "Village Panchayat Office",
+    "Sharma Residence",
+    "Village Temple"
+  ],
+  "clues": {
+    "Sharma Tea Stall, near the Banyan Tree": [
+      "A half-empty glass of chai is still on the table where Lakshmi Kant Sharma was last seen. The chai has gone cold, and a small dead fly is floating in it. The glass has a faint lipstick stain on the rim, analyzed to be a common shade of pink, not typically worn by Anjali Reddy, but potentially matching the lipstick Divya Sharma wears.",
+      "Underneath the table, partially obscured by the roots of the Banyan Tree, is a crumpled lottery ticket. It's dated for the previous week and has a few numbers circled. Anjali Reddy confirms Lakshmi Kant bought lottery tickets regularly and often scribbled on them while brooding, but she claims he usually bought them from the stall next to the Panchayat office. Footprints in the dust near the ticket suggest someone stood there for a while recently.",
+      "Anjali Reddy, though initially cooperative, becomes visibly nervous when questioned about Lakshmi Kant's last words. She claims he was just complaining about paperwork, but her hands tremble noticeably when she pours tea. She's wiping the table obsessively, cleaning far beyond what's necessary, possibly trying to remove evidence.",
+      "A faint scent of sandalwood incense lingers in the air, stronger than typically found around the tea stall. Sandalwood incense is commonly used in Hindu religious practices and can be found in the Sharma residence."
+    ],
+    "Village Panchayat Office": [
+      "Lakshmi Kant Sharma's office is locked, but the window has been forced open. The lock mechanism is damaged, suggesting it was picked rather clumsily. Inside, papers are scattered haphazardly, but no obvious documents are missing. A file labeled \"Land Disputes - Rathore\" is conspicuously on top of the pile.",
+      "The office computer shows the last login was at 22:58. The recent history reveals searches for \"poisonous plants common in Shady Indian Village\" and \"saffron dye extraction methods.\" These search entries have been deleted from the browser history, but are recoverable using forensic tools.",
+      "A security camera positioned outside the Panchayat office, pointed toward the entrance, captured footage of someone matching Divya Sharma's description entering the office around 23:05 and leaving around 23:18. Her face is partially obscured by a shawl, but her gait and clothing are recognizable. The camera malfunctions shortly after she leaves, displaying static.",
+      "A small piece of saffron silk fabric is caught in the window latch. It is consistent with the material of the scarf used to strangle Lakshmi Kant Sharma. There's a faint trace of turmeric on the fabric, a common ingredient in Indian cooking."
+    ],
+    "Sharma Residence": [
+      "In Divya Sharma's room, a bottle of sleeping pills is found on her bedside table. The prescription is valid, but the bottle is nearly empty, even though it was recently filled. The remaining pills are analyzed and found to be less potent than the original prescription suggests they have been diluted.",
+      "Lakshmi Kant Sharma's private study contains a hidden safe behind a bookshelf. The safe is unlocked and empty, but a small, torn piece of paper with Anjali Reddy's name and a monetary amount written on it is found inside.",
+      "Meena, the family servant, mentions that Divya had been acting strangely for weeks, often staring blankly into space and muttering to herself. She also saw Divya burning something in the backyard tandoor (clay oven) late one night last week, but couldn't see what it was.",
+      "A small, almost imperceptible stain of blood is found on the bottom hem of Divya's sari, hidden beneath folds of fabric. Forensic analysis confirms it is Lakshmi Kant Sharma's blood type."
+    ],
+    "Village Temple": [
+      "Pandit Joshi, the temple priest, confirms Rajesh Kumar Verma was present at the temple but couldn't recall the exact duration or his activities. He seemed agitated. He mentions Rajesh kept pacing back and forth.",
+      "Near the donation box, a discarded cigarette butt is found. It's a brand that Rajesh Kumar Verma is known to smoke. A faint smear of mud is on the butt, consistent with the mud near the Panchayat office window.",
+      "A small, almost invisible smudge of turmeric powder is found on the temple bell. Turmeric is considered auspicious and is commonly used in Hindu rituals. Rajesh Kumar Verma is known to apply tilak (turmeric paste) on his forehead before visiting the temple."
+    ]
+  },
+  "witnesses": {
+    "Sharma Tea Stall, near the Banyan Tree": [
+      {
+        "name": "Deepu",
+        "role": "Local Idler",
+        "background": "Deepu spends most of his days loitering around the tea stall, listening to gossip. He is heavily indebted to Vikram Singh Rathore.",
+        "testimony": "Deepu claims he saw Rajesh Kumar Verma arguing with Lakshmi Kant Sharma earlier that evening, around 21:00. He couldn't hear what they were saying, but their body language was aggressive.",
+        "reliability": "Unreliable. Deepu is easily influenced and known to fabricate stories for attention. His debt to Vikram raises questions about his impartiality.",
+        "hiddenAgenda": "Deepu is afraid of Vikram and likely to say anything that pleases him."
+      }
+    ],
+    "Village Panchayat Office": [
+      {
+        "name": "Sarpanch (Village Head)",
+        "role": "Village Head",
+        "background": "He is the political and administrative head of the village.",
+        "testimony": "Sarpanch recalls Lakshmi Kant confided about receiving veiled threats from Vikram Singh Rathore regarding land encroachment cases. He also mentioned Rajesh Kumar Verma had become increasingly desperate after being denied the Panchayat job.",
+        "reliability": "Somewhat reliable, but his memory might be affected by his age.",
+        "hiddenAgenda": "He might be trying to deflect suspicion from someone closer to him, or even cover up his own involvement in some of the village's darker dealings."
+      }
+    ],
+    "Sharma Residence": [],
+    "Village Temple": [
+      {
+        "name": "Radha",
+        "role": "Flower Seller",
+        "background": "Radha sells flowers and other religious items outside the temple. She is observant and knows everyone in the village.",
+        "testimony": "Radha says she saw Divya Sharma at the temple earlier that evening, around 20:00. Divya was crying and praying fervently. Radha offered her comfort, but Divya just shook her head and walked away.",
+        "reliability": "Relatively reliable. Radha is a devout woman with no apparent reason to lie.",
+        "hiddenAgenda": "Radha might embellish her stories to make them more interesting or to gain sympathy."
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
       }
     ]
   },
   "timeline": [
     {
       "time": "21:00",
+<<<<<<< HEAD
       "event": "Two days prior: Rana Vikram is seen at the Royal Flush Casino in Jaipur, losing a substantial sum of money at a game of Teen Patti. Surveillance footage captures him arguing with a loan shark."
     },
     {
@@ -377,6 +674,85 @@
     {
       "time": "07:00",
       "event": "The Following Day: Devi, the Maid, discovers Anjali Devi's body in the library during her morning duties. She screams, alerting the rest of the household. The silk scarf remains around Anjali's neck."
+=======
+      "event": "Two Days Before: Vikram Singh Rathore calls Lakshmi Kant Sharma demanding immediate repayment of the loan, threatening \"unpleasant consequences\" if Sharma doesn't comply. The call is logged on Sharma's phone records."
+    },
+    {
+      "time": "10:00",
+      "event": "One Day Before: Lakshmi Kant Sharma visits Anjali's Tea Stall, demanding 5000 Rupees by the next day to keep her secret about the affair hidden. Anjali feigns agreement but harbors resentment."
+    },
+    {
+      "time": "11:30",
+      "event": "One Day Before: Rajesh Kumar Verma sends a strongly worded WhatsApp message to Lakshmi Kant Sharma, accusing him of betrayal and threatening to expose his corruption. Screenshot saved on Rajesh's phone."
+    },
+    {
+      "time": "14:00",
+      "event": "One Day Before: Divya Sharma visits the Village Temple, crying and praying. Radha, the flower seller, witnesses this and offers comfort, which is refused. Divya buys a small vial of sleeping pills from a nearby pharmacy (recorded transaction)."
+    },
+    {
+      "time": "16:00",
+      "event": "One Day Before: Vikram Singh Rathore is seen near the Village Panchayat Office, looking agitated. A local boy, Raju, reports seeing him pacing back and forth. This is considered unreliable hearsay."
+    },
+    {
+      "time": "18:00",
+      "event": "One Day Before: Lakshmi Kant Sharma's affair partner calls him, demanding he leave Divya. Divya overhears the conversation, further fueling her resentment. She secretly searches for 'undetectable poisons' online using Lakshmi Kant Sharma's computer (browser history)."
+    },
+    {
+      "time": "20:00",
+      "event": "Today: Divya Sharma prepares dinner for Lakshmi Kant, including a small amount of sleeping pills in his lassi (yogurt drink). This is subtle and undetectable after a certain period. She also spikes her own food."
+    },
+    {
+      "time": "20:30",
+      "event": "Today: Rajesh Kumar Verma is seen arguing with Lakshmi Kant Sharma at Sharma Tea Stall near the Banyan Tree. Deepu, a local idler, witnesses the argument but cannot hear the conversation. Their body language appears aggressive."
+    },
+    {
+      "time": "21:00",
+      "event": "Today: Anjali Reddy is seen walking past the Village Panchayat Office, glancing around nervously. A CCTV camera, usually nonfunctional, captures her image but the quality is poor due to darkness."
+    },
+    {
+      "time": "21:15",
+      "event": "Today: Divya brings Lakshmi Kant his dinner and lassi. He consumes it while working at his desk."
+    },
+    {
+      "time": "21:30",
+      "event": "Today: Meena, the family servant, brings Divya her dinner. She confirms Divya is in her room, although it is not possible to ascertain if she is asleep."
+    },
+    {
+      "time": "22:00",
+      "event": "Today: Vikram Singh Rathore begins his card game at Kishore's house. Kishore, Deepu, and Santosh are present."
+    },
+    {
+      "time": "22:30",
+      "event": "Today: Rajesh Kumar Verma arrives at the Village Temple and begins praying. Pandit Joshi, the temple priest, vaguely remembers seeing him."
+    },
+    {
+      "time": "22:45",
+      "event": "Today: Divya Sharma, pretending to be asleep, gets out of bed. She takes a saffron silk scarf belonging to Lakshmi Kant Sharma from his cupboard."
+    },
+    {
+      "time": "23:00",
+      "event": "Today: Vikram Singh Rathore leaves the card game briefly to \"stretch his legs\". He is gone for approximately 10 minutes."
+    },
+    {
+      "time": "23:00",
+      "event": "Today: Anjali Reddy closes up her tea stall and begins her walk home. She claims to see a shadowy figure near the Panchayat office."
+    },
+    {
+      "time": "23:10",
+      "event": "Today: Rajesh Kumar Verma leaves the Village Temple for about five minutes to buy a packet of cigarettes from a nearby paan shop, which can be verified with the paan shop owner. The paan shop owner mentions he saw someone who looked like Vikram walking in the distance."
+    },
+    {
+      "time": "23:15",
+      "event": "Today: Divya Sharma enters Lakshmi Kant Sharma's study. He is drowsy from the sleeping pills. She strangles him with the saffron silk scarf. The scarf is tightly knotted, leaving ligature marks."
+    },
+    {
+      "time": "23:30",
+      "event": "Today: Divya Sharma returns to her room, hides the saffron scarf under her mattress, and pretends to sleep."
+    },
+    {
+      "time": "06:00",
+      "event": "Next Day: Meena, the family servant, discovers Lakshmi Kant Sharma's body in his study and raises the alarm. The murder is reported to the police."
+>>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
     }
   ]
 }
