@@ -14,7 +14,9 @@ import {
   MapPin,
   UserCheck,
   Target,
-  Clock
+  Clock,
+  LogOut,
+  FolderOpen
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
@@ -24,6 +26,7 @@ import Navbar from '@/components/navbar';
 import DifficultyModal from '@/components/DifficultyModal';
 import { useCases, useUserStats, CaseData } from '@/hooks/useCases';
 import { useEffect, useState } from 'react';
+import { logOut } from '@/lib/auth';
   
 export default function DashboardPage() {
   const { user, userData, loading } = useAuth();
@@ -164,6 +167,28 @@ export default function DashboardPage() {
 
   const handleStartNewMission = () => {
     setShowDifficultyModal(true);
+  };
+
+  const handleOpenRecentCase = () => {
+    if (casesToShow.length > 0) {
+      const mostRecentCase = casesToShow[0];
+      if (mostRecentCase.status === 'completed') {
+        // Navigate to the case file page for completed cases
+        router.push(`/dashboard/case/${mostRecentCase.id}`);
+      } else {
+        // Navigate to the investigation page for ongoing cases
+        router.push(`/dashboard/investigate/${mostRecentCase.id}`);
+      }
+    }
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+      router.push('/login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   const handleSelectDifficulty = async (difficulty: 'easy' | 'medium' | 'hard') => {
@@ -319,14 +344,13 @@ export default function DashboardPage() {
             className="flex justify-center"
           >
             <motion.button
-              whileHover={{ scale: 1, boxShadow: '0 0 12px 6px #444444, 0 0 2px 2px #fff2' }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleStartNewMission}
-              className="relative flex items-center gap-3 px-8 py-4 mt-2 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-900 shadow-lg shadow-yellow-400/20 border-none border-black/20 text-white font-bold tracking-tighter transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/40 hover:from-teal-400 hover:to-cyan-900 hover:shadow-2xl hover:shadow-pink-500/30"
-              style={{ letterSpacing: '0.15em' }}
+              className="px-6 py-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-lg hover:from-teal-600 hover:to-teal-700 transition-all duration-200 flex items-center gap-2"
             >
-              <Briefcase className="w-6 h-6 text-white drop-shadow-lg" />
-                  <div className = "tracking-normal" >Start a New Mission</div>
+              <Briefcase className="w-5 h-5 text-white" />
+              Start a New Mission
             </motion.button>
           </motion.div>
 
@@ -475,7 +499,7 @@ export default function DashboardPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleStartNewMission}
-                className="group text-center"
+                className="group text-center cursor-pointer"
               >
                 <div className="mb-4 flex justify-center">
                   <GlassIcons
@@ -488,32 +512,36 @@ export default function DashboardPage() {
                   />
                 </div>
                 <div className="p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300">
-                  <h3 className="text-white font-semibold mb-2">New Investigation</h3>
-                  <p className="text-gray-400 text-sm">Start a new case investigation</p>
+                  <h3 className="text-white font-semibold mb-2">Create New Investigation</h3>
+                  <p className="text-gray-400 text-sm">Start a fresh murder mystery case</p>
                 </div>
               </motion.div>
 
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group text-center"
+                onClick={handleOpenRecentCase}
+                className={`group text-center ${casesToShow.length > 0 ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               >
                 <div className="mb-4 flex justify-center">
                   <GlassIcons
                     items={[{
-                      icon: <Lock className="w-6 h-6 text-white" />,
-                      color: userStats?.evidenceFound ? 'red' : 'indigo',
-                      label: 'Evidence Analysis',
+                      icon: <FolderOpen className="w-6 h-6 text-white" />,
+                      color: casesToShow.length > 0 ? 'purple' : 'gray',
+                      label: 'Recent Case',
                     }]}
                     className="!grid-cols-1 !gap-0 !py-0"
                   />
                 </div>
                 <div className={`p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl transition-all duration-300 ${
-                  userStats?.evidenceFound ? 'hover:bg-white/10' : 'opacity-60'
+                  casesToShow.length > 0 ? 'hover:bg-white/10' : 'opacity-60'
                 }`}>
-                  <h3 className="text-white font-semibold mb-2">Evidence Analysis</h3>
+                  <h3 className="text-white font-semibold mb-2">Open Recent Case</h3>
                   <p className="text-gray-400 text-sm">
-                    {userStats?.evidenceFound ? `Analyze ${userStats.evidenceFound} pieces of evidence` : 'Find evidence to unlock'}
+                    {casesToShow.length > 0 
+                      ? `Continue "${casesToShow[0]?.story?.title || 'Untitled Case'}"` 
+                      : 'No recent cases available'
+                    }
                   </p>
                 </div>
               </motion.div>
@@ -521,25 +549,22 @@ export default function DashboardPage() {
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group text-center"
+                onClick={handleLogOut}
+                className="group text-center cursor-pointer"
               >
                 <div className="mb-4 flex justify-center">
                   <GlassIcons
                     items={[{
-                      icon: <Brain className="w-6 h-6 text-white" />,
-                      color: userStats?.casesCompleted ? 'purple' : 'indigo',
-                      label: 'Case Patterns',
+                      icon: <LogOut className="w-6 h-6 text-white" />,
+                      color: 'red',
+                      label: 'Log Out',
                     }]}
                     className="!grid-cols-1 !gap-0 !py-0"
                   />
                 </div>
-                <div className={`p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl transition-all duration-300 ${
-                  userStats?.casesCompleted ? 'hover:bg-white/10' : 'opacity-60'
-                }`}>
-                  <h3 className="text-white font-semibold mb-2">Case Patterns</h3>
-                  <p className="text-gray-400 text-sm">
-                    {userStats?.casesCompleted ? 'Analyze patterns across your cases' : 'Complete cases to unlock'}
-                  </p>
+                <div className="p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300">
+                  <h3 className="text-white font-semibold mb-2">Log Out</h3>
+                  <p className="text-gray-400 text-sm">Sign out of your detective account</p>
                 </div>
               </motion.div>
             </div>

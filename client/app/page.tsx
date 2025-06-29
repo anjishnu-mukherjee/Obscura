@@ -58,23 +58,23 @@ export default function Home() {
   const features = [
     {
       icon: Search,
-      title: "Real-Time Clue Decryption",
-      description: "Advanced algorithms decode encrypted evidence as you discover it"
+      title: "AI-Generated Cases",
+      description: "Every murder mystery is unique, crafted by AI with different suspects, motives, and locations"
     },
     {
       icon: Brain,
-      title: "AI-Powered Crime Scene Mapping",
-      description: "Neural networks reconstruct crime scenes with photorealistic precision"
+      title: "Voice-Based Interrogations",
+      description: "Listen to AI-generated voice conversations as you interrogate suspects and witnesses"
     },
     {
       icon: Lock,
-      title: "Evidence Discovery",
-      description: "Secure digital vault protecting sensitive case materials"
+      title: "Watson AI Assistant",
+      description: "Your personal detective AI helps analyze clues and spot inconsistencies you might miss"
     },
     {
       icon: Shield,
-      title: "Quantum Encryption Protocol",
-      description: "Military-grade security ensuring case integrity and authenticity"
+      title: "Dynamic Difficulty System",
+      description: "From Rookie to Elite - choose your challenge level with adaptive complexity"
     }
   ];
 
@@ -145,8 +145,8 @@ export default function Home() {
                 className="mb-8"
               >
                 <Eye className="w-16 h-16 text-teal-400 mx-auto mb-4" />
-                <h2 className="text-2xl font-light text-white mb-2">Initializing Obscura Protocol</h2>
-                <p className="text-gray-400">Decrypting access permissions...</p>
+                <h2 className="text-2xl font-light text-white mb-2">Initializing Detective Protocol</h2>
+                <p className="text-gray-400">Loading case files and AI systems...</p>
               </motion.div>
               
               <div className="w-64 h-1 bg-gray-800 rounded-full mx-auto">
@@ -173,11 +173,11 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="flex-1 flex items-center justify-center px-8 py-20 pt-32 min-h-screen"
+            className="flex-1 flex items-center justify-center px-8 py-16 pt-24 min-h-[80vh]"
           >
             <div className="max-w-6xl mx-auto text-center">
               <motion.div variants={fadeInUp} className="mb-8">
-                <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-6 tracking-tight">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight">
                   <DecryptedText
                     text="Decode the"
                     animateOn="view"
@@ -204,15 +204,15 @@ export default function Home() {
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 2, delay: 0.5 }}
-                  className="h-px bg-gradient-to-r from-transparent via-teal-500 to-transparent mx-auto mb-8"
+                  className="h-px bg-gradient-to-r from-transparent via-teal-500 to-transparent mx-auto mb-6"
                 />
                 
-                <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-                  A modern mystery experience. Clues are hidden. Truth is encrypted.
+                <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+                  An AI-powered murder mystery where every case is unique, every suspect has secrets, and only you can uncover the truth.
                 </p>
               </motion.div>
 
-              <motion.div variants={fadeInUp} className="mb-16">
+              <motion.div variants={fadeInUp} className="mb-8">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -221,7 +221,7 @@ export default function Home() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="relative flex items-center space-x-3">
-                    <span className="text-lg">Begin the Mission</span>
+                    <span className="text-lg">Start Investigation</span>
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
                   <div className="absolute inset-0 ring-2 ring-teal-400/50 rounded-full group-hover:ring-teal-300 transition-colors" />
@@ -235,7 +235,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
-            className="px-8 py-20 bg-gray-950/95 relative"
+            className="px-8 py-12 bg-gray-950/95 relative"
             id="cases"
           >
             <div className="max-w-4xl mx-auto">
@@ -249,25 +249,26 @@ export default function Home() {
                   repeat: Infinity, 
                   ease: "easeInOut" 
                 }}
-                className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl"
+                className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl"
               >
                 <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-teal-400 to-transparent" />
                 <div className="absolute -bottom-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-red-400 to-transparent" />
                 
-                <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="grid md:grid-cols-2 gap-6 items-center">
                   <div>
                     <div className="flex items-center space-x-3 mb-4">
                       <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
                       <span className="text-red-400 text-sm font-mono">CLASSIFIED</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-4">Case File #2156-X</h3>
-                    <p className="text-gray-300 mb-6 leading-relaxed">
-                      A series of encrypted messages have surfaced across the city. Each clue leads deeper into a web of deception that challenges everything you thought you knew.
+                    <h3 className="text-xl font-bold text-white mb-3">Case File #2156-X</h3>
+                    <p className="text-gray-300 mb-4 leading-relaxed text-sm">
+                      A high-profile CEO found dead in their locked office. Three suspects, each with motive and opportunity. 
+                      Interrogate witnesses, analyze alibis, and piece together the truth before time runs out.
                     </p>
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-400">Evidence Collected</span>
-                        <span className="text-teal-400">47/∞</span>
+                        <span className="text-gray-400">Investigation Progress</span>
+                        <span className="text-teal-400">3/7 Suspects Questioned</span>
                       </div>
                       <div className="w-full bg-gray-800 rounded-full h-2">
                         <div className="bg-gradient-to-r from-teal-500 to-teal-300 h-2 rounded-full w-1/3" />
@@ -276,21 +277,21 @@ export default function Home() {
                   </div>
                   
                   <div className="relative">
-                    <div className="bg-gray-900/50 backdrop-blur border border-gray-700 rounded-lg p-6 font-mono text-sm">
-                      <div className="flex items-center space-x-2 mb-4">
+                    <div className="bg-gray-900/50 backdrop-blur border border-gray-700 rounded-lg p-4 font-mono text-xs">
+                      <div className="flex items-center space-x-2 mb-3">
                         <div className="w-2 h-2 bg-green-500 rounded-full" />
-                        <span className="text-green-400">DECRYPTION ACTIVE</span>
+                        <span className="text-green-400">INTERROGATION_SYSTEM_ONLINE</span>
                       </div>
                       <div className="space-y-2">
-                        <div className="text-gray-500">{'>'} analyzing_pattern.exe</div>
-                        <div className="text-green-400">{'>'} cipher_key_found: 0xA7B9</div>
-                        <div className="text-yellow-400">{'>'} partial_decode: &quot;The truth lies in...&quot;</div>
+                        <div className="text-gray-500">{'>'} interrogating_suspect.exe</div>
+                        <div className="text-green-400">{'>'} voice_analysis: DECEPTION_DETECTED</div>
+                        <div className="text-yellow-400">{'>'} watson_ai: &quot;Notice the inconsistency...&quot;</div>
                         <motion.div
                           animate={{ opacity: [1, 0, 1] }}
                           transition={{ duration: 1, repeat: Infinity }}
                           className="text-teal-400"
                         >
-                          {'>'} [PROCESSING...]
+                          {'>'} [ANALYZING ALIBI...]
                         </motion.div>
                       </div>
                     </div>
@@ -305,14 +306,14 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="px-8 py-20 bg-gray-950"
+            className="px-8 py-12 bg-gray-950"
             id="features"
           >
             <div className="max-w-6xl mx-auto">
-              <motion.div variants={fadeInUp} className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <motion.div variants={fadeInUp} className="text-center mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                   <DecryptedText
-                    text="Advanced Investigation Suite"
+                    text="Detective Tools & Features"
                     animateOn="view"
                     speed={80}
                     maxIterations={15}
@@ -324,12 +325,12 @@ export default function Home() {
                     key={Math.random()} // Force re-render to trigger animation every time
                   />
                 </h2>
-                <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                  Cutting-edge technology meets detective intuition in this immersive mystery experience
+                <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                  AI-powered investigation tools that adapt to your detective skills and help solve complex murder mysteries
                 </p>
               </motion.div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {features.map((feature, index) => (
                   <motion.div
                     key={feature.title}
@@ -338,16 +339,16 @@ export default function Home() {
                       scale: 1.05,
                       rotateY: 5,
                     }}
-                    className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
+                    className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all duration-300"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     <div className="relative">
-                      <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <feature.icon className="w-6 h-6 text-white" />
+                      <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                        <feature.icon className="w-5 h-5 text-white" />
                       </div>
                       
-                      <h3 className="text-xl font-semibold text-white mb-3">
+                      <h3 className="text-lg font-semibold text-white mb-2">
                         <DecryptedText
                           text={feature.title}
                           animateOn="hover"
@@ -371,14 +372,14 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="px-8 py-20 bg-gradient-to-b from-gray-950 to-black"
+            className="px-8 py-12 bg-gradient-to-b from-gray-950 to-black"
             id="team"
           >
             <div className="max-w-6xl mx-auto">
-              <motion.div variants={fadeInUp} className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <motion.div variants={fadeInUp} className="text-center mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                   <DecryptedText
-                    text="Meet the Architects"
+                    text="Meet the Developers"
                     animateOn="view"
                     speed={80}
                     maxIterations={15}
@@ -390,12 +391,12 @@ export default function Home() {
                     key={Math.random()}
                   />
                 </h2>
-                <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                  The minds behind the mystery - crafting experiences that blur the line between reality and digital intrigue
+                <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                  The creative minds who built this AI-powered murder mystery experience from the ground up
                 </p>
               </motion.div>
 
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-3 gap-6">
                 {[
                   {
                     name: "Arnab Sengupta",
@@ -426,19 +427,19 @@ export default function Home() {
                       scale: 1.05,
                       rotateY: 5,
                     }}
-                    className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-8 hover:bg-white/10 transition-all duration-300"
+                    className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     <div className="relative text-center">
                       {/* Avatar placeholder with gradient */}
-                      <div className="w-24 h-24 bg-gradient-to-br from-teal-500 to-teal-400 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <span className="text-white text-2xl font-bold">
+                      <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-teal-400 rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                        <span className="text-white text-xl font-bold">
                           {member.name.split(' ').map(n => n[0]).join('')}
                         </span>
                       </div>
                       
-                      <h3 className="text-xl font-semibold text-white mb-2">
+                      <h3 className="text-lg font-semibold text-white mb-1">
                         <DecryptedText
                           text={member.name}
                           animateOn="hover"
@@ -505,7 +506,7 @@ export default function Home() {
               </div>
               
               <p className="text-gray-400 text-sm">
-                © 2025 Obscura | Powered by Intelligence & Code
+                © 2025 Obscura | AI-Powered Murder Mystery Experience
               </p>
             </div>
           </motion.footer>

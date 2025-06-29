@@ -9,7 +9,8 @@ import {
   Shield, 
   FileText, 
   Users, 
-  HelpCircle,
+  Brain,
+  Eye,
   Bell,
   Settings,
   User,
@@ -40,10 +41,9 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { name: 'Cases', href: '#cases', icon: FileText },
-    { name: 'Features', href: '#features', icon: Shield },
-    { name: 'Community', href: '#community', icon: Users },
-    { name: 'Support', href: '#support', icon: HelpCircle },
+    { name: 'Case Preview', href: '#cases', icon: FileText },
+    { name: 'Detective Tools', href: '#features', icon: Brain },
+    { name: 'Meet the Team', href: '#team', icon: Users },
   ];
 
   if (user && userData) {
@@ -133,12 +133,10 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className="group flex items-center space-x-2 text-gray-300 hover:text-teal-400 transition-colors duration-300 relative"
+                className="flex items-center space-x-2 text-gray-300 transition-colors duration-300"
               >
                 <item.icon className="w-4 h-4" />
                 <span className="font-medium">{item.name}</span>
-                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-teal-300 group-hover:w-full transition-all duration-300" />
               </motion.a>
             ))}
           </div>
@@ -210,7 +208,7 @@ export default function Navbar() {
                 }}
                 transition={{ delay: 0.1 * index, duration: 0.3 }}
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center space-x-3 text-gray-300 hover:text-teal-400 transition-colors duration-300 py-2"
+                className="flex items-center space-x-3 text-gray-300 transition-colors duration-300 py-2"
               >
                 <item.icon className="w-5 h-5" />
                 <span className="font-medium">{item.name}</span>
