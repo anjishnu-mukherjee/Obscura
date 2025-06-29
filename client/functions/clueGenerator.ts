@@ -48,35 +48,61 @@ class ClueGenerator {
   private determineClueType(clue: string): ClueType {
     const lowerClue = clue.toLowerCase();
 
+    // Biological traces (visible stains and marks)
     if (
       lowerClue.includes("blood") ||
-      lowerClue.includes("dna") ||
-      lowerClue.includes("fingerprint")
+      lowerClue.includes("bloodstain") ||
+      lowerClue.includes("stain") ||
+      lowerClue.includes("dried blood")
     ) {
       return "Biological Trace";
     }
+
+    // Digital records (visible electronic devices and displays)
     if (
-      lowerClue.includes("computer") ||
-      lowerClue.includes("log") ||
+      lowerClue.includes("phone") ||
       lowerClue.includes("camera") ||
+      lowerClue.includes("computer") ||
+      lowerClue.includes("screen") ||
+      lowerClue.includes("device") ||
       lowerClue.includes("footage")
     ) {
       return "Digital Record";
     }
+
+    // Witness testimony (verbal accounts)
     if (
       lowerClue.includes("witness") ||
       lowerClue.includes("saw") ||
-      lowerClue.includes("heard")
+      lowerClue.includes("heard") ||
+      lowerClue.includes("testimony") ||
+      lowerClue.includes("observed")
     ) {
       return "Witness Testimony";
     }
+
+    // Environmental anomalies (scene disturbances and environmental clues)
     if (
-      lowerClue.includes("weather") ||
-      lowerClue.includes("temperature") ||
-      lowerClue.includes("marks")
+      lowerClue.includes("footprint") ||
+      lowerClue.includes("tire track") ||
+      lowerClue.includes("handprint") ||
+      lowerClue.includes("trampled") ||
+      lowerClue.includes("disturbed") ||
+      lowerClue.includes("mud") ||
+      lowerClue.includes("dirt") ||
+      lowerClue.includes("broken") ||
+      lowerClue.includes("shattered") ||
+      lowerClue.includes("overturned") ||
+      lowerClue.includes("moved") ||
+      lowerClue.includes("displaced") ||
+      lowerClue.includes("burn") ||
+      lowerClue.includes("scorch") ||
+      lowerClue.includes("melted")
     ) {
       return "Environmental Anomaly";
     }
+
+    // Default to Physical Object for all visible items, tools, personal belongings, etc.
     return "Physical Object";
   }
 
@@ -97,7 +123,7 @@ class ClueGenerator {
     // Base difficulty on category
     switch (category) {
       case "direct":
-        difficulty += 4;
+        difficulty += 3; // Reduced from 4 since visual clues are more apparent
         break;
       case "indirect":
         difficulty += 2;
@@ -107,42 +133,47 @@ class ClueGenerator {
         break;
     }
 
-    // Adjust requirements based on type
+    // Adjust requirements based on type - focused on visual discovery
     switch (type) {
       case "Biological Trace":
-        requires = "forensic_kit";
+        // Visible bloodstains and marks - just need careful observation
+        requires = "observation";
         difficulty = Math.min(difficulty + 1, 5);
         return {
           requires,
           difficulty,
-          requiresItem: "UV Light and Sample Kit",
+          requiresAction: "Careful visual examination of stains and marks",
         };
       case "Digital Record":
-        requires = "hack";
+        // Visible electronic devices - may need interaction
+        requires = "deep_search";
         return {
           requires,
           difficulty,
-          requiresAction: "Bypass Security",
+          requiresAction: "Examine and potentially access electronic device",
         };
       case "Witness Testimony":
         requires = "witness_help";
         return {
           requires,
           difficulty,
-          requiresWitnessHelp: "Build Trust",
+          requiresWitnessHelp: "Build Trust and Ask Questions",
         };
       case "Environmental Anomaly":
+        // Footprints, disturbed areas, broken items - visual observation
         requires = "observation";
         return {
           requires,
           difficulty,
-          requiresItem: "Environmental Scanner",
+          requiresAction: "Observe environmental disturbances and disruptions",
         };
       default:
+        // Physical objects - may require searching or moving items
         requires = "deep_search";
         return {
           requires,
           difficulty,
+          requiresAction: "Search area thoroughly for physical evidence",
         };
     }
   }
@@ -183,17 +214,28 @@ CASE CONTEXT:
       .map((s) => s.name)
       .join(", ")}
 
+IMPORTANT - FOCUS ON VISUALLY OBSERVABLE CLUES:
+Generate clues about things that would be visible in crime scene photos or easily observed:
+- Physical objects they handled, moved, or left behind
+- Visible actions they performed (breaking, spilling, moving items)
+- Clothing, personal items, or tools they had
+- Environmental disturbances they caused
+- Visible evidence of their presence (footprints, handprints, stains)
+
+AVOID: Microscopic evidence, tiny details, internal thoughts, or things requiring special equipment to detect.
+
 INSTRUCTIONS:
 Generate clues this suspect might reveal based on different interrogation approaches. Consider:
 - If they're the killer: Include some misleading clues (red herrings) and make critical clues very hard to get
 - If they're innocent: Include helpful clues but also some nervous/defensive responses
 - Personality should affect how they respond to different approaches
 - Some clues should be easier to get (gentle approach) while others need pressure
+- Focus on visually apparent evidence that could be photographed
 
 Return ONLY a valid JSON array of clue objects:
 [
   {
-    "clue": "Specific information they might reveal",
+    "clue": "Specific information they might reveal about visible evidence",
     "triggerType": "pressing" | "gentle" | "aggressive" | "sympathetic" | "specific_question",
     "triggerLevel": 1-5,
     "triggerDescription": "What exactly needs to be done to trigger this",
@@ -253,17 +295,29 @@ CASE CONTEXT:
 - Setting: ${this.story.setting}
 - Suspects: ${this.story.suspects.map((s) => s.name).join(", ")}
 
+IMPORTANT - FOCUS ON VISUAL OBSERVATIONS:
+Generate clues about things the witness could have visually observed:
+- People carrying or handling visible objects
+- Physical actions they witnessed (breaking, moving, dropping items)
+- Clothing, appearance, or belongings of people they saw
+- Environmental changes they noticed (disturbed areas, displaced objects)
+- Visible evidence they spotted at the scene
+- Physical interactions between people they observed
+
+AVOID: Internal thoughts, emotions, or microscopic details the witness couldn't realistically see.
+
 INSTRUCTIONS:
 Generate clues this witness might reveal based on different approaches. Consider:
 - Their reliability affects clue quality
 - Hidden agenda might make them withhold or distort information
 - Some witnesses need sympathy, others respond to authority
 - Location context should influence what they might have seen/heard
+- Focus on visual observations that could later be verified through physical evidence
 
 Return ONLY a valid JSON array of clue objects:
 [
   {
-    "clue": "Specific information they might reveal",
+    "clue": "Specific visual information they might reveal about what they observed",
     "triggerType": "pressing" | "gentle" | "aggressive" | "sympathetic" | "specific_question",
     "triggerLevel": 1-5,
     "triggerDescription": "What exactly needs to be done to trigger this",
@@ -458,3 +512,8 @@ export async function generateEnhancedStoryWithTriggers(
 // const story = JSON.parse(fs.readFileSync('story.json', 'utf8'));
 // const gameClues = generateGameClues(story as StoryStructure);
 // console.log(JSON.stringify(gameClues, null, 2));
+
+// Note: This clue generator is optimized for visual, photographable evidence
+// that works well with AI-generated crime scene images. All clues are designed
+// to be visible and discoverable through visual investigation rather than
+// requiring microscopic analysis or special forensic equipment.

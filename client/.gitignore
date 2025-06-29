@@ -6,7 +6,7 @@
 /.pnp
 .pnp.js
 
-temp/
+temp/*.wav
 
 # testing
 /coverage

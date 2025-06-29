@@ -19,6 +19,7 @@ import {
   StoryStructure, 
   CaseIntro, 
   ProcessedClues, 
+  ProcessedClue,
   MapStructure,
   InterrogationSession,
   InvestigationFinding,
@@ -32,6 +33,13 @@ export interface InvestigationProgress {
     [locationId: string]: {
       visitedAt: any; // Firestore timestamp
       lastVisitDate: string; // ISO date string for IST
+      discoveredClues: ProcessedClue[]; // Location-specific discovered clues
+      generatedImages: {
+        url: string;
+        description: string;
+        clueHints: string[];
+        publicId: string; // Cloudinary public ID for deletion
+      }[]; // Saved location images
     };
   };
   interrogatedSuspects: {
@@ -58,13 +66,13 @@ export interface CaseData {
   clues: ProcessedClues;
   map: MapStructure;
   mapImageUrl?: string;
-  mapImagePublicId?: string; // Cloudinary public ID for deletion
+  mapImagePublicId?: string;
   status: 'active' | 'completed' | 'archived';
   createdAt: any;
   updatedAt: any;
   completedAt?: any;
   difficulty: 'easy' | 'medium' | 'hard';
-  estimatedDuration: number; // in minutes
+  estimatedDuration: number;
   tags: string[];
   investigationProgress?: InvestigationProgress;
 }
@@ -184,11 +192,32 @@ export const visitLocation = async (caseId: string, locationId: string) => {
   try {
     const today = getCurrentISTDate();
     
+    // Get current progress to preserve existing data
+    const caseResult = await getCase(caseId);
+    if (caseResult.error || !caseResult.data) {
+      return { error: 'Case not found' };
+    }
+    
+    const currentProgress = caseResult.data.investigationProgress || {
+      visitedLocations: {},
+      interrogatedSuspects: {},
+      discoveredClues: [],
+      currentDay: 1,
+      investigationFindings: []
+    };
+    
+    const existingLocationData = currentProgress.visitedLocations[locationId] || {
+      discoveredClues: [],
+      generatedImages: []
+    };
+    
     const progressUpdate = {
       visitedLocations: {
         [locationId]: {
           visitedAt: serverTimestamp(),
-          lastVisitDate: today
+          lastVisitDate: today,
+          discoveredClues: existingLocationData.discoveredClues || [],
+          generatedImages: existingLocationData.generatedImages || []
         }
       }
     };
@@ -501,6 +530,153 @@ export const getUserCaseStats = async (userId: string) => {
   } catch (error) {
     console.error('Error fetching case statistics:', error);
     return { stats: null, error: 'Failed to fetch case statistics' };
+  }
+};
+
+// ================================
+// LOCATION INVESTIGATION FUNCTIONS
+// ================================
+
+// Save location images to database
+export const saveLocationImages = async (
+  caseId: string, 
+  locationId: string, 
+  images: Array<{url: string, description: string, clueHints: string[], publicId: string}>
+) => {
+  try {
+    console.log('Saving location images for case:', caseId, 'location:', locationId);
+    
+    const caseResult = await getCase(caseId);
+    if (caseResult.error || !caseResult.data) {
+      return { error: 'Case not found' };
+    }
+    
+    const currentProgress = caseResult.data.investigationProgress || {
+      visitedLocations: {},
+      interrogatedSuspects: {},
+      discoveredClues: [],
+      currentDay: 1,
+      investigationFindings: []
+    };
+    
+    const existingLocationData = currentProgress.visitedLocations[locationId] || {
+      discoveredClues: [],
+      generatedImages: []
+    };
+    
+    const progressUpdate = {
+      visitedLocations: {
+        [locationId]: {
+          ...existingLocationData,
+          visitedAt: existingLocationData.visitedAt || serverTimestamp(),
+          lastVisitDate: existingLocationData.lastVisitDate || getCurrentISTDate(),
+          generatedImages: images
+        }
+      }
+    };
+    
+    return await updateInvestigationProgress(caseId, progressUpdate);
+  } catch (error) {
+    console.error('Error saving location images:', error);
+    return { error: 'Failed to save location images' };
+  }
+};
+
+// Get location images from database
+export const getLocationImages = async (caseId: string, locationId: string) => {
+  try {
+    const caseResult = await getCase(caseId);
+    if (caseResult.error || !caseResult.data) {
+      return { images: [], error: 'Case not found' };
+    }
+    
+    const progress = caseResult.data.investigationProgress;
+    const locationData = progress?.visitedLocations[locationId];
+    
+    return { 
+      images: locationData?.generatedImages || [], 
+      error: null 
+    };
+  } catch (error) {
+    console.error('Error getting location images:', error);
+    return { images: [], error: 'Failed to get location images' };
+  }
+};
+
+// Save discovered clues for a location
+export const saveLocationDiscoveredClues = async (
+  caseId: string, 
+  locationId: string, 
+  discoveredClues: ProcessedClue[]
+) => {
+  try {
+    console.log('Saving discovered clues for case:', caseId, 'location:', locationId);
+    
+    const caseResult = await getCase(caseId);
+    if (caseResult.error || !caseResult.data) {
+      return { error: 'Case not found' };
+    }
+    
+    const currentProgress = caseResult.data.investigationProgress || {
+      visitedLocations: {},
+      interrogatedSuspects: {},
+      discoveredClues: [],
+      currentDay: 1,
+      investigationFindings: []
+    };
+    
+    const existingLocationData = currentProgress.visitedLocations[locationId] || {
+      discoveredClues: [],
+      generatedImages: []
+    };
+    
+    // Merge new clues with existing ones, avoiding duplicates
+    const existingClues = existingLocationData.discoveredClues || [];
+    const mergedClues = [...existingClues];
+    
+    discoveredClues.forEach(newClue => {
+      const exists = existingClues.some(existing => existing.content === newClue.content);
+      if (!exists) {
+        mergedClues.push(newClue);
+      }
+    });
+    
+    const progressUpdate = {
+      visitedLocations: {
+        [locationId]: {
+          ...existingLocationData,
+          visitedAt: existingLocationData.visitedAt || serverTimestamp(),
+          lastVisitDate: existingLocationData.lastVisitDate || getCurrentISTDate(),
+          discoveredClues: mergedClues
+        }
+      }
+    };
+    
+    return await updateInvestigationProgress(caseId, progressUpdate);
+  } catch (error) {
+    console.error('Error saving discovered clues:', error);
+    return { error: 'Failed to save discovered clues' };
+  }
+};
+
+// Get discovered clues for a location
+export const getLocationDiscoveredClues = async (caseId: string, locationId: string) => {
+  try {
+    const caseResult = await getCase(caseId);
+    if (caseResult.error || !caseResult.data) {
+      return { clues: [], error: 'Case not found' };
+    }
+    
+    const progress = caseResult.data.investigationProgress;
+    const locationData = progress?.visitedLocations[locationId];
+    
+    return { 
+      clues: locationData?.discoveredClues || [], 
+      error: null 
+    };
+  } catch (error) {
+    console.error('Error getting discovered clues:', error);
+    return { clues: [], error: 'Failed to get discovered clues' };
   }
 };
 

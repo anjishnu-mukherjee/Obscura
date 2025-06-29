@@ -198,7 +198,7 @@ Generate the complete interrogation conversation:`;
         ? maleVoices[Math.floor(Math.random() * maleVoices.length)]
         : femaleVoices[Math.floor(Math.random() * femaleVoices.length)];
         
-      const detectiveVoice = suspectGender === 'male' ? "Charon" : "Pulcherrima";
+      const detectiveVoice = detectiveGender === 'male' ? "Charon" : "Pulcherrima";
 
       const characters = [
         { name: name, voice: detectiveVoice },

@@ -1,665 +1,409 @@
 {
-  "title": "Saffron Betrayal: A Shady Indian Village Murder",
-  "setting": "Shady Indian Village",
+  "title": "The Indus Cipher: A Cover-Up at Gupt Griha",
+  "setting": "Ancient Indian Archaeological Site",
   "victim": {
-    "name": "Lakshmi Kant Sharma",
-    "profession": "Village Panchayat Secretary",
-    "lastKnownLocation": "Sharma Tea Stall, near the Banyan Tree",
-    "deathTimeEstimate": "23:15",
-    "causeOfDeath": "Strangulation with a saffron silk scarf",
-    "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062370/obscura/victims/obscura/victims/Lakshmi%20Kant%20Sharma_portrait.jpg"
+    "name": "Arya Ghosh",
+    "profession": "Epigraphist and Linguist specializing in deciphering ancient scripts, specifically those found at the archaeological site.",
+    "lastKnownLocation": "The subterranean chamber beneath the primary excavation site, known locally as the 'Gupt Griha' (Secret Chamber).",
+    "deathTimeEstimate": "02:17",
+    "causeOfDeath": "Blunt force trauma to the head, consistent with being struck by a heavy stone artifact. Evidence suggests the artifact was likely one she was studying.",
+    "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751222842/obscura/victims/obscura/victims/Arya%20Ghosh_portrait.jpg"
   },
   "suspects": [
     {
-      "name": "Anjali Reddy",
-      "role": "Owner of \"Anjali's Tea Stall\", Village Gossip",
-      "alibi": "Anjali claims she was closing up her tea stall at 23:00 and walked home, a 20-minute journey, reaching her house around 23:20. She says her husband, Ravi, a rickshaw puller, was already asleep and can't corroborate her story. She mentions seeing a shadowy figure near the Panchayat office earlier that evening, around 21:00, but couldn't identify them.",
+      "name": "Dr. Vikram Rajan",
+      "role": "Head Archaeologist and Lead Excavator of the site. Supervised Arya Ghosh.",
+      "alibi": "Dr. Rajan claims he was in his on-site research trailer reviewing excavation reports and preparing a grant proposal. He says he worked from 11:00 PM until 5:00 AM, taking only short breaks for tea. He says he saw nobody during that time. His assistant, Gita, confirms bringing him tea around 11:30 PM, but no one else can corroborate his presence in the trailer for the rest of the night. There is no security footage of him either inside or outside of his trailer.",
       "motives": [
-        "Lakshmi Kant Sharma was blackmailing her about a past affair that, if revealed, would destroy her marriage and reputation in the conservative village. He demanded increasingly large sums of money to keep quiet.",
-        "Anjali’s tea stall was facing closure due to Lakshmi Kant Sharma's refusal to grant her the necessary permits, ostensibly due to 'bureaucratic hurdles', but in reality, because she refused his advances.",
-        "Anjali has a deep-seated resentment towards authority figures, stemming from her father being unfairly treated by the local government years ago. She sees Lakshmi Kant as a symbol of this corruption."
-      ],
-      "isKiller": false,
-      "personality": "Anjali is outwardly friendly and chatty, the classic village gossip. Beneath the surface, she's shrewd, observant, and fiercely protective of her family. She carries a lot of anger and resentment, carefully hidden behind a veneer of pleasantness. She has a sharp wit and isn't afraid to speak her mind when provoked, but usually prefers to manipulate situations from the shadows. She compulsively cleans her tea stall, a way of controlling her anxiety.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062390/obscura/suspects/obscura/suspects/Anjali%20Reddy_portrait.jpg",
-      "cluesTriggers": [
-        {
-          "clue": "Oh, that Lakshmi Kant... always causing trouble. He was seen arguing loudly with Rajesh Kumar Verma just outside the Panchayat office around 8 PM the night of the murder. It was quite a scene, lots of shouting about money, I think.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Offer Anjali a cup of tea and engage in casual conversation about Lakshmi Kant Sharma and village happenings. Show genuine interest in her perspective and build rapport.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": " (Visibly uncomfortable, fidgeting with her saree) I... I saw someone near the Panchayat office earlier that evening, around 9 PM. It was dark, and they were just a shadow. I couldn't make out who it was, honestly. Maybe they were just relieving themselves.",
-          "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Challenge her alibi directly, pointing out the inconsistencies in her story about seeing a shadowy figure versus her stated timeline. Emphasize the seriousness of withholding information.",
-          "isRedHerring": false,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": " (After repeated questioning about her finances, she snaps) Look, running a tea stall isn't exactly a gold mine! It's enough to keep Ravi and me fed. And yes, I had to take out a small loan from the local moneylender to repair the roof after the last monsoon. Lakshmi Kant wasn't involved in that. It was settled ages ago! ",
-          "triggerType": "aggressive",
-          "triggerLevel": 4,
-          "triggerDescription": "Accuse her directly of being in debt to Lakshmi Kant and imply that the debt was a motive for murder. Use a loud and accusatory tone.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": " (Softly, after expressing sympathy for her struggles) Lakshmi Kant... he made things very difficult for me. He kept putting obstacles in the way of my permits. He knew the tea stall was my livelihood. He... he implied that if I were 'nicer' to him, things would be easier. But I didn't want anything to do with him! How dare he!",
-          "triggerType": "sympathetic",
-          "triggerLevel": 3,
-          "triggerDescription": "Express empathy for Anjali's situation as a small business owner struggling with bureaucracy. Gently inquire about any difficulties she faced with Lakshmi Kant Sharma and the permits.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        },
-        {
-          "clue": " (Under intense pressure about her alibi and whereabouts after closing, she says, almost defensively) I told you, I walked home! What else do you want me to say? It's not my fault Ravi was asleep! He's tired after pulling his rickshaw all day! If you want to find the killer, ask Divya Sharma. She and Lakshmi Kant were always arguing about village land! Everyone knows that!",
-          "triggerType": "pressing",
-          "triggerLevel": 5,
-          "triggerDescription": "Intensely scrutinize her alibi, highlighting the lack of corroboration and pressing her for specific details about her movements between the tea stall and her home. Focus on time discrepancies.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        }
-      ]
-    },
-    {
-      "name": "Rajesh Kumar Verma",
-      "role": "Unemployed Graduate, Aspiring Politician",
-      "alibi": "Rajesh states he was at the village temple praying for a government job from 22:30 to 23:30. He claims the temple priest, Pandit Joshi, can vouch for him, but Pandit Joshi vaguely remembers him being there, saying many people come and go at that hour. He admits he left the temple for about five minutes around 23:10 to buy a packet of cigarettes from a nearby paan shop.",
-      "motives": [
-        "Lakshmi Kant Sharma promised Rajesh a government job within the Panchayat in exchange for his support in the upcoming elections. When Lakshmi Kant backtracked and gave the job to someone else, Rajesh felt betrayed and humiliated.",
-        "Rajesh discovered that Lakshmi Kant Sharma was embezzling funds meant for the village school, a project that Rajesh was heavily involved in promoting. He threatened to expose Lakshmi Kant, but was ignored.",
-        "Rajesh suffers from narcissistic personality disorder. He believes he is destined for greatness and views obstacles, like Lakshmi Kant, as personal affronts that must be removed. He seeks validation and power above all else."
-      ],
-      "isKiller": false,
-      "personality": "Rajesh is ambitious, charismatic, and prone to grand pronouncements about his future. He's desperate to escape the poverty and stagnation of Shady Indian Village. He is easily frustrated when things don't go his way and has a strong sense of entitlement. He is often seen practicing speeches in front of a mirror and is overly concerned with his appearance.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062389/obscura/suspects/obscura/suspects/Rajesh%20Kumar%20Verma_portrait.jpg",
-      "cluesTriggers": [
-        {
-          "clue": "Lakshmi Kant was a *snake*. Promised me a position in the Panchayat, said he admired my...vision for the village. Then he gave it to that idiot Vikram! Said I lacked 'experience'. Experience! I practically built this village's school project with my own two hands!",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Expressing general sympathy for Rajesh's ambitions and disappointments.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "I saw Anjali Reddy arguing with Lakshmi Kant near the school construction site earlier that day. It was…heated. I couldn't make out what they were saying, but she looked very angry. I thought she was going to slap him!",
-          "triggerType": "gentle",
-          "triggerLevel": 3,
-          "triggerDescription": "Asking about his observations of Lakshmi Kant's relationships with other villagers.",
-          "isRedHerring": false,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Look, I might have called him a few names, but murder? I’m not a barbarian! I need Lakshmi Kant alive so I can show him how wrong he was! I'll be running this village one day, and he'll be begging for *my* favor!",
-          "triggerType": "pressing",
-          "triggerLevel": 4,
-          "triggerDescription": "Presenting evidence that suggests Rajesh had a strong motive to harm Lakshmi Kant, such as bank statements showing his financial distress.",
-          "isRedHerring": false,
-          "importance": "critical",
-          "revealed": false
-        },
-        {
-          "clue": "Fine! So, after I left the temple to buy cigarettes, the paan shop was closed. Can you believe it? So, I walked a bit further down the road, towards the old mill, and found one open, bought the cigarettes and walked straight back to the temple.",
-          "triggerType": "specific_question",
-          "triggerLevel": 5,
-          "triggerDescription": "Directly questioning the precise route he took after leaving the temple, pressing for details.",
-          "isRedHerring": true,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Embezzling? Lakshmi Kant? That old fool wouldn't know how to embezzle if his life depended on it! If anyone was embezzling from the school, it was that Rathore! He always had his hands in everything.",
-          "triggerType": "aggressive",
-          "triggerLevel": 3,
-          "triggerDescription": "Accusing Rajesh of knowing about Lakshmi Kant's embezzlement, forcing him to deflect.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        }
-      ]
-    },
-    {
-<<<<<<< HEAD
-      "name": "Rajkumar Arjun Singh",
-      "role": "Anjali Devi's son, heir to the estate, struggling artist",
-      "alibi": "Arjun states he was in his art studio, located in a separate wing of the manor, painting from 21:00 until 01:00. He claims he was completely absorbed in his work and didn't hear anything unusual. No one can verify his alibi, as his studio is isolated.",
-      "motives": [
-        "Financial Dependence & Control: Arjun resented his mother's tight control over his finances. He desired independence and the freedom to pursue his artistic passions without her constant scrutiny and disapproval.",
-        "Artistic Recognition: Arjun felt his mother belittled his artistic talent, constantly comparing him to his successful cousins and urging him to take up a 'respectable' profession. He yearned for her approval and recognition.",
-        "Secret Debt and Gambling Habit: Arjun has a gambling problem and is in debt to dangerous individuals. He secretly asked his mother for money which she refused to give. This may have spurred him to take drastic actions."
+        "Cover-up: Arya was close to deciphering a series of inscriptions suggesting the site was not a temple, as Rajan had long maintained, but a palace complex indicating the existence of a previously unknown dynasty. This would discredit Rajan's entire career and reputation, impacting future funding.",
+        "Professional Jealousy: Rajan resented Arya's growing recognition and expertise, particularly her ability to solve linguistic puzzles that had baffled him for years. He feared she would overshadow him in the academic community.",
+        "Fear of discovery: Rajan has been secretly selling less significant artifacts discovered on site to private collectors to fund his gambling addiction."
       ],
       "isKiller": true,
-      "personality": "Rajkumar Arjun is a sensitive and introspective soul, torn between his artistic ambitions and his familial obligations. He is prone to bouts of depression and self-doubt. He is easily influenced by others and struggles to assert himself. He is passive-aggressive and prone to making sarcastic remarks when frustrated. While he loves his mother, he also resents her controlling nature. He's not the most courageous soul, so he may have hired a hitman to do the job.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140347/obscura/suspects/obscura/suspects/Rajkumar%20Arjun%20Singh_portrait.jpg",
+      "personality": "Dr. Rajan is outwardly charismatic and ambitious, known for his confident lectures and media appearances. Beneath the surface, he is deeply insecure, arrogant, and prone to fits of rage when challenged. He is a risk-taker, driven by a need for validation and fueled by a crippling gambling addiction. He has a patronizing attitude towards subordinates, especially women, and tends to take credit for their work. He is prone to grandiose pronouncements and often exaggerates his achievements. His guilt over his addiction manifests as defensiveness and a quick temper.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751222860/obscura/suspects/obscura/suspects/Dr.%20Vikram%20Rajan_portrait.jpg",
       "cluesTriggers": [
         {
-          "clue": "I was working on a landscape piece. It's… it's mostly grey. Depressing, I suppose, like my life. The grey reflects the despair I felt because my mother never believed in my art.",
-          "triggerType": "sympathetic",
+          "clue": "Dr. Rajan nervously adjusts his expensive silk scarf (a recent acquisition), revealing a faint smudge of reddish-brown mud near the knot. He claims he must have brushed against some earth while walking to the cafeteria earlier that day, though the cafeteria is paved.",
+          "triggerType": "gentle",
           "triggerLevel": 2,
-          "triggerDescription": "Express sympathy for his artistic struggles and lack of parental support. Ask about the emotional content of his art.",
+          "triggerDescription": "Complimenting his scarf and casually inquiring where he purchased it. Follow up by noting the smudge.",
           "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "He becomes agitated when questioned about the specific time he made tea, claiming Gita always makes it, even though Gita has said she brought a flask of tea to him at 11:30 and nothing since. He becomes flustered and knocks over a glass of water, creating a visible puddle on the table. When asked to help clean it he visibly recoils at the thought.",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Repeatedly challenge his tea-making story, highlighting inconsistencies with Gita's statement.",
+          "isRedHerring": true,
           "importance": "minor",
           "revealed": false
         },
         {
-          "clue": "Yes, mother and I argued. We always did. She never understood my passion. But murder? That's absurd. I would never! I may have said things in anger, even stormed off that evening, but I was in my studio ALL night, painting. It was a new oil paint. It was hard to wash off... I think.",
+          "clue": "When discussing Arya's work, he mentions, \"She was so clumsy. Always misplacing her tools and leaving things scattered around. I remember on Tuesday, she left her notebook laying open in the sun, right next to the main inscription! I had to move it.\" This explains fingerprints on Arya's notebook and a slight discoloration from sun exposure on the pages that were not covered.",
+          "triggerType": "specific_question",
+          "triggerLevel": 1,
+          "triggerDescription": "Specifically ask if he ever had to touch any of Arya's belongings or move anything in her workspace.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Under intense interrogation about his gambling debts and the artifacts, he claims he was in his trailer, reviewing excavation reports, but the reports recovered at the crime scene by the victim's body are not in their place. The report for section Gamma-9, where Arya was working, is missing. This could prove that he was near the crime scene and had a reason for being there, but it doesn't prove he was the killer.",
           "triggerType": "pressing",
-          "triggerLevel": 3,
-          "triggerDescription": "Directly accuse him of arguing with his mother and downplaying his emotional reaction. Watch for him over-explain or contradict himself.",
-          "isRedHerring": true,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Vikram? That pompous ass probably had something to do with it. He's always been jealous of the inheritance. He would have benefited from it.",
-          "triggerType": "gentle",
-          "triggerLevel": 1,
-          "triggerDescription": "Casually inquire about other family members and their potential motives.",
-          "isRedHerring": true,
-=======
-      "name": "Divya Sharma",
-      "role": "Lakshmi Kant Sharma's Wife, Homemaker",
-      "alibi": "Divya claims she was asleep in her room from 22:00 onwards. She says she took a sleeping pill due to a severe headache and didn't wake up until the next morning. The family servant, Meena, confirms that Divya was in her room when she brought her dinner at 21:30, but Meena doesn't know if she was asleep or awake later in the night. Meena lives in the outhouse on the property and wouldn't hear anything through the house.",
-      "motives": [
-        "Lakshmi Kant Sharma was having an affair with a woman from a neighboring village, and Divya knew about it. The affair had been ongoing for months, and Divya was humiliated and heartbroken. She was planning to leave him and feared being left destitute.",
-        "Lakshmi Kant Sharma was verbally and emotionally abusive towards Divya. He constantly belittled her and controlled every aspect of her life. She felt trapped and powerless.",
-        "Divya is struggling with severe depression and anxiety, exacerbated by her husband's behavior. She has a history of passive-aggressive behavior and repressed anger, culminating in a single act of rage."
-      ],
-      "isKiller": true,
-      "personality": "Divya is a quiet, reserved woman who appears submissive on the surface. She has endured years of emotional abuse and carries a deep well of suppressed anger and resentment. She is intelligent and observant, but her spirit has been crushed by her husband's domineering personality. She often daydreams of a different life and finds solace in reading religious texts. She bites her nails unconsciously when nervous.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062390/obscura/suspects/obscura/suspects/Divya%20Sharma_portrait.jpg",
-      "cluesTriggers": [
-        {
-          "clue": "He... he was a difficult man to live with. Always demanding, always critical. It was like walking on eggshells.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 1,
-          "triggerDescription": "Expressing sympathy for her situation and acknowledging the difficulty of her marriage.",
-          "isRedHerring": false,
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
-          "importance": "important",
-          "revealed": false
-        },
-        {
-<<<<<<< HEAD
-          "clue": " (After a long pause, fidgeting) I… I borrowed some money. A small sum. It's nothing. It's for art supplies! Experimental materials, you know? She refused to give it to me. But it's not a big deal!",
-          "triggerType": "aggressive",
           "triggerLevel": 4,
-          "triggerDescription": "Confront him directly about his gambling debt and financial situation. Highlight the evidence you have. Observe his reaction and body language.",
-=======
-          "clue": "I took the sleeping pill. I swear I did. The doctor prescribed it months ago, for my headaches. I keep it in the nightstand drawer. See? I can show you.",
-          "triggerType": "specific_question",
-          "triggerLevel": 2,
-          "triggerDescription": "Directly asking about the sleeping pill and its location, then pressing on verifying its use.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Anjali? Yes, Lakshmi knew her. He... he did business with her sometimes, I think. Something about land deals, near the neighboring village. I don't know the details, I never interfered in his business. Women don't, in these parts.",
-          "triggerType": "gentle",
-          "triggerLevel": 3,
-          "triggerDescription": "Mentioning the name 'Anjali' and observing her reaction.",
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "I was so angry! So much anger that I almost... I almost burned his favorite dhoti with the iron, just before Meena brought me the dinner. But I stopped myself! I went to lie down instead.",
-          "triggerType": "aggressive",
-          "triggerLevel": 4,
-          "triggerDescription": "Accusing her of snapping and lashing out, observing for any reaction or admittance. The mention of the dhoti helps to imply intent without the action being related to the murder.",
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
-          "isRedHerring": false,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-<<<<<<< HEAD
-          "clue": " (Barely audible whisper) The… the studio door… sometimes it sticks. You have to… really push it hard to get it fully shut. It's quite loud. And if it's not shut completely, it swings open after a bit.",
-          "triggerType": "specific_question",
-          "triggerLevel": 5,
-          "triggerDescription": "Ask very specific and technical questions about the state of his studio door, and the sound that might be made if it doesn't shut fully. You might also ask about the latch and whether it makes a noise. This is a trigger that will be harder to obtain as it may directly reveal how he sneaked out of the room",
+          "triggerDescription": "Present him with evidence of his gambling debts and missing artifacts, then directly accuse him of being present at the crime scene.",
           "isRedHerring": false,
           "importance": "critical",
-=======
-          "clue": "He threatened to take everything from me, you know. Said he'd leave me with nothing if I ever challenged him. That I'd be out on the streets, begging for scraps. (Nail biting intensifies, eyes dart around the room)",
-          "triggerType": "pressing",
+          "revealed": false
+        },
+        {
+          "clue": "When asked to describe the inscription Arya was working on, he struggles to provide details and claims he didn't pay much attention to it. If shown a photograph of the inscription (specifically, a newly chipped piece near the base), he stares intently at it, his eyes darting to the chipped area before quickly looking away. This is because he likely damaged it during the confrontation with her.",
+          "triggerType": "sympathetic",
           "triggerLevel": 5,
-          "triggerDescription": "Repeatedly questioning her about her financial security and vulnerability if Lakshmi left her, stressing that she would be left with nothing. Nail biting and eye darting should be closely watched.",
-          "isRedHerring": true,
-          "importance": "minor",
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
+          "triggerDescription": "Expressing sympathy for the loss of Arya and gently probing for details about her work, then abruptly presenting the photograph of the inscription.",
+          "isRedHerring": false,
+          "importance": "critical",
           "revealed": false
         }
       ]
     },
     {
-<<<<<<< HEAD
       "name": "Priya Sharma",
-      "role": "Anjali Devi's cousin from the opposing family faction, visiting from Delhi",
-      "alibi": "Priya claims to have been feeling unwell and retired to her room around 21:30. She says she took a sleeping draught and didn't wake up until the following morning. A servant, Devi, confirms bringing her a glass of water and a sleeping draught around 21:45, but no one saw Priya after that.",
+      "role": "Junior Epigraphist and Research Assistant; Arya Ghosh's protégé and close friend.",
+      "alibi": "Priya states she was asleep in her shared accommodation with two other junior researchers from 10:00 PM onwards. Her roommates, Anika and Lakshmi, confirm she was in the room, but cannot definitively say she didn't leave during the night. They are all heavy sleepers, and the rooms are not locked during the night. They remember her being distraught earlier in the evening after a fight with Arya.",
       "motives": [
-        "Land Dispute: The Sharma and Singh families have been locked in a bitter land dispute for generations. Anjali Devi was the primary obstacle to Priya's family claiming what they believe is rightfully theirs.",
-        "Revenge for Father's Humiliation: Priya's father was publicly humiliated by Anjali Devi years ago during a business dealing. Priya vowed to avenge her father's honor.",
-        "Jealousy of Anjali's Status: Priya has always been envious of Anjali Devi's position and influence. Priya felt that Anjali Devi had gotten everything she wanted in life."
+        "Betrayal: Priya discovered Arya had secretly submitted Priya's own research paper, on a minor aspect of the site's inscriptions, under Arya's name alone, hindering Priya's career progression.",
+        "Emotional Turmoil: Priya was secretly in love with Arya, and Arya had recently rejected her advances, causing Priya immense emotional pain and resentment. ",
+        "Accidental Homicide: In a fit of anger, Priya confronted Arya about stealing her work. The confrontation escalated, and Priya may have unintentionally struck Arya during a struggle."
       ],
       "isKiller": false,
-      "personality": "Priya is a sophisticated and ambitious woman, known for her sharp wit and cunning intellect. She is fiercely loyal to her family and deeply invested in their success. She possesses a calculating mind and is not afraid to use manipulation to achieve her goals. She is outwardly charming and polite, but underneath lies a ruthless determination and a thirst for power. She is also prone to holding grudges and seeking revenge.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751140346/obscura/suspects/obscura/suspects/Priya%20Sharma_portrait.jpg",
+      "personality": "Priya is initially perceived as shy and dedicated, but possesses a sharp intellect and strong ambition. She is fiercely loyal to those she cares about but can be prone to jealousy and resentment when she feels betrayed. She is introverted and analytical, preferring quiet research to social interaction. She suppresses her emotions, leading to occasional outbursts of anger and frustration. She is generally rule-abiding, but willing to bend the rules for those she cares about.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751222862/obscura/suspects/obscura/suspects/Priya%20Sharma_portrait.jpg",
       "cluesTriggers": [
         {
-          "clue": "While I wasn't particularly close to Anjali, I did overhear Rana Vikram Singh arguing with her quite vehemently earlier that day near the stables. It sounded like it was about money, something to do with gambling debts.",
+          "clue": "A faint smudge of reddish soil, consistent with the soil around the excavation site, is visible on the hem of Priya's kurta in the crime scene photos. She claims she hadn't been near the dig site for two days, and had been exclusively in the library. She struggles to explain it, only saying it must have brushed off someone in passing.",
           "triggerType": "gentle",
           "triggerLevel": 2,
-          "triggerDescription": "Expressing general condolences about Anjali's death and creating a safe space for Priya to share any observations, however small.",
-          "isRedHerring": true,
-          "importance": "important",
-          "revealed": false
-        },
-        {
-          "clue": "Devi, the servant, seems awfully nervous. She was practically shaking when she brought me my water and the sleeping draught. I wonder if she knows more than she's letting on?",
-          "triggerType": "aggressive",
-          "triggerLevel": 3,
-          "triggerDescription": "Directly accuse Priya of withholding information and suggest she might be protecting someone.",
-          "isRedHerring": true,
-          "importance": "minor",
-          "revealed": false
-        },
-        {
-          "clue": "Of course, I was aware of the land dispute. It's been hanging over our families for generations. But honestly, I was more interested in expanding my business in Delhi than acquiring a few acres of land here.",
-          "triggerType": "pressing",
-          "triggerLevel": 4,
-          "triggerDescription": "Confront Priya directly with the motive related to the land dispute and observe her reaction and attempt to downplay its importance to her.",
-=======
-      "name": "Vikram Singh Rathore",
-      "role": "Landlord, Local Moneylender",
-      "alibi": "Vikram claims he was playing cards with three other men – Kishore, Deepu, and Santosh – at Kishore's house from 22:00 until after midnight. Kishore confirms this, but Deepu and Santosh are known to be heavily indebted to Vikram and are likely to corroborate his story regardless of the truth. Vikram admits he left the game for about 10 minutes around 23:00 to \"stretch his legs\".",
-      "motives": [
-        "Lakshmi Kant Sharma, as Panchayat Secretary, was investigating Vikram's illegal land grabbing activities. If the investigation went further, Vikram would lose a significant portion of his wealth and face criminal charges.",
-        "Vikram lent Lakshmi Kant Sharma a large sum of money for a supposed 'business venture,' but Lakshmi Kant refused to pay it back. Vikram threatened to use forceful means to recover his debt, but Lakshmi Kant remained defiant.",
-        "Vikram is a ruthless and power-hungry individual who enjoys exerting control over others. He saw Lakshmi Kant Sharma as a threat to his influence in the village and wanted to eliminate him to maintain his dominance."
-      ],
-      "isKiller": false,
-      "personality": "Vikram is a powerful and intimidating man with a reputation for ruthlessness. He is used to getting his way and is not afraid to use threats and intimidation to achieve his goals. He is calculating and manipulative, always thinking several steps ahead. He speaks slowly and deliberately, making every word count. He carries a silver-handled cane, which he often uses to emphasize his points.",
-      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751062391/obscura/suspects/obscura/suspects/Vikram%20Singh%20Rathore_portrait.jpg",
-      "cluesTriggers": [
-        {
-          "clue": "Sharma was a fool with money. He came to me for a 'business venture,' promised me great returns. He got the money, alright, but never delivered. A regrettable loss, but hardly worth... *this*.",
-          "triggerType": "gentle",
-          "triggerLevel": 2,
-          "triggerDescription": "Casually ask about Vikram's relationship with Lakshmi Kant Sharma, focusing on any financial dealings.",
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
+          "triggerDescription": "Showing Priya the crime scene photos and casually asking about her clothing that night.",
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
-<<<<<<< HEAD
-          "clue": "The sleeping draught...it had a strange taste. Bitter. I couldn't quite place it, but it wasn't the usual taste. I thought it was perhaps just a bad batch and didn't think much of it.",
-          "triggerType": "specific_question",
-          "triggerLevel": 5,
-          "triggerDescription": "Ask Priya directly about the sleeping draught. Highlight any inconsistencies in her story, focusing on the details.",
-=======
-          "clue": "That Anjali Reddy... she's got a fiery temper. I saw her arguing with Sharma near the Panchayat office a few days before... you know.",
+          "clue": "Priya admits she was extremely angry with Arya. When presented with security footage of her exiting the shared accommodation at 11:47 PM, she claims she went for a walk to cool down and stopped by the site's storage shed (where the murder weapon was kept). She acknowledges that the shed's lock was broken recently, saying she saw Dr. Rajan struggling with it a few days ago.",
           "triggerType": "aggressive",
-          "triggerLevel": 3,
-          "triggerDescription": "Accuse Vikram of having a motive related to Sharma's investigation into his land deals. Press him on others who might have had issues with Sharma.",
+          "triggerLevel": 4,
+          "triggerDescription": "Confronting Priya with the security footage and accusing her of lying about her alibi and insinuating a premeditated plan.",
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
         },
         {
-          "clue": "Yes, I admit, I was… *forceful* in my reminders to Sharma about his debt. I may have visited his home earlier that day. But I never harmed him. I merely… *persuaded* him to see reason.",
-          "triggerType": "pressing",
-          "triggerLevel": 4,
-          "triggerDescription": "Present solid evidence that Vikram threatened Sharma. Push him to admit to the specifics of their final interactions.",
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
+          "clue": "When shown a photograph of a displaced inscription stone at the crime scene, Priya visibly flinches and avoids eye contact. After repeated questioning, she breaks down and confesses to confronting Arya. She admits to pushing Arya during their argument. The pushing dislodged an inscription stone, which fell and caused her to strike her head. The inscription stone is small and only weighs about 5-10lbs. She insists that she only wanted to make her understand the impact of stealing her work.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 5,
+          "triggerDescription": "Expressing empathy for Priya's situation, validating her feelings of betrayal, and gently guiding her towards admitting to the confrontation, focusing on the accidental nature of Arya's death.",
           "isRedHerring": false,
           "importance": "critical",
           "revealed": false
         },
         {
-<<<<<<< HEAD
-          "clue": "It is true my father was... humiliated. But that was years ago. I'm a businesswoman now, I act with strategy, not petty revenge. Although, I suspect that Lakshmi Bai was more than happy about Anjali's death. She always felt overshadowed by Anjali.",
-          "triggerType": "sympathetic",
+          "clue": "Priya is wearing a simple silver ring on her left ring finger. When pressed about it, she says it was a gift from Arya many years ago, before her feelings developed romantically. She says she almost threw it away after Arya rejected her, but couldn't bring herself to do it. There's nothing special or unique about the ring to connect it to the crime scene.",
+          "triggerType": "pressing",
           "triggerLevel": 3,
-          "triggerDescription": "Attempt to build rapport and suggest that you understand Priya's past grievances, creating a space for her to reveal her feelings and potentially implicate others.",
+          "triggerDescription": "Repeatedly questioning her about the silver ring she wears, implying it's a sign of a deeper connection to Arya and potentially linked to the crime.",
           "isRedHerring": true,
-          "importance": "important",
+          "importance": "minor",
           "revealed": false
-=======
-          "clue": "I left the card game for about ten minutes. To... relieve myself. The pressure can get to an old man. And those boys, Deepu and Santosh, they are not always watching.",
-          "triggerType": "specific_question",
+        }
+      ]
+    },
+    {
+      "name": "Anil Kumar",
+      "role": "Local Historian and Independent Researcher. Frequently visited the site and consulted with Arya Ghosh.",
+      "alibi": "Anil claims he was at home writing a chapter for his upcoming book about the region's history. He lives alone and has no witnesses to corroborate his story. He states he works late into the night, often until sunrise. He lives in a neighboring town, and he claimed to have heard the news the following morning. He is a known insomniac.",
+      "motives": [
+        "Conflicting Interpretation: Anil believed Arya's interpretation of the inscriptions was flawed and damaging to his own historical theories about the region. He worried her findings would undermine his life's work.",
+        "Loss of Recognition: Anil had initially introduced Arya to the site and shared his preliminary findings. He felt Arya had taken his ideas and was now receiving all the credit, diminishing his own contributions to the historical understanding of the site.",
+        "Long-term Obsession: Anil developed an unhealthy obsession with Arya and her work. He felt he was the only one who truly understood her research and resented anyone who interfered with their \"intellectual partnership.\""
+      ],
+      "isKiller": false,
+      "personality": "Anil is eccentric and passionate about history, sometimes to the point of obsession. He is often seen as arrogant and dismissive of others' opinions, especially those who disagree with his interpretations. He is socially awkward and struggles to maintain personal relationships. He is prone to rambling monologues and can be overly sensitive to criticism. Beneath his intellectual arrogance lies a deep-seated insecurity about his own legacy.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751222862/obscura/suspects/obscura/suspects/Anil%20Kumar_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "Anil mentions, almost dismissively, that he saw Arya struggling with a large, ornately carved stone block near the inscription area a few days before her death. He claims she seemed frustrated and was trying to move it, perhaps to get a better look at something underneath. He scoffs, saying she lacked the physical strength and historical context to understand its significance.",
+          "triggerType": "gentle",
           "triggerLevel": 2,
-          "triggerDescription": "Directly ask about the ten minutes he was absent from the card game, emphasizing the lack of reliable witnesses.",
+          "triggerDescription": "Ask Anil about his general observations of Arya's work habits and physical interactions with the site's artifacts.",
           "isRedHerring": false,
           "importance": "important",
           "revealed": false
         },
         {
-          "clue": " Sharma was getting in the way of a lot of things. He kept making noise over some land that I had acquired fairly through the appropriate channels.",
-          "triggerType": "sympathetic",
-          "triggerLevel": 3,
-          "triggerDescription": "Express understanding of the difficulties Sharma's investigation created for him, creating a sense of shared frustration.",
+          "clue": "When confronted about possible jealousy over Arya's recognition, Anil vehemently denies it, but in doing so, he nervously gestures toward his wrist, revealing a small, fresh scratch. He quickly covers it with his sleeve, muttering something about \"thorn bushes\" while examining the site for inscription references a few days prior.",
+          "triggerType": "aggressive",
+          "triggerLevel": 4,
+          "triggerDescription": "Directly accuse Anil of resenting Arya's success and watch for his reaction and body language.",
           "isRedHerring": true,
           "importance": "minor",
           "revealed": false
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
+        },
+        {
+          "clue": "Under pressure about his alibi, Anil becomes flustered and starts talking about his writing process. He mentions that he often uses specific inks and quills, particularly a special type of imported ink from Kolkata that leaves a distinctive, slightly iridescent sheen when it dries. He says he spilled some on his notes that evening because he knocked over his inkwell while reaching for some tea and needed to clean up the spill using water he brought from the well nearest to the digsite.",
+          "triggerType": "pressing",
+          "triggerLevel": 3,
+          "triggerDescription": "Continue to express disbelief in his alibi and point out the lack of witnesses. Ask for specific details about his writing process and habits on the night of the murder.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "When shown a crime scene photo of footprints near the victim, Anil scoffs, dismissing them as belonging to \"some tourist\" or a \"careless worker.\" However, he then adds, almost as an afterthought, that he always wears a specific brand of leather boots while visiting the site, as they provide better grip on the uneven terrain. He even pulls up his pant leg to show them, but they look recently cleaned.",
+          "triggerType": "specific_question",
+          "triggerLevel": 2,
+          "triggerDescription": "Directly ask Anil what type of footwear he normally wears when visiting the archaeological site and if he noticed any footprints near where the victim was discovered.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "While attempting to appeal to his knowledge of the site, show Anil a photo of a toppled over sign near the digsite. Ask him if he knows who put it up and what it means. He might say that it was he who had initially volunteered to put it up for Arya because she wasn't one for publicity. He also might mention that it was poorly affixed and was likely to topple over by itself.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 1,
+          "triggerDescription": "Attempt to build rapport with Anil by asking about his expertise on the site's history and layout, subtly introducing evidence from the crime scene.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        }
+      ]
+    },
+    {
+      "name": "Gita Patel",
+      "role": "Dr. Rajan's personal assistant and site administrator. Responsible for logistical operations and record-keeping.",
+      "alibi": "Gita claims to have been asleep in her quarters from 10:30 PM onwards. She shares the accommodation with a cook, Lakshmi who works for the archaeologists at the site. Lakshmi confirms Gita was in the room and asleep. Lakshmi had left to make tea for herself and when she returned Gita was still asleep.",
+      "motives": [
+        "Financial Debt: Gita has amassed significant gambling debts and desperately needed money. She overheard Arya discussing a newly discovered, invaluable artifact with Dr. Rajan and planned to steal it for sale. Arya may have discovered her plan.",
+        "Professional Advancement: Gita resented being stuck in an administrative role and secretly desired to be a lead researcher. She felt Arya was blocking her path to advancement within the archaeological team, since Dr. Rajan relied heavily on Arya's research skills.",
+        "Unrequited Love and Resentment: Gita harbored unrequited feelings for Dr. Rajan and resented Arya's close working relationship with him. She perceived Arya as a rival for his attention and affection."
+      ],
+      "isKiller": false,
+      "personality": "Gita is outwardly efficient and organized, but secretly harbors deep-seated resentments and ambitions. She is meticulous and detail-oriented, but also manipulative and opportunistic. She is excellent at observing and gathering information, using it to her advantage. She presents a calm and composed exterior, but is prone to anxiety and prone to make mistakes when under pressure. She has a talent for blending in and avoiding suspicion.",
+      "portrait": "https://res.cloudinary.com/dsnfa3dlu/image/upload/v1751222862/obscura/suspects/obscura/suspects/Gita%20Patel_portrait.jpg",
+      "cluesTriggers": [
+        {
+          "clue": "A partial muddy footprint (size 6, her shoe size) was found near the storage tent, but Gita insists she hasn't been near there in days. She stammers slightly when asked if she wears a size 6 shoe, and offers a shaky confirmation.",
+          "triggerType": "aggressive",
+          "triggerLevel": 3,
+          "triggerDescription": "Directly accuse Gita of lying about her whereabouts on the night of the murder and challenge her alibi, focusing on any discrepancies.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Gita mentions that she saw Priya arguing with Arya earlier in the day near the dig site, and Priya carelessly left her trowel behind which Gita picked up to safeguard it.",
+          "triggerType": "gentle",
+          "triggerLevel": 2,
+          "triggerDescription": "Casually inquire about any interactions Gita observed between Arya and the other suspects leading up to the murder.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
+        },
+        {
+          "clue": "Gita recalls seeing a small tear in Arya's shawl near the left shoulder in the morning, but she claims it wasn't there when she saw Arya in her lab that evening.",
+          "triggerType": "specific_question",
+          "triggerLevel": 1,
+          "triggerDescription": "Specifically ask Gita to describe Arya's clothing and appearance on the day of the murder, prompting her to recall details.",
+          "isRedHerring": false,
+          "importance": "important",
+          "revealed": false
+        },
+        {
+          "clue": "Gita nervously admits that she used a cleaning cloth from the supply closet to wipe up a spilled cup of coffee in Arya's lab around 5:00 PM. She says she returned the cloth to the laundry basket, but cannot be certain which one. Arya was furious about her clumsiness.",
+          "triggerType": "sympathetic",
+          "triggerLevel": 2,
+          "triggerDescription": "Express sympathy for Gita's situation and convey understanding that accidents happen, encouraging her to disclose any minor incidents that might be relevant.",
+          "isRedHerring": false,
+          "importance": "critical",
+          "revealed": false
+        },
+        {
+          "clue": "A bottle of Dr. Rajan's favorite pain medication is seen in Gita's trash basket, which she claims to have found in the hallway near the Dr.'s quarters and disposed of it for him. She did not mention this earlier.",
+          "triggerType": "pressing",
+          "triggerLevel": 4,
+          "triggerDescription": "Point out inconsistencies in Gita's previous statements regarding her movements and activities on the day of the murder and demand an explanation for this omission. Insinuate she's hiding something crucial.",
+          "isRedHerring": true,
+          "importance": "minor",
+          "revealed": false
         }
       ]
     }
   ],
-<<<<<<< HEAD
-  "killer": "Rajkumar Arjun Singh",
+  "killer": "Dr. Vikram Rajan",
   "locations": [
-    "The Library",
-    "Arjun's Art Studio",
-    "The Billiards Room",
-    "The Kitchen",
-    "The Estate Gardens"
+    "Gupt Griha (Secret Chamber)",
+    "Dr. Rajan's On-Site Research Trailer",
+    "Arya Ghosh's Accommodation",
+    "Site Excavation Main Area (Near the Banyan Tree)",
+    "Local Tea Stall (Chaiwala's Stand)"
   ],
   "clues": {
-    "The Library": [
-      "The victim's writing desk is in disarray. The ledger she was reviewing is open to a page detailing recent withdrawals from the family trust, with a significant sum marked 'Discretionary Funds - Arjun'. The last entry is dated yesterday. The page is slightly smudged with what appears to be oil paint.",
-      "A silken scarf, identified as belonging to the Sharma family faction (distinct color and pattern), is lying on the floor near the victim. A faint scent of sandalwood is detectable on the scarf.",
-      "A half-empty cup of masala chai sits on the desk. Fingerprints are visible on the cup. Forensic analysis reveals that in addition to Anjali Devi's fingerprints, there are also partial fingerprints that do not match any known residents of the manor but does match a known associate of Arjun's gambling debt.",
-      "The window is slightly ajar, despite the chilly night. Footprints, seemingly made by expensive leather shoes, are visible in the flowerbed outside the window. The footprints lead away from the manor towards the stables."
+    "Gupt Griha (Secret Chamber)": [
+      "A toppled stone inscription pedestal, approximately head-height, smeared with fresh blood that is now partially dried. The inscription itself is partially chipped on one edge, revealing a previously unseen symbol.",
+      "Arya's shattered eyeglasses lie near the pedestal, one lens cracked completely. A faint but visible footprint in the dust nearby suggests someone stepped back quickly after impact. The footprint pattern matches the design of boots sold at the nearby marketplace.",
+      "A partially deciphered inscription note, written in Arya's hand, mentioning the word \"Rajan\" and the phrase \"palace complex\" underlined three times. The note is stained with what appears to be spilled turmeric tea.",
+      "A small, intricately carved wooden box, typically used for storing sindoor, lying open and empty near Arya's body. Sindoor is commonly associated with married Hindu women."
     ],
-    "Arjun's Art Studio": [
-      "Arjun's latest painting is a disturbing portrait of his mother, with exaggerated shadows and a palpable sense of unease. The painting is dated today.",
-      "A small, ornate box containing betting slips is hidden behind a canvas. The slips indicate significant gambling debts owed to a known local bookie.",
-      "A tube of sandalwood-scented oil paint is on the easel. The paint is the same brand and color found smudged on the ledger in the library. The tube is almost empty.",
-      "A recently cleaned silk scarf, similar in texture and material to the one found at the crime scene, is drying on a rack. Traces of a cleaning solution are detectable. A faint red stain is barely visible on one corner."
+    "Dr. Rajan's On-Site Research Trailer": [
+      "A crumpled draft of a grant proposal mentioning the \"temple hypothesis\" in detail, with handwritten notes scribbled in the margins expressing frustration and doubt about the interpretation.",
+      "A half-empty bottle of Old Monk rum is hidden behind a stack of excavation reports. A used glass sits nearby, with faint lipstick marks around the rim, suggesting someone else was also drinking from it.",
+      "A muddy boot print, partially obscured, is visible on the floor near the desk. The print seems to match the pattern from the marketplace boots also found in the Gupt Griha. The mud appears to be a distinctive red clay found only in a specific section of the excavation site.",
+      "A torn betting slip from a local bookie, dated the previous day, showing a significant loss on a cricket match. The slip is tucked inside Rajan's passport, which is visibly frayed."
     ],
-    "The Billiards Room": [
-      "Rana Vikram's cue is lying on the billiards table. It appears recently used. There's a faint smear of what might be blood on the leather grip. Forensics confirms it is human blood and matches Rajkumari Anjali Devi Singh.",
-      "An empty bottle of single-malt scotch sits on the side table, along with a tumbler. Fingerprints on the bottle match Rana Vikram. Traces of sleeping draught are detected in the tumbler.",
-      "A discarded betting slip is crumpled near the waste bin. It shows a substantial loss from a cockfight held earlier that day. The handwriting on the slip is identified as belonging to Rana Vikram.",
-      "The window leading to the back garden is unlocked and ajar. There are faint mud traces on the windowsill, suggesting someone recently climbed in or out. The mud matches soil found in the Estate Gardens, particularly near the Lotus Pond."
+    "Arya Ghosh's Accommodation": [
+      "A framed photograph of Arya and Priya, her protégé, is lying face down on the floor, the glass cracked. A small, torn piece of paper with a single word, \"Traitor\", written in Hindi is tucked behind the frame.",
+      "A half-packed suitcase containing Arya's personal belongings, including a one-way train ticket to Delhi dated for the next day. The ticket is visibly creased and looks unused.",
+      "A book on ancient Indian dynasties lies open on Arya's bed, specifically on a page detailing the Mauryan empire. A bookmark, crafted from a peacock feather, marks a section describing palace structures.",
+      "A bottle of sleeping pills (nitrazepam) with a missing prescription label is found hidden under Arya's pillow. The bottle is almost empty. The pills would require a doctor's prescription."
     ],
-    "The Kitchen": [
-      "Lakshmi's knife set is meticulously organized. One knife is missing from its place. It's a small paring knife, commonly used for peeling vegetables. The empty slot is slightly dusty, suggesting the knife hasn't been used in some time but recently was returned.",
-      "A discarded cloth, used for wiping surfaces, is found in the trash. It has traces of a strong cleaning solution and faint traces of sandalwood oil.",
-      "A broken vial labeled \"Sleeping Draught\" is discovered behind the spice rack. The label matches the prescription Devi gave to Priya.",
-      "A freshly made cup of herbal tea sits near the stove. It appears to be Lakshmi's personal blend. A small amount of unidentified white powder is mixed in."
+    "Site Excavation Main Area (Near the Banyan Tree)": [
+      "A discarded surgical glove is caught on a branch of the banyan tree. The glove is stained with mud, and it seems to be unused. It looks new.",
+      "Freshly disturbed earth near the tree’s roots suggests recent digging. A small piece of pottery, possibly from the site, is unearthed in the disturbed soil, and is placed by the side.",
+      "A discarded cigarette butt of a brand not commonly smoked in the area. The cigarette is a Benson & Hedges (British brand), and is half smoked."
     ],
-    "The Estate Gardens": [
-      "Footprints leading from the Library window end near the Lotus Pond. The footprints are partially obscured by recent rainfall, but the expensive leather shoe tread is still distinguishable.",
-      "A small, tarnished silver locket is found near the Lotus Pond. The locket contains a miniature portrait of a young woman resembling Lakshmi. An inscription on the back reads, 'Forever Yours, A'.",
-      "Near the stables, a discarded matchbook from a local gambling den is found. The matchbook has fingerprints matching Arjun Singh.",
-      "A discarded piece of canvas with splotches of oil paints lies near the tool shed. A closer examination reveals it was used to clean brushes and the paint colors matches the type used in Arjun’s Art Studio."
+    "Local Tea Stall (Chaiwala's Stand)": [
+      "A discarded newspaper with a headline announcing Arya's groundbreaking research on the ancient site. Someone has circled Arya's name and scribbled \"Liar!\" next to it. The newspaper is dated three days prior to the murder.",
+      "A stained teacup with a distinctive lipstick imprint on the rim. The lipstick shade appears to match a color commonly worn by Gita Patel.",
+      "A conversation overheard by the Chaiwala about someone asking where Arya would be at night. It sounds like it was a man asking for directions to the Gupt Griha.",
+      "A man fitting the description of Anil Kumar, the local historian, was seen arguing with a customer about the interpretations of the site’s history. He seemed agitated and kept referring to Arya as a fraud."
     ]
   },
   "witnesses": {
-    "The Library": [],
-    "Arjun's Art Studio": [
+    "Gupt Griha (Secret Chamber)": [],
+    "Dr. Rajan's On-Site Research Trailer": [
       {
-        "name": "Ramesh, the Gardener",
-        "role": "Gardener",
-        "background": "Ramesh has worked on the estate for over 20 years and is a keen observer. He is loyal to the Singh family, but also holds some disdain towards those who take the family riches for granted.",
-        "testimony": "Ramesh claims he saw Arjun sneaking out of the main house around 23:30, looking agitated. He was heading towards the stables but seemed to be avoiding the main path.",
-        "reliability": "Fairly reliable, as he is generally honest and observant. However, he might be biased due to his respect for Anjali Devi.",
-        "hiddenAgenda": "He might be subtly protecting Lakshmi's son, the stable boy, as he sees him as a hardworking young man led astray."
+        "name": "Lakshmi Bai",
+        "role": "Site cook and Gita Patel's roommate",
+        "background": "Lakshmi is a simple woman from a nearby village, employed to cook for the archaeological team. She has worked at the site for several years and is generally considered trustworthy but easily intimidated.",
+        "testimony": "Lakshmi confirms that Gita was asleep in their shared quarters. She left to make tea for herself and returned an hour later, Gita was still asleep. She woke up at her usual time in the morning.",
+        "reliability": "Fairly reliable, but Lakshmi might be hesitant to speak negatively about her roommate or those in positions of authority.",
+        "hiddenAgenda": "Lakshmi may be protecting Gita due to a sense of friendship or obligation, or she may simply be afraid of getting involved."
       }
     ],
-    "The Billiards Room": [],
-    "The Kitchen": [
+    "Arya Ghosh's Accommodation": [
       {
-        "name": "Devi, the Maid",
-        "role": "Maid",
-        "background": "Devi is a young and ambitious maid, relatively new to the manor. She is eager to please and climb the social ladder within the household. She is very observant and gossipy.",
-        "testimony": "Devi claims she saw Lakshmi arguing with Anjali Devi in the kitchen earlier that evening. She overheard Lakshmi complaining about her son being unfairly accused of theft.",
-        "reliability": "Potentially unreliable, as she might exaggerate or fabricate details to gain favor. She's known to eavesdrop.",
-        "hiddenAgenda": "She is secretly in love with Arjun, but doesn't believe he notices her existence."
+        "name": "Anika Verma",
+        "role": "Junior researcher sharing Arya’s Accommodation",
+        "background": "Anika is Priya's roommate, and is a hard-working and ambitious young archaeologist.",
+        "testimony": "Anika confirms Priya was in the room, but cannot confirm she didn't leave. She mentions there were several nights she was not in the room due to stress and overwork. ",
+        "reliability": "Fairly reliable, but might be biased toward Priya. ",
+        "hiddenAgenda": "Anika may be covering for Priya due to friendship or out of fear of repercussions from the archeology team if she mentions a potential motive that implicates her best friend."
       }
     ],
-    "The Estate Gardens": [
+    "Site Excavation Main Area (Near the Banyan Tree)": [
       {
-        "name": "Kumar, the Stable Boy",
-        "role": "Stable Boy",
-        "background": "Kumar is a young and hardworking stable boy, son of Lakshmi. He was recently caught stealing from the estate stables but maintains his innocence.",
-        "testimony": "Kumar admits to being near the Lotus Pond earlier that evening, but claims he was just taking a walk. He denies seeing anyone or anything suspicious. He insists that he was framed for the theft from the stables.",
-        "reliability": "Potentially unreliable, as he is trying to protect himself. He could also be covering for someone else.",
-        "hiddenAgenda": "He deeply resents Rana Vikram for his arrogance and mistreatment of the staff. He may know something about Rana Vikram's movements that night but is afraid to speak up."
-=======
-  "killer": "Divya Sharma",
-  "locations": [
-    "Sharma Tea Stall, near the Banyan Tree",
-    "Village Panchayat Office",
-    "Sharma Residence",
-    "Village Temple"
-  ],
-  "clues": {
-    "Sharma Tea Stall, near the Banyan Tree": [
-      "A half-empty glass of chai is still on the table where Lakshmi Kant Sharma was last seen. The chai has gone cold, and a small dead fly is floating in it. The glass has a faint lipstick stain on the rim, analyzed to be a common shade of pink, not typically worn by Anjali Reddy, but potentially matching the lipstick Divya Sharma wears.",
-      "Underneath the table, partially obscured by the roots of the Banyan Tree, is a crumpled lottery ticket. It's dated for the previous week and has a few numbers circled. Anjali Reddy confirms Lakshmi Kant bought lottery tickets regularly and often scribbled on them while brooding, but she claims he usually bought them from the stall next to the Panchayat office. Footprints in the dust near the ticket suggest someone stood there for a while recently.",
-      "Anjali Reddy, though initially cooperative, becomes visibly nervous when questioned about Lakshmi Kant's last words. She claims he was just complaining about paperwork, but her hands tremble noticeably when she pours tea. She's wiping the table obsessively, cleaning far beyond what's necessary, possibly trying to remove evidence.",
-      "A faint scent of sandalwood incense lingers in the air, stronger than typically found around the tea stall. Sandalwood incense is commonly used in Hindu religious practices and can be found in the Sharma residence."
-    ],
-    "Village Panchayat Office": [
-      "Lakshmi Kant Sharma's office is locked, but the window has been forced open. The lock mechanism is damaged, suggesting it was picked rather clumsily. Inside, papers are scattered haphazardly, but no obvious documents are missing. A file labeled \"Land Disputes - Rathore\" is conspicuously on top of the pile.",
-      "The office computer shows the last login was at 22:58. The recent history reveals searches for \"poisonous plants common in Shady Indian Village\" and \"saffron dye extraction methods.\" These search entries have been deleted from the browser history, but are recoverable using forensic tools.",
-      "A security camera positioned outside the Panchayat office, pointed toward the entrance, captured footage of someone matching Divya Sharma's description entering the office around 23:05 and leaving around 23:18. Her face is partially obscured by a shawl, but her gait and clothing are recognizable. The camera malfunctions shortly after she leaves, displaying static.",
-      "A small piece of saffron silk fabric is caught in the window latch. It is consistent with the material of the scarf used to strangle Lakshmi Kant Sharma. There's a faint trace of turmeric on the fabric, a common ingredient in Indian cooking."
-    ],
-    "Sharma Residence": [
-      "In Divya Sharma's room, a bottle of sleeping pills is found on her bedside table. The prescription is valid, but the bottle is nearly empty, even though it was recently filled. The remaining pills are analyzed and found to be less potent than the original prescription suggests they have been diluted.",
-      "Lakshmi Kant Sharma's private study contains a hidden safe behind a bookshelf. The safe is unlocked and empty, but a small, torn piece of paper with Anjali Reddy's name and a monetary amount written on it is found inside.",
-      "Meena, the family servant, mentions that Divya had been acting strangely for weeks, often staring blankly into space and muttering to herself. She also saw Divya burning something in the backyard tandoor (clay oven) late one night last week, but couldn't see what it was.",
-      "A small, almost imperceptible stain of blood is found on the bottom hem of Divya's sari, hidden beneath folds of fabric. Forensic analysis confirms it is Lakshmi Kant Sharma's blood type."
-    ],
-    "Village Temple": [
-      "Pandit Joshi, the temple priest, confirms Rajesh Kumar Verma was present at the temple but couldn't recall the exact duration or his activities. He seemed agitated. He mentions Rajesh kept pacing back and forth.",
-      "Near the donation box, a discarded cigarette butt is found. It's a brand that Rajesh Kumar Verma is known to smoke. A faint smear of mud is on the butt, consistent with the mud near the Panchayat office window.",
-      "A small, almost invisible smudge of turmeric powder is found on the temple bell. Turmeric is considered auspicious and is commonly used in Hindu rituals. Rajesh Kumar Verma is known to apply tilak (turmeric paste) on his forehead before visiting the temple."
-    ]
-  },
-  "witnesses": {
-    "Sharma Tea Stall, near the Banyan Tree": [
-      {
-        "name": "Deepu",
-        "role": "Local Idler",
-        "background": "Deepu spends most of his days loitering around the tea stall, listening to gossip. He is heavily indebted to Vikram Singh Rathore.",
-        "testimony": "Deepu claims he saw Rajesh Kumar Verma arguing with Lakshmi Kant Sharma earlier that evening, around 21:00. He couldn't hear what they were saying, but their body language was aggressive.",
-        "reliability": "Unreliable. Deepu is easily influenced and known to fabricate stories for attention. His debt to Vikram raises questions about his impartiality.",
-        "hiddenAgenda": "Deepu is afraid of Vikram and likely to say anything that pleases him."
+        "name": "Ramesh Yadav",
+        "role": "Local laborer working at the excavation site",
+        "background": "Ramesh is a manual laborer from a nearby village, hired to assist with the excavation work. He has little formal education but a keen eye for detail.",
+        "testimony": "Ramesh says he saw Dr. Rajan walking near the banyan tree late at night, around 1:00 AM. He seemed agitated and was talking on his phone. Ramesh initially assumed it was no big deal, but now he thinks it's unusual because Dr. Rajan rarely left his trailer at night.",
+        "reliability": "Potentially unreliable due to his lower social standing and possible fear of authority figures.",
+        "hiddenAgenda": "Ramesh might be embellishing his story to gain attention or curry favor with the investigators."
       }
     ],
-    "Village Panchayat Office": [
+    "Local Tea Stall (Chaiwala's Stand)": [
       {
-        "name": "Sarpanch (Village Head)",
-        "role": "Village Head",
-        "background": "He is the political and administrative head of the village.",
-        "testimony": "Sarpanch recalls Lakshmi Kant confided about receiving veiled threats from Vikram Singh Rathore regarding land encroachment cases. He also mentioned Rajesh Kumar Verma had become increasingly desperate after being denied the Panchayat job.",
-        "reliability": "Somewhat reliable, but his memory might be affected by his age.",
-        "hiddenAgenda": "He might be trying to deflect suspicion from someone closer to him, or even cover up his own involvement in some of the village's darker dealings."
-      }
-    ],
-    "Sharma Residence": [],
-    "Village Temple": [
-      {
-        "name": "Radha",
-        "role": "Flower Seller",
-        "background": "Radha sells flowers and other religious items outside the temple. She is observant and knows everyone in the village.",
-        "testimony": "Radha says she saw Divya Sharma at the temple earlier that evening, around 20:00. Divya was crying and praying fervently. Radha offered her comfort, but Divya just shook her head and walked away.",
-        "reliability": "Relatively reliable. Radha is a devout woman with no apparent reason to lie.",
-        "hiddenAgenda": "Radha might embellish her stories to make them more interesting or to gain sympathy."
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
+        "name": "Govind, the Chaiwala",
+        "role": "The owner and operator of the tea stall.",
+        "background": "Govind has been running the tea stall for many years and knows everyone who frequents the area. He is a shrewd observer of human nature.",
+        "testimony": "Govind remembers seeing Dr. Rajan drinking tea at his stall the day before Arya died. He seemed unusually stressed and kept checking his watch. He also said he needs money badly. ",
+        "reliability": "Generally reliable, but his memory might be affected by the constant flow of customers and conversations.",
+        "hiddenAgenda": "Govind might be exaggerating details to make his story more interesting or to ingratiate himself with the police."
       }
     ]
   },
   "timeline": [
     {
-      "time": "21:00",
-<<<<<<< HEAD
-      "event": "Two days prior: Rana Vikram is seen at the Royal Flush Casino in Jaipur, losing a substantial sum of money at a game of Teen Patti. Surveillance footage captures him arguing with a loan shark."
+      "time": "08:00",
+      "event": "Arya Ghosh arrives at the Gupt Griha, visibly excited, and begins to analyze newly uncovered inscriptions. She sends a text to Priya Sharma requesting her assistance later in the day."
+    },
+    {
+      "time": "09:15",
+      "event": "Dr. Rajan arrives at the excavation site, noticeably irritated. He receives a phone call, paces near the Banyan Tree, and speaks in hushed tones (observed by Ramesh Yadav)."
     },
     {
       "time": "10:00",
-      "event": "One day prior: Priya Sharma arrives at Old Indian Victorian Manor from Delhi. She is greeted by Anjali Devi, but the exchange is formal and strained. Devi, the Maid, observes the arrival."
-    },
-    {
-      "time": "12:00",
-      "event": "One day prior: Anjali Devi reviews the family accounts in the library, noticing discrepancies and Vikram's growing debts. She makes a note to confront him."
-    },
-    {
-      "time": "14:00",
-      "event": "One day prior: Lakshmi confronts Anjali Devi in the kitchen about the accusations against her son, Kumar. Devi, the Maid, overhears part of the heated argument. The argument ends with Anjali Devi promising to investigate thoroughly."
-    },
-    {
-      "time": "16:00",
-      "event": "One day prior: Arjun Singh pleads with his mother, Anjali Devi, for money to cover his gambling debts. She refuses, criticizing his artistic pursuits and lack of financial responsibility. This occurs in the Estate Gardens near the Lotus Pond."
-    },
-    {
-      "time": "18:00",
-      "event": "One day prior: Rana Vikram attempts to charm Anjali Devi into granting him a loan. She firmly rejects him, reminding him of his past failures. This takes place in the main hall."
-    },
-    {
-      "time": "19:00",
-      "event": "Evening of the murder: Anjali Devi has dinner with all the suspects. The atmosphere is tense, with veiled insults and subtle power plays. Priya Sharma makes a comment about the land dispute that clearly agitates Anjali Devi."
-    },
-    {
-      "time": "20:00",
-      "event": "Evening of the murder: Arjun is seen pacing nervously outside his art studio by Ramesh, the Gardener. Ramesh wonders aloud if Arjun is feeling alright."
-    },
-    {
-      "time": "20:30",
-      "event": "Evening of the murder: Vikram pours himself a generous serving of whiskey in the billiards room, visibly agitated. He makes a phone call, which cell tower records later show was to an unknown number in Jaipur known for criminal activity."
-    },
-    {
-      "time": "21:00",
-      "event": "Evening of the murder: Lakshmi begins preparing dinner in the kitchen with her staff. She is unusually quiet and withdrawn, according to other kitchen staff."
-    },
-    {
-      "time": "21:15",
-      "event": "Evening of the murder: Priya Sharma complains of a headache and asks Devi, the Maid, for a glass of water and a sleeping draught, retiring to her room."
-    },
-    {
-      "time": "21:30",
-      "event": "Evening of the murder: Arjun enters his art studio. He is carrying a small, wrapped package which he quickly hides behind a canvas. This is later revealed to contain a down payment for a hitman."
-    },
-    {
-      "time": "22:00",
-      "event": "Evening of the murder: Rana Vikram claims to begin practicing billiards alone. The sound of the billiard balls can be faintly heard near the kitchen and Library."
-    },
-    {
-      "time": "22:30",
-      "event": "Evening of the murder: Ramesh, the Gardener, sees Arjun leaving his art studio and sneaking towards the main house through the gardens, trying to avoid the main paths."
-    },
-    {
-      "time": "23:00",
-      "event": "Evening of the murder: Anjali Devi is last seen alive, reviewing ledgers at her writing desk in the library. She makes a final entry about Vikram's suspicious financial activities."
-    },
-    {
-      "time": "23:15",
-      "event": "Evening of the murder: Rajkumar Arjun Singh, having hired a hitman, enters the library. The hitman strangles Anjali Devi with a silk scarf (later determined to be from Rana Vikram's room, stolen earlier by Arjun). Arjun stands watch, panicking."
-    },
-    {
-      "time": "23:30",
-      "event": "Evening of the murder: The hitman, leaves the Manor house unnoticed. Security footage shows him scaling the back wall near the Estate Gardens."
-    },
-    {
-      "time": "23:40",
-      "event": "Evening of the murder: Rana Vikram goes to the kitchen to get water, encountering Lakshmi. She notes that he looks flustered and is sweating profusely. He returns to the billiards room."
-    },
-    {
-      "time": "00:00",
-      "event": "The Following Day: Arjun, visibly shaken, burns the wrapping from the down payment in the art studio's fireplace. The faint smell of smoke lingers in the air."
-    },
-    {
-      "time": "07:00",
-      "event": "The Following Day: Devi, the Maid, discovers Anjali Devi's body in the library during her morning duties. She screams, alerting the rest of the household. The silk scarf remains around Anjali's neck."
-=======
-      "event": "Two Days Before: Vikram Singh Rathore calls Lakshmi Kant Sharma demanding immediate repayment of the loan, threatening \"unpleasant consequences\" if Sharma doesn't comply. The call is logged on Sharma's phone records."
-    },
-    {
-      "time": "10:00",
-      "event": "One Day Before: Lakshmi Kant Sharma visits Anjali's Tea Stall, demanding 5000 Rupees by the next day to keep her secret about the affair hidden. Anjali feigns agreement but harbors resentment."
+      "event": "Anil Kumar arrives at the site, seeking to discuss his theories with Arya. Arya politely dismisses him, stating she is too busy with her own discoveries. Anil appears visibly frustrated."
     },
     {
       "time": "11:30",
-      "event": "One Day Before: Rajesh Kumar Verma sends a strongly worded WhatsApp message to Lakshmi Kant Sharma, accusing him of betrayal and threatening to expose his corruption. Screenshot saved on Rajesh's phone."
+      "event": "Gita Patel delivers tea to Dr. Rajan in his trailer. Rajan is on his laptop, seemingly working on a grant proposal. This is corroborated by Gita's statement."
     },
     {
-      "time": "14:00",
-      "event": "One Day Before: Divya Sharma visits the Village Temple, crying and praying. Radha, the flower seller, witnesses this and offers comfort, which is refused. Divya buys a small vial of sleeping pills from a nearby pharmacy (recorded transaction)."
+      "time": "12:00",
+      "event": "Arya takes a lunch break and meets Priya near the site excavation main area. Priya confronts Arya about submitting Priya's research under Arya's name. A heated argument ensues, overheard by another labourer, Suresh, near the Site Excavation Main Area (Near the Banyan Tree)."
+    },
+    {
+      "time": "13:00",
+      "event": "Arya returns to the Gupt Griha, visibly upset. She makes a note in her journal about the palace complex theory, emphasizing the importance of keeping it confidential."
+    },
+    {
+      "time": "14:30",
+      "event": "Dr. Rajan places a call to an unknown number (later traced to a known antiquities dealer), discussing the sale of \"a few select pieces.\" This call is logged in his phone records."
     },
     {
       "time": "16:00",
-      "event": "One Day Before: Vikram Singh Rathore is seen near the Village Panchayat Office, looking agitated. A local boy, Raju, reports seeing him pacing back and forth. This is considered unreliable hearsay."
+      "event": "Priya, still visibly distraught after the earlier argument, shares tea with Anika and Lakshmi in Arya Ghosh's Accommodation. Priya complains about her work situation to her roommates."
     },
     {
-      "time": "18:00",
-      "event": "One Day Before: Lakshmi Kant Sharma's affair partner calls him, demanding he leave Divya. Divya overhears the conversation, further fueling her resentment. She secretly searches for 'undetectable poisons' online using Lakshmi Kant Sharma's computer (browser history)."
+      "time": "17:00",
+      "event": "Anil Kumar visits Govind, the Chaiwala, at his stall and rants about Arya's flawed interpretations, stating she is \"ruining the region's history\". Govind vaguely remembers this conversation."
     },
     {
-      "time": "20:00",
-      "event": "Today: Divya Sharma prepares dinner for Lakshmi Kant, including a small amount of sleeping pills in his lassi (yogurt drink). This is subtle and undetectable after a certain period. She also spikes her own food."
-    },
-    {
-      "time": "20:30",
-      "event": "Today: Rajesh Kumar Verma is seen arguing with Lakshmi Kant Sharma at Sharma Tea Stall near the Banyan Tree. Deepu, a local idler, witnesses the argument but cannot hear the conversation. Their body language appears aggressive."
+      "time": "19:00",
+      "event": "Dr. Rajan spends time at the Local Tea Stall (Chaiwala's Stand) as observed by Govind. He is distracted, checks his watch frequently, and mentions needing funds. He makes a call to his bookie where he loses 100,000 Rupees."
     },
     {
       "time": "21:00",
-      "event": "Today: Anjali Reddy is seen walking past the Village Panchayat Office, glancing around nervously. A CCTV camera, usually nonfunctional, captures her image but the quality is poor due to darkness."
-    },
-    {
-      "time": "21:15",
-      "event": "Today: Divya brings Lakshmi Kant his dinner and lassi. He consumes it while working at his desk."
-    },
-    {
-      "time": "21:30",
-      "event": "Today: Meena, the family servant, brings Divya her dinner. She confirms Divya is in her room, although it is not possible to ascertain if she is asleep."
+      "event": "Arya sends an email to Dr. Rajan requesting an urgent meeting to discuss a significant discovery. Rajan replies, agreeing to meet her in the Gupt Griha after midnight. The email exchange is saved on their respective accounts."
     },
     {
       "time": "22:00",
-      "event": "Today: Vikram Singh Rathore begins his card game at Kishore's house. Kishore, Deepu, and Santosh are present."
-    },
-    {
-      "time": "22:30",
-      "event": "Today: Rajesh Kumar Verma arrives at the Village Temple and begins praying. Pandit Joshi, the temple priest, vaguely remembers seeing him."
-    },
-    {
-      "time": "22:45",
-      "event": "Today: Divya Sharma, pretending to be asleep, gets out of bed. She takes a saffron silk scarf belonging to Lakshmi Kant Sharma from his cupboard."
+      "event": "Priya returns to Arya Ghosh's Accommodation, and takes a sleeping pill at 22:00 (witnesses Anika and Lakshmi). The other researchers in Arya's accommodation, Anika and Lakshmi confirm this."
     },
     {
       "time": "23:00",
-      "event": "Today: Vikram Singh Rathore leaves the card game briefly to \"stretch his legs\". He is gone for approximately 10 minutes."
+      "event": "Gita Patel leaves Dr. Rajan's trailer, returning to her quarters (verified by Lakshmi). Lakshmi then leaves to make tea and returns an hour later and Gita is asleep. "
     },
     {
-      "time": "23:00",
-      "event": "Today: Anjali Reddy closes up her tea stall and begins her walk home. She claims to see a shadowy figure near the Panchayat office."
+      "time": "01:00",
+      "event": "Ramesh Yadav sees Dr. Rajan near the Banyan Tree talking on his phone. This corroborates Ramesh Yadav's testimony and places Rajan outside his trailer at a time when he claims to be working."
     },
     {
-      "time": "23:10",
-      "event": "Today: Rajesh Kumar Verma leaves the Village Temple for about five minutes to buy a packet of cigarettes from a nearby paan shop, which can be verified with the paan shop owner. The paan shop owner mentions he saw someone who looked like Vikram walking in the distance."
+      "time": "01:30",
+      "event": "Dr. Rajan enters the Gupt Griha, carrying a small bag (its contents are unknown). Footprints matching Rajan's shoes will be found near the chamber entrance."
     },
     {
-      "time": "23:15",
-      "event": "Today: Divya Sharma enters Lakshmi Kant Sharma's study. He is drowsy from the sleeping pills. She strangles him with the saffron silk scarf. The scarf is tightly knotted, leaving ligature marks."
+      "time": "01:45",
+      "event": "Dr. Rajan and Arya Ghosh are seen arguing in the Gupt Griha by a security camera positioned at the entrance. The audio is unclear. It is later revealed through reconstruction of broken pieces that Arya had a newly discovered stone tablet showing proof the historical site was a palace."
     },
     {
-      "time": "23:30",
-      "event": "Today: Divya Sharma returns to her room, hides the saffron scarf under her mattress, and pretends to sleep."
+      "time": "02:17",
+      "event": "Dr. Rajan strikes Arya Ghosh with a heavy stone artifact, causing blunt force trauma to the head. He leaves the artifact near her body, wipes his fingerprints off nearby surfaces, and flees the Gupt Griha."
+    },
+    {
+      "time": "02:30",
+      "event": "Dr. Rajan returns to his trailer, disposes of the small bag (later found to contain traces of the artifact's stone dust and some cleaning supplies) in a distant ravine, and attempts to clean his shoes."
     },
     {
       "time": "06:00",
-      "event": "Next Day: Meena, the family servant, discovers Lakshmi Kant Sharma's body in his study and raises the alarm. The murder is reported to the police."
->>>>>>> 6e5984c0a6157d0b6645641eedd37ce6cfeac794
+      "event": "Priya wakes up, feeling groggy from the sleeping pill. She notices Arya is not in her room and assumes she has already gone to work."
+    },
+    {
+      "time": "07:00",
+      "event": "Dr. Rajan alerts the site security, claiming he found Arya Ghosh's body in the Gupt Griha. He expresses shock and orders the area to be sealed off."
     }
   ]
 }

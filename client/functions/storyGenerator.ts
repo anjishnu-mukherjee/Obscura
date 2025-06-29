@@ -188,29 +188,38 @@ async function generateLocationsAndClues(
                    - Locations that could realistically contain evidence
                    
                    For each location, provide 2-4 detailed clues that are:
+                   - VISUALLY DISTINCT and easily photographable (suitable for AI-generated forensic images)
+                   - Large enough to be clearly visible in crime scene photos
                    - Relevant within the Indian context
-                   - Specific and descriptive (include physical details, timestamps, forensic evidence)
+                   - Specific and descriptive physical objects or environmental disturbances
                    - Realistic within the setting's technology and capabilities
                    - A mix of direct evidence and circumstantial evidence
                    - Some pointing clearly to the killer, others creating red herrings
-                   - Include both physical evidence and witness testimony/behavioral clues
-                   - Consider environmental factors (weather, lighting, access restrictions)
-                   - Include evidence that requires interpretation or analysis
                    
-                   Clue types to include:
-                   - Physical evidence (fibers, fingerprints, DNA, tool marks)
-                   - Digital evidence (security footage, computer logs, messages)
-                   - Behavioral evidence (witness statements, suspicious behavior)
-                   - Environmental evidence (weather conditions, access patterns)
-                   - Forensic evidence (blood spatter, trajectory analysis, timing)
+                   FOCUS ON VISUAL CLUES THAT PHOTOGRAPH WELL:
+                   - Broken or displaced objects (overturned chairs, shattered glass, damaged items)
+                   - Stains and marks (bloodstains, mud tracks, spilled liquids, burn marks)
+                   - Personal items (clothing, jewelry, shoes, bags, dropped objects)
+                   - Food and drink items (half-eaten meals, spilled tea, cigarette butts, bottles)
+                   - Tools and weapons (knives, ropes, blunt objects, improvised weapons)
+                   - Footprints, tire tracks, handprints on surfaces
+                   - Disturbed environments (trampled plants, moved furniture, open/broken locks)
+                   - Electronic devices (phones, cameras, radios) that are clearly visible
+                   - Containers and packages (boxes, bags, jars, papers that are readable in photos)
+                   
+                   AVOID TINY OR DELICATE DETAILS:
+                   - Small handwriting or tiny text that requires magnification
+                   - Microscopic evidence like individual fibers or DNA traces
+                   - Very subtle scratches or minute marks
+                   - Fine details that would be invisible in standard crime scene photos
+                   - Anything requiring close-up examination of small surfaces
                    
                    Ensure clues are:
-                   - Relevant within the Indian context
-                   - Believable and not overly convenient
-                   - Require detective work to interpret
-                   - Create multiple possible interpretations
-                   - Build a coherent narrative when pieced together
-                   - Include both obvious and subtle evidence
+                   - Clearly visible in wide and medium crime scene photography
+                   - Photographable with standard forensic equipment
+                   - Distinct enough for AI image generation to render accurately
+                   - Require detective interpretation but are visually obvious once spotted
+                   - Create a coherent visual narrative of what happened at the scene
 
                    For each location, introduce 0-2 random characters with their backgrounds who may or may not know something relevant to the story and ultimately point to the killer in a complex way. These characters should be:
                    - Relevant within the Indian context

@@ -21,6 +21,7 @@ import { LocationNode, Suspect } from '@/functions/types';
 import FloatingNotepad from '@/components/FloatingNotepad';
 import FloatingWatson from '@/components/FloatingWatson';
 import InvestigationFindings from '@/components/InvestigationFindings';
+import Image from 'next/image';
 
 interface InvestigatePageProps {
   params: Promise<{
@@ -339,36 +340,88 @@ export default function InvestigatePage({ params }: InvestigatePageProps) {
                       className="p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl transition-all duration-300 hover:bg-white/10 cursor-pointer hover:border-teal-400/50"
                       onClick={() => handleInterrogateSuspect(suspect.name)}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                            isInterrogated 
-                              ? 'bg-gradient-to-br from-green-500 to-green-400' 
-                              : 'bg-gradient-to-br from-purple-500 to-purple-400'
-                          }`}>
-                            {isInterrogated ? (
-                              <CheckCircle className="w-6 h-6 text-white" />
-                            ) : (
-                              <Users className="w-6 h-6 text-white" />
-                            )}
-                          </div>
-                          <div>
-                            <h3 className="text-white font-semibold">{suspect.name}</h3>
-                            <p className="text-gray-400 text-sm mb-1">{suspect.role}</p>
-                            <p className="text-gray-300 text-sm">{suspect.personality}</p>
-                            {isInterrogated && (
-                              <p className="text-green-400 text-xs mt-1">
-                                Last interrogated: {new Date(isInterrogated.interrogatedAt.seconds * 1000).toLocaleDateString()}
-                              </p>
-                            )}
+                     <div className="flex items-center gap-6">
+                        {/* Suspect Portrait - Case File Style */}
+                        <div className="flex-shrink-0">
+                          <div className="relative">
+                            {/* Case file photo frame */}
+                            <div className="w-24 h-32 bg-gray-800 border-2 border-gray-300 rounded-sm shadow-lg relative overflow-hidden">
+                              {suspect.portrait ? (
+                                <Image
+                                  src={suspect.portrait}
+                                  alt={`${suspect.name} - Suspect`}
+                                  fill
+                                  className="object-cover filter sepia-[0.2] contrast-[1.05] saturate-[0.9]"
+                                />
+                              ) : (
+                                <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                                  <Users className="w-8 h-8 text-gray-500" />
+                                </div>
+                              )}
+                              {/* Photo corner clips */}
+                              <div className="absolute -top-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                              <div className="absolute -bottom-0.5 -left-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                              <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-gray-400 rotate-45 transform origin-center"></div>
+                            </div>
+                            {/* Case file label */}
+                            <div className="absolute -bottom-5 left-0 right-0 text-center">
+                              <div className="inline-block bg-yellow-900/80 text-yellow-200 text-xs px-2 py-1 rounded border border-yellow-700">
+                                SUSPECT
+                              </div>
+                            </div>
                           </div>
                         </div>
                         
-                        {!canInterrogate && (
-                          <div className="flex items-center gap-2 text-gray-400">
-                            <span className="text-sm">Already interrogated today</span>
+                        {/* Suspect Information */}
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-3">
+                            <div>
+                              <h3 className="text-white font-semibold text-lg">{suspect.name}</h3>
+                              <p className="text-gray-400 text-sm mb-1">{suspect.role}</p>
+                            </div>
+                            
+                            <div className="flex items-center gap-3">
+                              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+                                isInterrogated 
+                                  ? 'bg-gradient-to-br from-green-500 to-green-400' 
+                                  : 'bg-gradient-to-br from-purple-500 to-purple-400'
+                              }`}>
+                                {isInterrogated ? (
+                                  <CheckCircle className="w-6 h-6 text-white" />
+                                ) : (
+                                  <Users className="w-6 h-6 text-white" />
+                                )}
+                              </div>
+                              
+                              {!canInterrogate && (
+                                <div className="flex items-center gap-2 text-gray-400">
+                                  <span className="text-sm">Already interrogated today</span>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
+                          
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Personality</p>
+                              <p className="text-gray-300 text-sm line-clamp-2">{suspect.personality}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Status</p>
+                              <div className="flex items-center gap-2">
+                                {isInterrogated && (
+                                  <p className="text-green-400 text-xs">
+                                    Last interrogated: {new Date(isInterrogated.interrogatedAt.seconds * 1000).toLocaleDateString()}
+                                  </p>
+                                )}
+                                {!isInterrogated && (
+                                  <p className="text-yellow-400 text-xs">Not yet interrogated</p>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   );
