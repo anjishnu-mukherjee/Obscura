@@ -454,7 +454,6 @@ Generate 2-4 varied clues with different trigger types and levels.`;
 
     // Generate clue triggers for each witness
     console.log("Generating clue triggers for witnesses...");
-    fs.writeFileSync("enhancedStory.json", JSON.stringify(enhancedStory, null, 2));
     if (
       enhancedStory.witnesses &&
       Object.keys(enhancedStory.witnesses).length > 0
