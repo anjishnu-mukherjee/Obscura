@@ -14,6 +14,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import Aurora from '@/react-bits/Aurora';
 import DecryptedText from '@/react-bits/DecryptedText';
@@ -103,16 +104,29 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-teal-500/5 rounded-full blur-3xl" />
       </div>
 
-      {/* Audio Toggle */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showContent ? 1 : 0 }}
-        transition={{ delay: 1 }}
-        onClick={() => setAudioEnabled(!audioEnabled)}
-        className="fixed bottom-8 right-8 z-40 p-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full hover:bg-white/10 transition-colors"
+      {/* Bolt Branding Logo */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: showContent ? 1 : 0, scale: showContent ? 1 : 0.8 }}
+        transition={{ delay: 1.2, duration: 0.5 }}
+        className="fixed bottom-8 right-8 z-40"
       >
-        {audioEnabled ? <Volume2 className="w-5 h-5 text-teal-400" /> : <VolumeX className="w-5 h-5 text-gray-400" />}
-      </motion.button>
+        <Link
+          href="https://bolt.new/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block group"
+        >
+          <motion.img
+            src="/bolt-white-circle.jpg"
+            alt="Built with Bolt"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-12 h-12 rounded-full cursor-pointer transition-all duration-300 hover:brightness-125 filter brightness-110"
+            style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+          />
+        </Link>
+      </motion.div>
 
       <div className="relative z-20">
         {/* Loading Screen */}

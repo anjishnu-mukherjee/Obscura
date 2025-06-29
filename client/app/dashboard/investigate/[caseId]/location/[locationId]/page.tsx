@@ -451,8 +451,8 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-500/20 rounded-2xl mb-6">
                       <Loader2 className="w-8 h-8 text-teal-400 animate-spin" />
                     </div>
-                    <h3 className="text-white font-semibold mb-2">Generating Crime Scene Images</h3>
-                    <p className="text-gray-400">AI is creating realistic investigation photos...</p>
+                    <h3 className="text-white font-semibold mb-2">Getting Crime Scene Photographs</h3>
+                    <p className="text-gray-400">Contacting Forensics Team...</p>
                   </div>
                 </div>
               ) : locationImages.length === 0 ? (

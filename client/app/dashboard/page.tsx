@@ -19,6 +19,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import DecryptedText from '@/react-bits/DecryptedText';
+import GlassIcons from '@/react-bits/GlassIcons';
 import Navbar from '@/components/navbar';
 import DifficultyModal from '@/components/DifficultyModal';
 import { useCases, useUserStats, CaseData } from '@/hooks/useCases';
@@ -91,6 +92,12 @@ export default function DashboardPage() {
   // Dynamic stats with fallback values and loading states
   const stats = [
     { 
+      label: 'Current Rank', 
+      value: statsLoading ? '...' : userStats?.rank || 'Rookie Agent', 
+      icon: Shield,
+      subtext: userStats?.averageProgress ? `${userStats.averageProgress}% avg progress` : 'Build your reputation'
+    },
+    { 
       label: 'Cases Completed', 
       value: statsLoading ? '...' : userStats?.casesCompleted || 0, 
       icon: Trophy,
@@ -101,13 +108,7 @@ export default function DashboardPage() {
       value: statsLoading ? '...' : userStats?.evidenceFound || 0, 
       icon: Search,
       subtext: userStats?.locationsVisited ? `${userStats.locationsVisited} locations visited` : 'No evidence yet'
-    },
-    { 
-      label: 'Current Rank', 
-      value: statsLoading ? '...' : userStats?.rank || 'Rookie Agent', 
-      icon: Shield,
-      subtext: userStats?.averageProgress ? `${userStats.averageProgress}% avg progress` : 'Build your reputation'
-    },
+    }
   ];
 
   // Additional stats for expanded view
@@ -238,46 +239,78 @@ export default function DashboardPage() {
             <p className="text-xl text-gray-400">Your mission control center awaits</p>
           </motion.div>
 
-          {/* Main Stats Grid */}
-          <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-6">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                whileHover={{ scale: 1.02, rotateY: 5 }}
-                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center">
-                    <stat.icon className="w-6 h-6 text-white" />
+          {/* Main Stats Grid with Glass Icons */}
+          <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Agent Statistics</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  whileHover={{ scale: 1.02 }}
+                  className="text-center"
+                >
+                  <div className="mb-4 flex justify-center">
+                    <GlassIcons
+                      items={[{
+                        icon: <stat.icon className="w-6 h-6 text-white" />,
+                        color: index === 0 ? 'orange' : index === 1 ? 'blue' : 'purple',
+                        label: stat.label,
+                      }]}
+                      className="!grid-cols-1 !gap-0 !py-0"
+                    />
                   </div>
-                  {/* <ChevronRight className="w-5 h-5 text-gray-400" /> */}
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-1">{stat.value}</h3>
-                <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
-                <p className="text-gray-500 text-xs">{stat.subtext}</p>
-              </motion.div>
-            ))}
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all duration-300">
+                    <h3 className="text-3xl font-bold text-white mb-2">{stat.value}</h3>
+                    <p className="text-gray-300 font-medium mb-1">{stat.label}</p>
+                    <p className="text-gray-400 text-sm">{stat.subtext}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Detailed Stats Grid */}
-          <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-4">
-            {detailedStats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                whileHover={{ scale: 1.02 }}
-                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 hover:bg-white/10 transition-all duration-300"
-              >
-                <div className="flex items-center justify-between">
-                  <div className={`w-10 h-10 bg-gradient-to-br ${stat.color} rounded-lg flex items-center justify-center`}>
-                    <stat.icon className="w-5 h-5 text-white" />
+          {/* Detailed Stats Grid with Glass Icons */}
+          <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <h3 className="text-xl font-bold text-white mb-6 text-center">Performance Metrics</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              {detailedStats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  whileHover={{ scale: 1.02 }}
+                  className="text-center"
+                >
+                  <div className="mb-4 flex justify-center">
+                    <GlassIcons
+                      items={[{
+                        icon: <stat.icon className="w-6 h-6 text-white" />,
+                        color: index === 0 ? 'blue' : index === 1 ? 'purple' : 'green',
+                        label: stat.label,
+                      }]}
+                      className="!grid-cols-1 !gap-0 !py-0"
+                    />
                   </div>
-                  <div className="text-right">
-                    <h4 className="text-lg font-bold text-white">{stat.value}</h4>
-                    <p className="text-gray-400 text-xs">{stat.label}</p>
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all duration-300">
+                    <h4 className="text-3xl font-bold text-white mb-2">{stat.value}</h4>
+                    <p className="text-gray-300 font-medium mb-1">{stat.label}</p>
+                    {stat.value !== '...' && stat.value !== 0 && (
+                      <div className="mt-2 w-full bg-gray-700/50 rounded-full h-1.5">
+                        <div 
+                          className={`h-full rounded-full bg-gradient-to-r ${stat.color} transition-all duration-500`}
+                          style={{ 
+                            width: typeof stat.value === 'number' ? `${Math.min(100, (stat.value / 10) * 100)}%` : '0%' 
+                          }}
+                        />
+                      </div>
+                    )}
+                    <p className="text-gray-400 text-sm mt-2">
+                      {stat.value !== '...' && stat.value !== 0 
+                        ? `Active in your investigations` 
+                        : 'Start investigating to see progress'}
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Start a New Case Button */}
@@ -434,50 +467,82 @@ export default function DashboardPage() {
             )}
           </motion.div>
 
-          {/* Quick Actions */}
-          <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-6">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={handleStartNewMission}
-              className="group p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 text-left"
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Eye className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-white font-semibold mb-2">New Investigation</h3>
-              <p className="text-gray-400 text-sm">Start a new case investigation</p>
-            </motion.button>
+          {/* Quick Actions with Glass Icons */}
+          <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <h3 className="text-xl font-bold text-white mb-6 text-center">Quick Actions</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleStartNewMission}
+                className="group text-center"
+              >
+                <div className="mb-4 flex justify-center">
+                  <GlassIcons
+                    items={[{
+                      icon: <Eye className="w-6 h-6 text-white" />,
+                      color: 'blue',
+                      label: 'New Investigation',
+                    }]}
+                    className="!grid-cols-1 !gap-0 !py-0"
+                  />
+                </div>
+                <div className="p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300">
+                  <h3 className="text-white font-semibold mb-2">New Investigation</h3>
+                  <p className="text-gray-400 text-sm">Start a new case investigation</p>
+                </div>
+              </motion.div>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="group p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 text-left"
-              disabled={!userStats?.evidenceFound}
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-400 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Lock className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-white font-semibold mb-2">Evidence Analysis</h3>
-              <p className="text-gray-400 text-sm">
-                {userStats?.evidenceFound ? `Analyze ${userStats.evidenceFound} pieces of evidence` : 'Find evidence to unlock'}
-              </p>
-            </motion.button>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group text-center"
+              >
+                <div className="mb-4 flex justify-center">
+                  <GlassIcons
+                    items={[{
+                      icon: <Lock className="w-6 h-6 text-white" />,
+                      color: userStats?.evidenceFound ? 'red' : 'indigo',
+                      label: 'Evidence Analysis',
+                    }]}
+                    className="!grid-cols-1 !gap-0 !py-0"
+                  />
+                </div>
+                <div className={`p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl transition-all duration-300 ${
+                  userStats?.evidenceFound ? 'hover:bg-white/10' : 'opacity-60'
+                }`}>
+                  <h3 className="text-white font-semibold mb-2">Evidence Analysis</h3>
+                  <p className="text-gray-400 text-sm">
+                    {userStats?.evidenceFound ? `Analyze ${userStats.evidenceFound} pieces of evidence` : 'Find evidence to unlock'}
+                  </p>
+                </div>
+              </motion.div>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="group p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 text-left"
-              disabled={!userStats?.casesCompleted}
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-400 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Brain className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-white font-semibold mb-2">Case Patterns</h3>
-              <p className="text-gray-400 text-sm">
-                {userStats?.casesCompleted ? 'Analyze patterns across your cases' : 'Complete cases to unlock'}
-              </p>
-            </motion.button>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group text-center"
+              >
+                <div className="mb-4 flex justify-center">
+                  <GlassIcons
+                    items={[{
+                      icon: <Brain className="w-6 h-6 text-white" />,
+                      color: userStats?.casesCompleted ? 'purple' : 'indigo',
+                      label: 'Case Patterns',
+                    }]}
+                    className="!grid-cols-1 !gap-0 !py-0"
+                  />
+                </div>
+                <div className={`p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl transition-all duration-300 ${
+                  userStats?.casesCompleted ? 'hover:bg-white/10' : 'opacity-60'
+                }`}>
+                  <h3 className="text-white font-semibold mb-2">Case Patterns</h3>
+                  <p className="text-gray-400 text-sm">
+                    {userStats?.casesCompleted ? 'Analyze patterns across your cases' : 'Complete cases to unlock'}
+                  </p>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* Stats Error Display */}
