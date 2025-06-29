@@ -209,12 +209,39 @@ There should be no other text or backticks in the response before or after the J
 
     await updateDoc(caseRef, verdictData);
 
-    // Prepare response
-    const response: VerdictResponse = {
+    // Prepare comprehensive response with all case data
+    const response: VerdictResponse & {
+      victim?: any;
+      realKiller?: any;
+      accusedSuspect?: string;
+      caseSummary?: string;
+    } = {
       correct: aiAnalysis.nameCorrect,
       score: Math.round(finalScore),
       correctSuspect: correctSuspect,
       explanation: aiAnalysis.explanation,
+      // Add victim information
+      victim: {
+        name: caseData.story?.victim?.name,
+        portrait: caseData.story?.victim?.portrait,
+        profession: caseData.story?.victim?.profession || caseData.story?.victim?.role,
+        causeOfDeath: caseData.story?.victim?.causeOfDeath || "Murder",
+        deathTimeEstimate: caseData.story?.victim?.timeOfDeath || "Unknown"
+      },
+      // Add real killer information
+      realKiller: {
+        name: correctSuspect,
+        portrait: killerSuspect?.portrait,
+        role: killerSuspect?.role
+      },
+      // Add accused suspect
+      accusedSuspect: suspectName,
+      // Add case summary
+      caseSummary: `In this case, ${caseData.story?.victim?.name} was murdered by ${correctSuspect}. ${
+        aiAnalysis.nameCorrect 
+          ? 'Your investigation successfully identified the correct perpetrator.' 
+          : `You identified ${suspectName} as the killer, but the real murderer was ${correctSuspect}.`
+      } ${aiAnalysis.feedback}`,
       aiAnalysis: {
         explanation: aiAnalysis.explanation,
         nameCorrect: aiAnalysis.nameCorrect,

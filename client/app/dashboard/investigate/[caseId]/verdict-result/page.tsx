@@ -224,7 +224,7 @@ function VerdictResultContent() {
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-red-400">
-                        Success!
+                        {verdictData.aiAnalysis.nameCorrect ? "Success!" : "Failed!"}
                       </div>
                       {/* <div className="text-sm text-gray-400">out of 160 pts</div> */}
                     </div>

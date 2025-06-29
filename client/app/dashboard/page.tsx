@@ -10,14 +10,18 @@ import {
   Eye,
   Lock,
   Brain,
-  Briefcase
+  Briefcase,
+  MapPin,
+  UserCheck,
+  Target,
+  Clock
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import DecryptedText from '@/react-bits/DecryptedText';
 import Navbar from '@/components/navbar';
 import DifficultyModal from '@/components/DifficultyModal';
-import { useCases, CaseData } from '@/hooks/useCases';
+import { useCases, useUserStats, CaseData } from '@/hooks/useCases';
 import { useEffect, useState } from 'react';
   
 export default function DashboardPage() {
@@ -25,7 +29,9 @@ export default function DashboardPage() {
   const router = useRouter();
   const [showDifficultyModal, setShowDifficultyModal] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const { cases: recentCases, loading: casesLoading, error: casesError } = useCases(user?.uid, 3);
+  const [showAllCases, setShowAllCases] = useState(false);
+  const { cases: recentCases, loading: casesLoading, error: casesError } = useCases(user?.uid, showAllCases ? undefined : 3);
+  const { stats: userStats, loading: statsLoading, error: statsError } = useUserStats(user?.uid);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -38,7 +44,9 @@ export default function DashboardPage() {
     console.log('Dashboard - Cases loading:', casesLoading);
     console.log('Dashboard - Cases:', recentCases);
     console.log('Dashboard - Cases error:', casesError);
-  }, [user?.uid, casesLoading, recentCases, casesError]);
+    console.log('Dashboard - Stats:', userStats);
+    console.log('Dashboard - Stats loading:', statsLoading);
+  }, [user?.uid, casesLoading, recentCases, casesError, userStats, statsLoading]);
 
 
 
@@ -80,10 +88,48 @@ export default function DashboardPage() {
     }
   };
 
+  // Dynamic stats with fallback values and loading states
   const stats = [
-    { label: 'Cases Completed', value: userData?.stats?.casesCompleted || 0, icon: Trophy },
-    { label: 'Evidence Found', value: userData?.stats?.evidenceFound || 0, icon: Search },
-    { label: 'Current Rank', value: userData?.stats?.rank || 'Rookie Agent', icon: Shield },
+    { 
+      label: 'Cases Completed', 
+      value: statsLoading ? '...' : userStats?.casesCompleted || 0, 
+      icon: Trophy,
+      subtext: userStats?.totalCases ? `${userStats.totalCases} total cases` : 'Start your first case'
+    },
+    { 
+      label: 'Evidence Found', 
+      value: statsLoading ? '...' : userStats?.evidenceFound || 0, 
+      icon: Search,
+      subtext: userStats?.locationsVisited ? `${userStats.locationsVisited} locations visited` : 'No evidence yet'
+    },
+    { 
+      label: 'Current Rank', 
+      value: statsLoading ? '...' : userStats?.rank || 'Rookie Agent', 
+      icon: Shield,
+      subtext: userStats?.averageProgress ? `${userStats.averageProgress}% avg progress` : 'Build your reputation'
+    },
+  ];
+
+  // Additional stats for expanded view
+  const detailedStats = [
+    {
+      label: 'Active Cases',
+      value: statsLoading ? '...' : userStats?.activeCases || 0,
+      icon: FileText,
+      color: 'from-blue-500 to-blue-400'
+    },
+    {
+      label: 'Suspects Questioned',
+      value: statsLoading ? '...' : userStats?.suspectsInterrogated || 0,
+      icon: UserCheck,
+      color: 'from-purple-500 to-purple-400'
+    },
+    {
+      label: 'Locations Explored',
+      value: statsLoading ? '...' : userStats?.locationsVisited || 0,
+      icon: MapPin,
+      color: 'from-green-500 to-green-400'
+    }
   ];
 
   // Calculate progress for each case based on investigation progress
@@ -95,8 +141,8 @@ export default function DashboardPage() {
     
     // Calculate progress based on locations visited, suspects interrogated, and clues discovered
     const totalLocations = Object.keys(caseData.map?.locations || {}).length;
-    const totalSuspects = caseData.story?.characters?.suspects?.length || 0;
-    const totalClues = Object.keys(caseData.clues?.processed || {}).length;
+    const totalSuspects = caseData.story?.characters?.suspects?.length || caseData.story?.suspects?.length || 0;
+    const totalClues = Object.keys(caseData.clues?.processed || caseData.clues || {}).length;
     
     const visitedLocations = Object.keys(progress.visitedLocations || {}).length;
     const interrogatedSuspects = Object.keys(progress.interrogatedSuspects || {}).length;
@@ -160,6 +206,10 @@ export default function DashboardPage() {
     }
   };
 
+  const handleToggleCasesView = () => {
+    setShowAllCases(!showAllCases);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900">
       {/* Navbar (dashboard mode) */}
@@ -188,7 +238,7 @@ export default function DashboardPage() {
             <p className="text-xl text-gray-400">Your mission control center awaits</p>
           </motion.div>
 
-          {/* Stats Grid */}
+          {/* Main Stats Grid */}
           <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-6">
             {stats.map((stat, index) => (
               <motion.div
@@ -200,10 +250,32 @@ export default function DashboardPage() {
                   <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center">
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                  {/* <ChevronRight className="w-5 h-5 text-gray-400" /> */}
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-1">{stat.value}</h3>
-                <p className="text-gray-400 text-sm">{stat.label}</p>
+                <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
+                <p className="text-gray-500 text-xs">{stat.subtext}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Detailed Stats Grid */}
+          <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-4">
+            {detailedStats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                whileHover={{ scale: 1.02 }}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 hover:bg-white/10 transition-all duration-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div className={`w-10 h-10 bg-gradient-to-br ${stat.color} rounded-lg flex items-center justify-center`}>
+                    <stat.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="text-right">
+                    <h4 className="text-lg font-bold text-white">{stat.value}</h4>
+                    <p className="text-gray-400 text-xs">{stat.label}</p>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -228,10 +300,30 @@ export default function DashboardPage() {
           {/* Recent Cases */}
           <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Recent Cases</h2>
+              <div>
+                <h2 className="text-2xl font-bold text-white">
+                  {showAllCases ? 'All Cases' : 'Recent Cases'}
+                </h2>
+                {!casesLoading && casesToShow.length > 0 && (
+                  <p className="text-gray-400 text-sm mt-1">
+                    {showAllCases ? `${casesToShow.length} total cases` : `${casesToShow.length} most recent cases`}
+                  </p>
+                )}
+              </div>
               {casesToShow.length > 0 && (
-                <button className="text-teal-400 hover:text-teal-300 transition-colors">
-                  View All
+                <button 
+                  onClick={handleToggleCasesView}
+                  className="flex items-center gap-2 text-teal-400 hover:text-teal-300 transition-colors"
+                  disabled={casesLoading}
+                >
+                  {casesLoading ? (
+                    <div className="w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <>
+                      <span>{showAllCases ? 'Show Recent' : 'View All'}</span>
+                      <ChevronRight className={`w-4 h-4 transition-transform ${showAllCases ? 'rotate-180' : ''}`} />
+                    </>
+                  )}
                 </button>
               )}
             </div>
@@ -347,6 +439,7 @@ export default function DashboardPage() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={handleStartNewMission}
               className="group p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 text-left"
             >
               <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -360,26 +453,39 @@ export default function DashboardPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="group p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 text-left"
+              disabled={!userStats?.evidenceFound}
             >
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-400 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Lock className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-white font-semibold mb-2">Decrypt Evidence</h3>
-              <p className="text-gray-400 text-sm">Analyze encrypted materials</p>
+              <h3 className="text-white font-semibold mb-2">Evidence Analysis</h3>
+              <p className="text-gray-400 text-sm">
+                {userStats?.evidenceFound ? `Analyze ${userStats.evidenceFound} pieces of evidence` : 'Find evidence to unlock'}
+              </p>
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="group p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 text-left"
+              disabled={!userStats?.casesCompleted}
             >
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-400 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Brain className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-white font-semibold mb-2">AI Analysis</h3>
-              <p className="text-gray-400 text-sm">Run pattern recognition</p>
+              <h3 className="text-white font-semibold mb-2">Case Patterns</h3>
+              <p className="text-gray-400 text-sm">
+                {userStats?.casesCompleted ? 'Analyze patterns across your cases' : 'Complete cases to unlock'}
+              </p>
             </motion.button>
           </motion.div>
+
+          {/* Stats Error Display */}
+          {statsError && (
+            <motion.div variants={fadeInUp} className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+              <p className="text-red-400 text-sm">Unable to load statistics: {statsError}</p>
+            </motion.div>
+          )}
         </motion.div>
       </main>
 
