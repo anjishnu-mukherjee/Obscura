@@ -19,6 +19,16 @@ export interface CaseData {
   estimatedDuration: number;
   tags: string[];
   investigationProgress?: any;
+  verdictSubmitted?: boolean;
+  verdict?: {
+    selectedSuspect: string;
+    reasoning: string;
+    isCorrect: boolean;
+    score: number;
+    submittedAt: any;
+    correctSuspect: string;
+    aiAnalysis?: any;
+  };
 }
 
 export interface UserStats {

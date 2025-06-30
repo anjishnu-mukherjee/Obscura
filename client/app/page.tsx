@@ -14,7 +14,6 @@ import {
   ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import Aurora from '@/react-bits/Aurora';
 import DecryptedText from '@/react-bits/DecryptedText';
@@ -502,7 +501,7 @@ export default function Home() {
             <div className="max-w-6xl mx-auto px-8 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <Zap className="w-6 h-6 text-teal-400" />
-                <span className="text-white font-semibold text-lg">Obscura</span>
+                <span className="text-white font-semibold text-lg">Obs<span className="text-teal-400">cura</span></span>
               </div>
               
               <p className="text-gray-400 text-sm">
