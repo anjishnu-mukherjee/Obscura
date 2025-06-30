@@ -140,14 +140,14 @@ CASE CONTEXT:
 - Is suspect the killer: ${suspect.isKiller ? 'YES (but they will NOT confess and will be evasive)' : 'NO (they are innocent but may act nervous)'}
 - Detective's name: ${name}
 
-DETECTIVE'S PLANNED QUESTIONS (these may have poor grammar - convert them to proper Hindi/Hinglish):
+DETECTIVE'S PLANNED QUESTIONS (these may have poor grammar - convert them to proper English):
 ${questions.map((q, i) => `${i + 1}. ${q}`).join('\n')}${previousQuestionsText}
 
 INSTRUCTIONS:
 1. Create a natural conversation flow using these questions as a guide
 2. The story is set in an Indian setting.
-3. The detective and the suspect are Indian. They must speak ONLY in Hindi or Hinglish (mix of Hindi and very few English words as spoken in Indian city streets). NO ENGLISH CONVERSATION AT ALL. Both of them must have a distinct South Indian or North Indian or South Delhi or Bombaywali accent. But the accent should be consistent throughout the conversation for each character.
-4. IMPORTANT: Convert all detective questions from broken English to proper, coherent Hindi/Hinglish questions. The questions given may have bad grammar - you must translate and improve them into natural Hindi conversation.
+3. The detective and the suspect are Indian. They must speak ONLY in English. NO HINDI CONVERSATION AT ALL. Both of them must have a distinct South Indian or North Indian or South Delhi or Bombaywali accent. But the accent should be consistent throughout the conversation for each character.
+4. IMPORTANT: Convert all detective questions from broken English to proper, coherent English questions. The questions given may have bad grammar - you must translate and improve them into natural English conversation.
 5. ${name} should ask the questions in a logical order, building on responses
 6. ${suspect.name} should respond authentically based on their personality and guilt status
 7. ${suspect.isKiller ? `${suspect.name} IS the killer but will NOT confess. They should be evasive, defensive, or misleading when pressed.` : `${suspect.name} is INNOCENT and should be helpful but may show nervousness or frustration.`}
@@ -156,13 +156,13 @@ INSTRUCTIONS:
 10. Keep each response realistic (not too long or short)
 11. End the conversation naturally when ${name} has gathered sufficient information
 
-## CRITICAL: The conversation MUST be in Hindi only. If it is a village setting, the people should be completely speaking in village Hindi. If it is a city setting, the people should be speaking in Hinglish. Use slangs and emotions as per the setting. Translate whatever questions that have been planned by the detective into proper Hindi/Hinglish, even if the original questions have poor grammar.
+## CRITICAL: The conversation MUST be in English only. If it is a village setting, the people should be completely speaking in village English with thick Indian accent. If it is a city setting, the people should be speaking in city English with thick Indian accent. Use slangs and emotions as per the setting. Translate whatever questions that have been planned by the detective into proper English, even if the original questions have poor grammar.
 
 FORMAT:
-${name}: [statement/question in Hindi/Hinglish]
-${suspect.name}: [response in Hindi/Hinglish]
-${name}: [follow-up in Hindi/Hinglish]
-${suspect.name}: [response in Hindi/Hinglish]
+${name}: [statement/question in English]
+${suspect.name}: [response in English]
+${name}: [follow-up in English]
+${suspect.name}: [response in English]
 ...
 
 There should be no other text before or after the conversation.

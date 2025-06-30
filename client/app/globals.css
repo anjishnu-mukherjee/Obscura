@@ -80,4 +80,20 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Smooth scrolling for the entire application */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Enhanced smooth scrolling for webkit browsers */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    * {
+      scroll-behavior: smooth;
+    }
+  }
 }

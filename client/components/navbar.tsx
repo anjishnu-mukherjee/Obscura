@@ -40,10 +40,24 @@ export default function Navbar() {
     }
   };
 
+  // Smooth scroll function
+  const handleSmoothScroll = (targetId: string) => {
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
+    // Close mobile menu if open
+    setIsMenuOpen(false);
+  };
+
   const navItems = [
-    { name: 'Case Preview', href: '#cases', icon: FileText },
-    { name: 'Detective Tools', href: '#features', icon: Brain },
-    { name: 'Meet the Team', href: '#team', icon: Users },
+    { name: 'Case Preview', targetId: 'cases', icon: FileText },
+    { name: 'Detective Tools', targetId: 'features', icon: Brain },
+    { name: 'Meet the Team', targetId: 'team', icon: Users },
   ];
 
   if (user && userData) {
@@ -127,17 +141,19 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
-              <motion.a
+              <motion.button
                 key={item.name}
-                href={item.href}
+                onClick={() => handleSmoothScroll(item.targetId)}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index, duration: 0.5 }}
-                className="flex items-center space-x-2 text-gray-300 transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300 cursor-pointer"
               >
                 <item.icon className="w-4 h-4" />
                 <span className="font-medium">{item.name}</span>
-              </motion.a>
+              </motion.button>
             ))}
           </div>
 
@@ -198,21 +214,22 @@ export default function Navbar() {
         >
           <div className="px-4 py-6 space-y-4">
             {navItems.map((item, index) => (
-              <motion.a
+              <motion.button
                 key={item.name}
-                href={item.href}
+                onClick={() => handleSmoothScroll(item.targetId)}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ 
                   opacity: isMenuOpen ? 1 : 0, 
                   x: isMenuOpen ? 0 : -20 
                 }}
                 transition={{ delay: 0.1 * index, duration: 0.3 }}
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center space-x-3 text-gray-300 transition-colors duration-300 py-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors duration-300 py-2 w-full text-left"
               >
                 <item.icon className="w-5 h-5" />
                 <span className="font-medium">{item.name}</span>
-              </motion.a>
+              </motion.button>
             ))}
             
             <div className="pt-4 border-t border-white/10 space-y-3">

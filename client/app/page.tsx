@@ -172,7 +172,7 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="flex-1 flex items-center justify-center px-8 py-16 pt-24 min-h-[80vh]"
+            className="flex-1 flex items-center justify-center px-8 py-16 pt-24 min-h-screen"
           >
             <div className="max-w-6xl mx-auto text-center">
               <motion.div variants={fadeInUp} className="mb-8">
