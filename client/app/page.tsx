@@ -412,7 +412,7 @@ export default function Home() {
                     linkedin: "https://www.linkedin.com/in/anjishnu-mukherjee-645297322/"
                   },
                   {
-                    name: "Sampoorna Pyne",
+                    name: "Sampurna Pyne",
                     role: "Criminal Analyst",
                     description: "Specialist in behavioral patterns and case profiling",
                     github: "https://github.com/Samk1710",
