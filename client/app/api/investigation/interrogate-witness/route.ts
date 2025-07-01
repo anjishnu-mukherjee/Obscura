@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCase, addInvestigationFinding } from "@/lib/gameDb";
 import { generate, generateAudio } from "@/functions/generate";
 import { Witness } from "@/functions/types";
+import { operationStatusManager } from "@/lib/operationStatus";
 
 // Helper function to detect gender from name using LLM
 async function detectGenderFromName(name: string): Promise<'male' | 'female'> {
@@ -31,7 +32,7 @@ Respond with only one word: "male" or "female"`;
   }
 }
 
-async function POSThandler(request: NextRequest) {
+async function handlePOST(request: NextRequest) {
   try {
     const body = await request.json();
     const { caseId, witnessName, questions, detectiveName, locationName } = body;
@@ -68,14 +69,84 @@ async function POSThandler(request: NextRequest) {
       );
     }
 
+    // Create operation and return immediately
+    const operationId = operationStatusManager.createOperation(
+      'interrogate-witness',
+      'Preparing witness interview...'
+    );
+
+    console.log("Created witness interview operation:", operationId);
+
+    // Return immediately with operation ID
+    const response = NextResponse.json({
+      success: true,
+      operationId,
+      status: 'processing',
+      message: "Witness interview in progress..."
+    });
+
+    // Start background processing (don't await)
+    processWitnessInterrogation(operationId, {
+      caseId,
+      witnessName,
+      questions,
+      detectiveName,
+      locationName,
+      caseData: caseResult.data,
+      witness
+    }).catch((error: any) => {
+      console.error("Background witness interview failed:", operationId, error);
+      operationStatusManager.updateOperation(operationId, {
+        status: 'failed',
+        error: error.message || 'Witness interview failed'
+      });
+    });
+
+    return response;
+
+  } catch (error: any) {
+    console.error("Error processing witness interrogation:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// Background processing function
+async function processWitnessInterrogation(
+  operationId: string,
+  data: {
+    caseId: string;
+    witnessName: string;
+    questions: string[];
+    detectiveName: string;
+    locationName?: string;
+    caseData: any;
+    witness: Witness;
+  }
+) {
+  const { caseId, witnessName, questions, detectiveName, locationName, caseData, witness } = data;
+
+  try {
+    operationStatusManager.updateOperation(operationId, {
+      progress: 20,
+      message: 'Preparing witness interview context...'
+    });
+
     console.log("Generating witness conversation...");
+
+    operationStatusManager.updateOperation(operationId, {
+      progress: 40,
+      message: 'Generating interview conversation...'
+    });
 
     // Generate conversation flow - witnesses are more cooperative
     const conversationPrompt = `You are creating a realistic witness interview between Detective ${detectiveName} and ${witness.name}, a witness in a murder investigation.
 
 CASE CONTEXT:
-- Victim: ${caseResult.data.story.victim.name} (${caseResult.data.story.victim.profession})
-- Setting: ${caseResult.data.story.setting}
+- Victim: ${caseData.story.victim.name} (${caseData.story.victim.profession})
+- Setting: ${caseData.story.setting}
 - Location: ${locationName || 'Investigation site'}
 
 WITNESS INFORMATION:
@@ -114,13 +185,18 @@ Generate the complete witness interview:`;
     try {
       conversation = await generate(conversationPrompt);
       conversation = conversation.trim();
-      console.log("Witness Conversation:\n", conversation);
-    } catch (error) {
+      console.log("Witness conversation generated for operation:", operationId);
+    } catch (error: any) {
       console.error('Error generating witness conversation:', error);
       
       // Fallback conversation
       conversation = `${detectiveName}: ${questions[0]}\n${witness.name}: Haan, main aapko jo dekha hai sab bata deta hun. ${witness.testimony}\n${detectiveName}: Aur kuch yaad hai aapko?\n${witness.name}: Ji haan, aur bhi kuch details hain jo helpful ho sakti hain.`;
     }
+
+    operationStatusManager.updateOperation(operationId, {
+      progress: 60,
+      message: 'Generating interview audio...'
+    });
 
     console.log("Generating witness interview audio...");
 
@@ -151,10 +227,15 @@ Generate the complete witness interview:`;
       // Generate audio file
       audioId = await generateAudio(conversation, characters);
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating witness audio:', error);
       // Continue without audio - it's not critical
     }
+
+    operationStatusManager.updateOperation(operationId, {
+      progress: 80,
+      message: 'Analyzing interview findings...'
+    });
 
     // Analyze witness interview for automatic findings
     try {
@@ -168,8 +249,8 @@ ${conversation}
 CONTEXT:
 - Witness: ${witness.name} (${witness.role})
 - Reliability: ${witness.reliability}
-- Victim: ${caseResult.data.story.victim.name}
-- Setting: ${caseResult.data.story.setting}
+- Victim: ${caseData.story.victim.name}
+- Setting: ${caseData.story.setting}
 
 Extract 1-3 key findings from this interview. For each finding, determine:
 1. The specific information revealed
@@ -204,37 +285,42 @@ Return a JSON array of findings:
           
           console.log(`Added ${findings.length} findings from witness interview`);
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error parsing or saving witness findings:', error);
       }
       
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error analyzing witness interview:", error);
     }
 
-    console.log("Witness interview successful");
-
-    return NextResponse.json({
-      success: true,
-      message: "Witness interviewed successfully",
-      conversation,
-      audioId,
-      witness: {
-        name: witness.name,
-        role: witness.role,
-        reliability: witness.reliability
+    // Complete the operation
+    operationStatusManager.updateOperation(operationId, {
+      status: 'completed',
+      progress: 100,
+      message: 'Witness interview completed successfully!',
+      result: {
+        success: true,
+        message: "Witness interviewed successfully",
+        conversation,
+        audioId,
+        witness: {
+          name: witness.name,
+          role: witness.role,
+          reliability: witness.reliability
+        }
       }
     });
 
-  } catch (error) {
-    console.error("Error processing witness interrogation:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
-} 
+    console.log(`Witness interview operation ${operationId} completed successfully`);
 
-export {
-  POSThandler as POST
-} 
+  } catch (error: any) {
+    console.error(`Background witness interview failed for operation ${operationId}:`, error);
+    operationStatusManager.updateOperation(operationId, {
+      status: 'failed',
+      error: error.message || 'Witness interview processing failed'
+    });
+    throw error;
+  }
+}
+
+export const POST = handlePOST; 

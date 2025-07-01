@@ -3,6 +3,7 @@ import { interrogateSuspect, getCase, addInvestigationFinding } from "@/lib/game
 import { generate, generateAudio } from "@/functions/generate";
 import { uploadAudioFromArrayBuffer } from "@/lib/cloudinary";
 import { analyzeInterrogationTranscript, convertToInvestigationFindings, checkClueRevealedTriggers } from "@/functions/transcriptAnalyzer";
+import { operationStatusManager } from "@/lib/operationStatus";
 
 // Helper function to detect gender from name using LLM
 async function detectGenderFromName(name: string): Promise<'male' | 'female'> {
@@ -27,7 +28,7 @@ Respond with only one word: "male" or "female"`;
       // Default fallback if response is unclear
       return Math.random() > 0.5 ? 'male' : 'female';
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error detecting gender from name:', error);
     // Fallback to random if LLM fails
     return Math.random() > 0.5 ? 'male' : 'female';
@@ -45,7 +46,7 @@ async function uploadAudioToCloudinary(audioBuffer: Buffer, caseId: string, susp
     );
     
     return result.secureUrl;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error uploading audio to Cloudinary:', error);
     // For now, return a placeholder URL if upload fails
     return `/audio/placeholder_${Date.now()}.wav`;
@@ -69,7 +70,7 @@ const canInterrogateSuspect = (progress: any, suspectName: string): boolean => {
   return suspectInterrogation.lastInterrogationDate !== today; // Can interrogate if not done today
 };
 
-async function POSThandler(request: NextRequest) {
+async function handlePOST(request: NextRequest) {
   try {
     const body = await request.json();
     const { caseId, suspectName, questions, name } = body;
@@ -116,23 +117,104 @@ async function POSThandler(request: NextRequest) {
       );
     }
 
+    // Create operation and return immediately
+    const operationId = operationStatusManager.createOperation(
+      'interrogate-suspect',
+      'Preparing interrogation...'
+    );
+
+    console.log("Created interrogation operation:", operationId);
+
+    // Verify operation was created
+    const verifyOperation = operationStatusManager.getOperation(operationId);
+    if (!verifyOperation) {
+      console.error("Failed to create operation:", operationId);
+      return NextResponse.json(
+        { error: "Failed to initialize interrogation" },
+        { status: 500 }
+      );
+    }
+
+    console.log("Operation verified successfully:", verifyOperation);
+
+    // Return immediately with operation ID
+    const response = NextResponse.json({
+      success: true,
+      operationId,
+      status: 'processing',
+      message: "Interrogation in progress..."
+    });
+
+    // Start background processing (don't await)
+    processSuspectInterrogation(operationId, {
+      caseId,
+      suspectName,
+      questions,
+      name,
+      caseData: caseResult.data,
+      suspect
+    }).catch((error: any) => {
+      console.error("Background interrogation failed:", operationId, error);
+      operationStatusManager.updateOperation(operationId, {
+        status: 'failed',
+        error: error.message || 'Interrogation failed'
+      });
+    });
+
+    return response;
+
+  } catch (error: any) {
+    console.error("Error processing suspect interrogation:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// Background processing function
+async function processSuspectInterrogation(
+  operationId: string,
+  data: {
+    caseId: string;
+    suspectName: string;
+    questions: string[];
+    name: string;
+    caseData: any;
+    suspect: any;
+  }
+) {
+  const { caseId, suspectName, questions, name, caseData, suspect } = data;
+
+  try {
+    operationStatusManager.updateOperation(operationId, {
+      progress: 20,
+      message: 'Analyzing case context...'
+    });
+
     console.log("Generating conversation flow...");
 
-    // Generate conversation flow
+    // Get previous interrogation data
+    const progress = caseData.investigationProgress || {};
     const suspectData = (progress.interrogatedSuspects as any)?.[suspectName];
     const previousQuestions: string[] = suspectData?.questionsAsked || [];
     const previousQuestionsText = previousQuestions.length > 0 
       ? `\n\nPrevious questions asked to this suspect:\n${previousQuestions.map((q: string, i: number) => `${i + 1}. ${q}`).join('\n')}`
       : '';
 
+    operationStatusManager.updateOperation(operationId, {
+      progress: 40,
+      message: 'Generating interrogation conversation...'
+    });
+
     const conversationPrompt = `You are creating a realistic interrogation conversation between ${name} and ${suspect.name}, a suspect in a murder investigation.
 
 CASE CONTEXT:
-- Victim: ${caseResult.data.story.victim.name} (${caseResult.data.story.victim.profession})
+- Victim: ${caseData.story.victim.name} (${caseData.story.victim.profession})
 - Setting and narrative: 
-  ${caseResult.data.story.setting}
+  ${caseData.story.setting}
 
-  ${caseResult.data.caseIntro.introNarrative}
+  ${caseData.caseIntro.introNarrative}
 - Suspect role: ${suspect.role}
 - Suspect personality: ${suspect.personality}
 - Suspect alibi: ${suspect.alibi}
@@ -172,13 +254,18 @@ Generate the complete interrogation conversation:`;
     try {
       conversation = await generate(conversationPrompt);
       conversation = conversation.trim();
-      console.log("Conversation:\n", conversation);
-    } catch (error) {
+      console.log("Conversation generated for operation:", operationId);
+    } catch (error: any) {
       console.error('Error generating conversation:', error);
       
       // Fallback conversation
       conversation = `${name}: ${questions[0]}\n${suspect.name}: I've already told you everything I know. ${suspect.alibi}\n${name}: Thank you for your cooperation.\n${suspect.name}: I just want to help find who did this.`;
     }
+
+    operationStatusManager.updateOperation(operationId, {
+      progress: 60,
+      message: 'Generating audio conversation...'
+    });
 
     console.log("Generating audio...");
 
@@ -190,7 +277,7 @@ Generate the complete interrogation conversation:`;
       const femaleVoices = ["Zephyr", "Kore", "Gacrux", "Sulafat", "Leda", "Aoede"];
       
       // Detect genders using LLM
-      const detectiveGender = await detectGenderFromName(name); // Give detective a name
+      const detectiveGender = await detectGenderFromName(name);
       const suspectGender = await detectGenderFromName(suspect.name);
       
       // Assign voices based on detected genders
@@ -210,20 +297,27 @@ Generate the complete interrogation conversation:`;
       // Generate audio file
       audioId = await generateAudio(conversation, characters);
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating audio:', error);
       // Continue without audio - it's not critical
     }
+
+    operationStatusManager.updateOperation(operationId, {
+      progress: 80,
+      message: 'Recording interrogation results...'
+    });
 
     // Record the interrogation with the full conversation
     const result = await interrogateSuspect(caseId, suspectName, questions.join('\n'), conversation);
 
     if (result.error) {
-      return NextResponse.json(
-        { error: result.error },
-        { status: 500 }
-      );
+      throw new Error(result.error);
     }
+
+    operationStatusManager.updateOperation(operationId, {
+      progress: 90,
+      message: 'Analyzing interrogation transcript...'
+    });
 
     console.log("Suspect interrogation successful");
 
@@ -232,10 +326,10 @@ Generate the complete interrogation conversation:`;
       console.log("Analyzing interrogation transcript...");
       
       const caseContext = {
-        victimName: caseResult.data.story.victim.name,
-        setting: caseResult.data.story.setting,
-        timelineEvents: caseResult.data.story.timeline.map((t: any) => `${t.time}: ${t.event}`),
-        existingFindings: caseResult.data.investigationProgress?.investigationFindings?.map((f: any) => f.finding) || [],
+        victimName: caseData.story.victim.name,
+        setting: caseData.story.setting,
+        timelineEvents: caseData.story.timeline.map((t: any) => `${t.time}: ${t.event}`),
+        existingFindings: caseData.investigationProgress?.investigationFindings?.map((f: any) => f.finding) || [],
         suspectRole: suspect.role,
         suspectIsKiller: suspect.isKiller
       };
@@ -253,7 +347,7 @@ Generate the complete interrogation conversation:`;
       for (const finding of findings) {
         try {
           await addInvestigationFinding(caseId, finding);
-        } catch (error) {
+        } catch (error: any) {
           console.error('Error saving investigation finding:', error);
         }
       }
@@ -274,28 +368,34 @@ Generate the complete interrogation conversation:`;
       }
 
       console.log(`Analysis complete. Found ${findings.length} new findings.`);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error analyzing interrogation:", error);
       // Don't fail the whole request if analysis fails
     }
 
-    // Fallback: no audio, return JSON
-    return NextResponse.json({
-      success: true,
-      message: "Suspect interrogated successfully",
-      conversation,
-      audioId
+    // Complete the operation
+    operationStatusManager.updateOperation(operationId, {
+      status: 'completed',
+      progress: 100,
+      message: 'Interrogation completed successfully!',
+      result: {
+        success: true,
+        message: "Suspect interrogated successfully",
+        conversation,
+        audioId
+      }
     });
 
-  } catch (error) {
-    console.error("Error processing suspect interrogation:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
-} 
+    console.log(`Interrogation operation ${operationId} completed successfully`);
 
-export {
-  POSThandler as POST
+  } catch (error: any) {
+    console.error(`Background interrogation failed for operation ${operationId}:`, error);
+    operationStatusManager.updateOperation(operationId, {
+      status: 'failed',
+      error: error.message || 'Interrogation processing failed'
+    });
+    throw error;
+  }
 }
+
+export const POST = handlePOST;

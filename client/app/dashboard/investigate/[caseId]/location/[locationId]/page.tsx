@@ -19,7 +19,9 @@ import {
   Microscope,
   Shield,
   Clock,
-  Target
+  Target,
+  Plus,
+  Trash2
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
@@ -75,6 +77,77 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
   const [interrogationResult, setInterrogationResult] = useState<WitnessInterrogation | null>(null);
   const [discoveredClues, setDiscoveredClues] = useState<ProcessedClue[]>([]);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+
+  // Background processing states
+  const [isProcessingImages, setIsProcessingImages] = useState(false);
+  const [imageProcessingMessage, setImageProcessingMessage] = useState<string>('');
+  const [imageProcessingProgress, setImageProcessingProgress] = useState(0);
+  const [imageDisplayMessage, setImageDisplayMessage] = useState<string>('');
+  const [isProcessingWitness, setIsProcessingWitness] = useState(false);
+  const [witnessProcessingMessage, setWitnessProcessingMessage] = useState<string>('');
+  const [witnessProcessingProgress, setWitnessProcessingProgress] = useState(0);
+  const [witnessDisplayMessage, setWitnessDisplayMessage] = useState<string>('');
+  
+  const imageRotationIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const witnessRotationIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Realistic crime scene documentation messages
+  const crimeSceneMessages = [
+    "Coordinating with forensics team...",
+    "Setting up professional photography equipment...",
+    "Documenting evidence positions...",
+    "Capturing multiple angle shots...",
+    "Recording scene lighting conditions...",
+    "Photographing potential evidence markers...",
+    "Documenting trace evidence locations...",
+    "Setting up measurement references...",
+    "Capturing wide-angle scene overview...",
+    "Recording detailed close-up shots...",
+    "Documenting environmental conditions...",
+    "Photographing entry and exit points...",
+    "Recording blood spatter patterns...",
+    "Capturing fingerprint locations...",
+    "Documenting weapon positions...",
+    "Recording victim positioning...",
+    "Photographing footprint evidence...",
+    "Capturing fabric fiber locations...",
+    "Documenting broken glass patterns...",
+    "Recording DNA sample sites...",
+    "Photographing tool mark evidence...",
+    "Capturing ballistic evidence...",
+    "Documenting timeline markers...",
+    "Recording scene reconstruction data...",
+    "Finalizing photographic documentation..."
+  ];
+
+  // Realistic witness interview messages
+  const witnessInterviewMessages = [
+    "Building rapport with witness...",
+    "Creating comfortable interview environment...",
+    "Reviewing witness background information...",
+    "Preparing non-confrontational questions...",
+    "Establishing timeline context...",
+    "Setting up recording equipment...",
+    "Explaining witness rights and protections...",
+    "Creating safe space for testimony...",
+    "Reviewing case details for reference...",
+    "Preparing follow-up questions...",
+    "Checking witness emotional state...",
+    "Coordinating with victim advocates...",
+    "Setting up one-way communication...",
+    "Preparing evidence for verification...",
+    "Establishing witness credibility baseline...",
+    "Reviewing previous statements...",
+    "Preparing memory enhancement techniques...",
+    "Setting up cognitive interview process...",
+    "Preparing sketch materials if needed...",
+    "Coordinating with legal counsel...",
+    "Setting up protective measures...",
+    "Preparing trauma-informed questions...",
+    "Reviewing witness protection protocols...",
+    "Setting up audio/video documentation...",
+    "Finalizing interview preparations..."
+  ];
   
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -138,6 +211,117 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
     }
   };
 
+  // Polling for image generation completion
+  const pollImageOperationStatus = async (operationId: string) => {
+    let attempts = 0;
+    const maxAttempts = 100; // 5 minutes at 3-second intervals
+    
+    const poll = async () => {
+      try {
+        const response = await fetch(`/api/operation-status/${operationId}`);
+        if (response.ok) {
+          const status = await response.json();
+          
+          setImageProcessingProgress(status.progress || 0);
+          setImageProcessingMessage(status.message || 'Processing images...');
+          
+          if (status.isComplete) {
+            setIsProcessingImages(false);
+            stopImageMessageRotation();
+            setImageDisplayMessage('Crime scene documentation completed!');
+            
+            if (status.status === 'completed' && status.result) {
+              setLocationImages(status.result.images || []);
+              if (status.result.images && status.result.images.length > 0) {
+                setSelectedImage(status.result.images[0]);
+              }
+            } else if (status.status === 'failed') {
+              console.error('Image generation failed:', status.error);
+            }
+            return;
+          }
+          
+          // Continue polling if not complete
+          if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(poll, 3000);
+          } else {
+            setIsProcessingImages(false);
+            console.error('Image generation taking too long');
+          }
+        } else {
+          console.error('Failed to check image operation status');
+        }
+      } catch (error) {
+        console.error('Error polling image operation status:', error);
+      }
+    };
+    
+    poll();
+  };
+
+  // Polling for witness interrogation completion
+  const pollWitnessOperationStatus = async (operationId: string) => {
+    let attempts = 0;
+    const maxAttempts = 100; // 5 minutes at 3-second intervals
+    
+    const poll = async () => {
+      try {
+        const response = await fetch(`/api/operation-status/${operationId}`);
+        if (response.ok) {
+          const status = await response.json();
+          
+          setWitnessProcessingProgress(status.progress || 0);
+          setWitnessProcessingMessage(status.message || 'Processing interview...');
+          
+          if (status.isComplete) {
+            setIsProcessingWitness(false);
+            stopWitnessMessageRotation();
+            setWitnessDisplayMessage('Witness interview completed!');
+            
+            if (status.status === 'completed' && status.result) {
+              console.log('=== WITNESS INTERROGATION COMPLETED ===');
+              console.log('Full status object:', status);
+              console.log('Full result object:', status.result);
+              console.log('Audio ID in result:', status.result.audioId);
+              console.log('Audio ID type:', typeof status.result.audioId);
+              console.log('Audio ID length:', status.result.audioId?.length);
+              console.log('Audio ID truthy check:', !!status.result.audioId);
+              console.log('Audio ID trim check:', status.result.audioId?.trim());
+              console.log('========================================');
+              
+              setInterrogationResult(status.result);
+              // Only add new clues that aren't already discovered
+              const newClues = (status.result.revealedClues || []).filter((newClue: ProcessedClue) => 
+                !discoveredClues.some(existing => existing.content === newClue.content)
+              );
+              setDiscoveredClues(prev => [...prev, ...newClues]);
+              setWitnessQuestions(['']);
+            } else if (status.status === 'failed') {
+              console.error('Witness interrogation failed:', status.error);
+            }
+            return;
+          }
+          
+          // Continue polling if not complete
+          if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(poll, 3000);
+          } else {
+            setIsProcessingWitness(false);
+            console.error('Witness interrogation taking too long');
+          }
+        } else {
+          console.error('Failed to check witness operation status');
+        }
+      } catch (error) {
+        console.error('Error polling witness operation status:', error);
+      }
+    };
+    
+    poll();
+  };
+
   const generateLocationImages = async () => {
     if (!user?.displayName) return;
     
@@ -156,9 +340,23 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
 
       const result = await response.json();
       if (result.success) {
-        setLocationImages(result.images);
-        if (result.images.length > 0) {
-          setSelectedImage(result.images[0]);
+        if (result.operationId) {
+          // Background processing - start polling
+          setIsProcessingImages(true);
+          setImageProcessingMessage('Starting crime scene documentation...');
+          setImageDisplayMessage('Preparing forensics equipment...');
+          setImageProcessingProgress(10);
+          
+          // Start message rotation
+          startImageMessageRotation();
+          
+          pollImageOperationStatus(result.operationId);
+        } else {
+          // Old format - handle immediately (fallback)
+          setLocationImages(result.images || []);
+          if (result.images && result.images.length > 0) {
+            setSelectedImage(result.images[0]);
+          }
         }
       } else {
         console.error('Failed to generate images:', result.error);
@@ -226,13 +424,26 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
 
       const result = await response.json();
       if (result.success) {
-        setInterrogationResult(result);
-        // Only add new clues that aren't already discovered
-        const newClues = result.revealedClues.filter((newClue: ProcessedClue) => 
-          !discoveredClues.some(existing => existing.content === newClue.content)
-        );
-        setDiscoveredClues(prev => [...prev, ...newClues]);
-        setWitnessQuestions(['']);
+        if (result.operationId) {
+          // Background processing - start polling
+          setIsProcessingWitness(true);
+          setWitnessProcessingMessage('Starting witness interview...');
+          setWitnessDisplayMessage('Preparing interview room...');
+          setWitnessProcessingProgress(10);
+          
+          // Start message rotation
+          startWitnessMessageRotation();
+          
+          pollWitnessOperationStatus(result.operationId);
+        } else {
+          // Old format - handle immediately (fallback)
+          setInterrogationResult(result);
+          const newClues = (result.revealedClues || []).filter((newClue: ProcessedClue) => 
+            !discoveredClues.some(existing => existing.content === newClue.content)
+          );
+          setDiscoveredClues(prev => [...prev, ...newClues]);
+          setWitnessQuestions(['']);
+        }
       }
     } catch (error) {
       console.error('Error interrogating witness:', error);
@@ -242,14 +453,34 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
   };
 
   const playAudio = async (audioId: string) => {
-    if (!audioRef.current) return;
+    console.log('playAudio called with audioId:', audioId);
+    console.log('audioId type:', typeof audioId);
+    console.log('audioId length:', audioId?.length);
+    
+    if (!audioRef.current) {
+      console.error('Audio ref is not available');
+      return;
+    }
     
     try {
       setIsPlayingAudio(true);
-      audioRef.current.src = `/temp/output-${audioId}.wav`;
+      const audioUrl = `/api/getAudio?id=${audioId}`;
+      console.log('Setting audio src to:', audioUrl);
+      audioRef.current.src = audioUrl;
+      
+      // Test if the audio URL is accessible
+      const testResponse = await fetch(audioUrl);
+      console.log('Audio URL test response:', testResponse.status, testResponse.statusText);
+      
       await audioRef.current.play();
+      console.log('Audio started playing successfully');
     } catch (error) {
       console.error('Error playing audio:', error);
+      console.error('Audio error details:', {
+        audioId,
+        audioUrl: `/api/getAudio?id=${audioId}`,
+        error
+      });
       setIsPlayingAudio(false);
     }
   };
@@ -257,6 +488,64 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
   const addQuestion = () => {
     setWitnessQuestions([...witnessQuestions, '']);
   };
+
+  // Crime scene message rotation
+  const startImageMessageRotation = () => {
+    if (imageRotationIntervalRef.current) {
+      clearInterval(imageRotationIntervalRef.current);
+    }
+    
+    let messageIndex = 0;
+    setImageDisplayMessage(crimeSceneMessages[0]);
+    console.log('Starting crime scene message rotation with:', crimeSceneMessages[0]);
+    
+    imageRotationIntervalRef.current = setInterval(() => {
+      messageIndex = (messageIndex + 1) % crimeSceneMessages.length;
+      console.log(`Crime scene rotating to message ${messageIndex}:`, crimeSceneMessages[messageIndex]);
+      setImageDisplayMessage(crimeSceneMessages[messageIndex]);
+    }, 2500);
+  };
+
+  const stopImageMessageRotation = () => {
+    if (imageRotationIntervalRef.current) {
+      console.log('Stopping crime scene message rotation');
+      clearInterval(imageRotationIntervalRef.current);
+      imageRotationIntervalRef.current = null;
+    }
+  };
+
+  // Witness interview message rotation
+  const startWitnessMessageRotation = () => {
+    if (witnessRotationIntervalRef.current) {
+      clearInterval(witnessRotationIntervalRef.current);
+    }
+    
+    let messageIndex = 0;
+    setWitnessDisplayMessage(witnessInterviewMessages[0]);
+    console.log('Starting witness interview message rotation with:', witnessInterviewMessages[0]);
+    
+    witnessRotationIntervalRef.current = setInterval(() => {
+      messageIndex = (messageIndex + 1) % witnessInterviewMessages.length;
+      console.log(`Witness interview rotating to message ${messageIndex}:`, witnessInterviewMessages[messageIndex]);
+      setWitnessDisplayMessage(witnessInterviewMessages[messageIndex]);
+    }, 2500);
+  };
+
+  const stopWitnessMessageRotation = () => {
+    if (witnessRotationIntervalRef.current) {
+      console.log('Stopping witness interview message rotation');
+      clearInterval(witnessRotationIntervalRef.current);
+      witnessRotationIntervalRef.current = null;
+    }
+  };
+
+  // Clean up intervals on unmount
+  useEffect(() => {
+    return () => {
+      stopImageMessageRotation();
+      stopWitnessMessageRotation();
+    };
+  }, []);
 
   const updateQuestion = (index: number, value: string) => {
     const updated = [...witnessQuestions];
@@ -442,10 +731,128 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
             </button>
           </motion.div>
 
+          {/* Background Processing Modals */}
+          {isProcessingImages && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 text-center max-w-md w-full"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-500/20 backdrop-blur-xl border border-amber-400/30 rounded-2xl mb-6">
+                  <div
+                  >
+                    <Camera className="w-8 h-8 text-amber-400" />
+                  </div>
+                </div>
+                
+                <h3 className="text-2xl font-bold text-white mb-2">Crime Scene Documentation</h3>
+                
+                <motion.p 
+                  key={imageDisplayMessage}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-gray-400 mb-6 h-6"
+                >
+                  {imageDisplayMessage}
+                </motion.p>
+                
+                <div className="w-full max-w-sm mx-auto">
+                  <div className="flex justify-between text-sm text-gray-400 mb-2">
+                    <span>Progress</span>
+                    <span>{imageProcessingProgress}%</span>
+                  </div>
+                  <div className="w-full h-3 bg-gray-700/50 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300 rounded-full relative"
+                      initial={{ width: "0%" }}
+                      animate={{ width: `${imageProcessingProgress}%` }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        animate={{ x: ["-100%", "100%"] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+                
+                {/* <div className="mt-8 text-xs text-gray-500">
+                  <p>📸 Coordinating with forensics team</p>
+                  <p>🔍 Capturing evidence angles</p>
+                  <p>🖼️ Processing scene imagery</p>
+                  <p>📁 Organizing documentation</p>
+                </div> */}
+              </motion.div>
+            </motion.div>
+          )}
+
+          {isProcessingWitness && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 text-center max-w-md w-full"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-500/20 backdrop-blur-xl border border-purple-400/30 rounded-2xl mb-6">
+                  <Users className="w-8 h-8 text-purple-400" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-white mb-2">Conducting Interview</h3>
+                
+                <motion.p 
+                  key={witnessDisplayMessage}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-gray-400 mb-6 h-6"
+                >
+                  {witnessDisplayMessage}
+                </motion.p>
+                
+                <div className="w-full max-w-sm mx-auto">
+                  <div className="flex justify-between text-sm text-gray-400 mb-2">
+                    <span>Progress</span>
+                    <span>{witnessProcessingProgress}%</span>
+                  </div>
+                  <div className="w-full h-3 bg-gray-700/50 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-purple-500 via-purple-400 to-purple-300 rounded-full relative"
+                      initial={{ width: "0%" }}
+                      animate={{ width: `${witnessProcessingProgress}%` }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        animate={{ x: ["-100%", "100%"] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+                
+                {/* <div className="mt-8 text-xs text-gray-500">
+                  <p>🗣️ Building rapport with witness</p>
+                  <p>❓ Conducting interview</p>
+                  <p>🎙️ Recording conversation</p>
+                  <p>📝 Analyzing testimony</p>
+                </div> */}
+              </motion.div>
+            </motion.div>
+          )}
+
           {/* Content Sections */}
           {activeSection === 'scene' && (
             <motion.div variants={fadeInUp}>
-              {isGeneratingImages ? (
+              {isGeneratingImages || isProcessingImages ? (
                 <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
                   <div className="text-center py-12">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-500/20 rounded-2xl mb-6">
@@ -675,7 +1082,7 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
                   
                   {/* Witness Interview */}
                   <div className="space-y-6">
-                    {selectedWitness && !interrogationResult && (
+                    {selectedWitness && !interrogationResult && !isProcessingWitness && (
                       <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
                         <div className="flex items-center gap-3 mb-6">
                           <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-400 rounded-lg flex items-center justify-center">
@@ -703,7 +1110,7 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
                                     onClick={() => removeQuestion(index)}
                                     className="px-3 py-2 bg-red-500/20 border border-red-400/30 rounded-lg text-red-400 hover:bg-red-500/30 transition-colors"
                                   >
-                                    ×
+                                    <Trash2 className="w-4 h-4" />
                                   </button>
                                 )}
                               </div>
@@ -713,19 +1120,21 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
                           <div className="flex gap-3">
                             <button
                               onClick={addQuestion}
-                              className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-300 hover:bg-white/10 transition-colors"
+                              disabled={isInterrogating || isProcessingWitness}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-300 hover:bg-white/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             >
+                              <Plus className="w-4 h-4" />
                               Add Question
                             </button>
                             <button
                               onClick={() => interrogateWitness(selectedWitness)}
-                              disabled={isInterrogating || witnessQuestions.some(q => !q.trim())}
+                              disabled={isInterrogating || isProcessingWitness || witnessQuestions.some(q => !q.trim())}
                               className="flex-1 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 disabled:from-gray-600 disabled:to-gray-600 text-white font-medium py-2 rounded-lg transition-all duration-200 disabled:cursor-not-allowed"
                             >
-                              {isInterrogating ? (
+                              {isInterrogating || isProcessingWitness ? (
                                 <div className="flex items-center justify-center gap-2">
                                   <Loader2 className="w-4 h-4 animate-spin" />
-                                  Interviewing...
+                                  {isInterrogating ? 'Starting...' : 'Processing...'}
                                 </div>
                               ) : (
                                 <div className="flex items-center justify-center gap-2">
@@ -753,19 +1162,38 @@ export default function LocationInvestigationPage({ params }: LocationPageProps)
                             </div>
                           </div>
                           
-                          {interrogationResult.audioId && (
-                            <button
-                              onClick={() => playAudio(interrogationResult.audioId!)}
-                              className="flex items-center gap-2 px-3 py-2 bg-blue-500/20 border border-blue-400/30 rounded-lg text-blue-400 hover:bg-blue-500/30 transition-colors"
-                            >
-                              {isPlayingAudio ? (
-                                <Pause className="w-4 h-4" />
-                              ) : (
-                                <Play className="w-4 h-4" />
-                              )}
-                              Audio
-                            </button>
-                          )}
+                          <button
+                            onClick={() => {
+                              console.log('=== AUDIO BUTTON CLICKED ===');
+                              console.log('interrogationResult:', interrogationResult);
+                              console.log('interrogationResult.audioId:', interrogationResult.audioId);
+                              console.log('audioId type:', typeof interrogationResult.audioId);
+                              console.log('audioId truthy:', !!interrogationResult.audioId);
+                              console.log('audioId after trim:', interrogationResult.audioId?.trim());
+                              console.log('============================');
+                              
+                              if (interrogationResult.audioId && interrogationResult.audioId.trim()) {
+                                playAudio(interrogationResult.audioId);
+                              } else {
+                                console.log('Audio not available for this conversation');
+                                console.log('Reason: audioId is', interrogationResult.audioId);
+                                // Could show a toast here if you have a toast system
+                              }
+                            }}
+                            disabled={!interrogationResult.audioId || !interrogationResult.audioId.trim()}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+                              interrogationResult.audioId && interrogationResult.audioId.trim()
+                                ? 'bg-blue-500/20 border border-blue-400/30 text-blue-400 hover:bg-blue-500/30'
+                                : 'bg-gray-500/20 border border-gray-400/30 text-gray-400 cursor-not-allowed'
+                            }`}
+                          >
+                            {isPlayingAudio ? (
+                              <Pause className="w-4 h-4" />
+                            ) : (
+                              <Play className="w-4 h-4" />
+                            )}
+                            {interrogationResult.audioId && interrogationResult.audioId.trim() ? 'Audio' : 'Audio (N/A)'}
+                          </button>
                         </div>
                         
                         <div className="bg-white/5 border border-white/10 rounded-lg p-4 max-h-64 overflow-y-auto mb-4">

@@ -67,7 +67,7 @@ export interface CaseData {
   map: MapStructure;
   mapImageUrl?: string;
   mapImagePublicId?: string;
-  status: 'active' | 'completed' | 'archived';
+  status: 'active' | 'completed' | 'archived' | 'generating';
   createdAt: any;
   updatedAt: any;
   completedAt?: any;
@@ -372,13 +372,31 @@ export const getUserCases = async (userId: string, status?: 'active' | 'complete
   }
 };
 
+// Helper function to remove undefined values from an object
+const removeUndefined = (obj: any): any => {
+  if (obj === null || obj === undefined) return null;
+  if (typeof obj !== 'object') return obj;
+  if (Array.isArray(obj)) return obj.map(removeUndefined);
+  
+  const cleaned: any = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      cleaned[key] = removeUndefined(value);
+    }
+  }
+  return cleaned;
+};
+
 // Update a case
 export const updateCase = async (caseId: string, updates: Partial<CaseData>) => {
   try {
     console.log('Updating case:', caseId);
     
+    // Remove undefined values to prevent Firebase errors
+    const cleanedUpdates = removeUndefined(updates);
+    
     await updateDoc(doc(db, 'cases', caseId), {
-      ...updates,
+      ...cleanedUpdates,
       updatedAt: serverTimestamp()
     });
     

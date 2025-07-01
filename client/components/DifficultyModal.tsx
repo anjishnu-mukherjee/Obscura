@@ -6,7 +6,6 @@ import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
@@ -16,13 +15,17 @@ interface DifficultyModalProps {
   onClose: () => void;
   onSelectDifficulty: (difficulty: 'easy' | 'medium' | 'hard') => void;
   isGenerating?: boolean;
+  generationMessage?: string;
+  generationProgress?: number;
 }
 
 export default function DifficultyModal({ 
   isOpen, 
   onClose, 
   onSelectDifficulty, 
-  isGenerating = false 
+  isGenerating = false,
+  generationMessage = "Generating your mission...",
+  generationProgress = 0
 }: DifficultyModalProps) {
   const [selectedDifficulty, setSelectedDifficulty] = useState<'easy' | 'medium' | 'hard' | null>(null);
 
@@ -90,19 +93,53 @@ export default function DifficultyModal({
               animate={{ opacity: 1 }}
               className="text-center py-12"
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-500/20 backdrop-blur-xl border border-teal-400/30 rounded-2xl mb-6">
-                <Shield className="w-8 h-8 text-teal-400 animate-pulse" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Generating Your Mission</h3>
-              <p className="text-gray-400 mb-6">Creating storyline, evidence, and location data...</p>
-              <div className="w-64 h-2 bg-gray-700 rounded-full mx-auto">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-teal-500/20 backdrop-blur-xl border border-teal-400/30 rounded-2xl mb-6">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-teal-500 to-teal-300 rounded-full"
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 3, ease: "easeInOut" }}
-                />
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                >
+                  <Shield className="w-10 h-10 text-teal-400" />
+                </motion.div>
               </div>
+              
+              <h3 className="text-2xl font-bold text-white mb-2">Brewing Your Perfect Mystery</h3>
+              
+              <motion.p 
+                key={generationMessage}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-gray-400 mb-6 h-6"
+              >
+                {generationMessage}
+              </motion.p>
+              
+              <div className="w-80 max-w-full mx-auto">
+                <div className="flex justify-between text-sm text-gray-400 mb-2">
+                  <span>Progress</span>
+                  <span>{Math.round(generationProgress)}%</span>
+                </div>
+                <div className="w-full h-3 bg-gray-700/50 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-teal-500 via-teal-400 to-teal-300 rounded-full relative"
+                    initial={{ width: "0%" }}
+                    animate={{ width: `${generationProgress}%` }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                      animate={{ x: ["-100%", "100%"] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </motion.div>
+                </div>
+              </div>
+              
+              {/* <div className="mt-8 text-xs text-gray-500">
+                <p>🔍 Generating storyline and characters</p>
+                <p>🗺️ Creating crime scene locations</p>
+                <p>🔍 Placing clues and evidence</p>
+                <p>📸 Rendering crime scene images</p>
+              </div> */}
             </motion.div>
           ) : (
             /* Difficulty selection */

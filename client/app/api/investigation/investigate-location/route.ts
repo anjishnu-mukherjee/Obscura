@@ -10,6 +10,7 @@ import {
 import { generate, generateImage, generateAudio, generateWithImage } from "@/functions/generate";
 import { uploadImageFromArrayBuffer, uploadAudioFromArrayBuffer } from "@/lib/cloudinary";
 import { ProcessedClue, Witness } from "@/functions/types";
+import { operationStatusManager } from "@/lib/operationStatus";
 
 // Helper function to detect gender from name using LLM
 async function detectGenderFromName(name: string): Promise<'male' | 'female'> {
@@ -253,11 +254,15 @@ Generate the complete witness interview:`;
     // Generate audio for the conversation
     let audioId: string = "";
     try {
+      console.log(`Generating audio for witness conversation with ${witness.name}...`);
+      
       const maleVoices = ["Puck", "Enceladus", "Iapetus", "Algieba", "Algenib", "Zubenelgenubi"];
       const femaleVoices = ["Zephyr", "Kore", "Gacrux", "Sulafat", "Leda", "Aoede"];
       
       const detectiveGender = await detectGenderFromName(detectiveName);
       const witnessGender = await detectGenderFromName(witness.name);
+      
+      console.log(`Detective ${detectiveName} gender: ${detectiveGender}, Witness ${witness.name} gender: ${witnessGender}`);
       
       const witnessVoice = witnessGender === 'male' 
         ? maleVoices[Math.floor(Math.random() * maleVoices.length)]
@@ -270,9 +275,24 @@ Generate the complete witness interview:`;
         { name: witness.name, voice: witnessVoice }
       ];
 
+      console.log(`Using voices - Detective: ${detectiveVoice}, Witness: ${witnessVoice}`);
+      console.log(`Conversation length: ${conversation.length} characters`);
+
       audioId = await generateAudio(conversation, characters);
-    } catch (error) {
+      
+      if (audioId && audioId.trim()) {
+        console.log(`Audio generated successfully for witness ${witness.name}: ${audioId}`);
+      } else {
+        console.warn(`Audio generation returned empty/invalid ID for witness ${witness.name}`);
+      }
+    } catch (error: any) {
       console.error('Error generating witness audio:', error);
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        detectiveName,
+        witnessName: witness.name
+      });
     }
 
     // Analyze conversation for revealed clues
@@ -437,76 +457,209 @@ export async function POST(request: NextRequest) {
     const cluesAtLocation = caseData.clues[locationName] || [];
     const witnessesAtLocation = caseData.story.witnesses[locationName] || [];
 
-    switch (action) {
-      case 'generate_images':
-        const imageResult = await generateLocationImages(
-          locationName,
-          caseData.story.setting,
-          cluesAtLocation,
-          caseId,
-          locationId
+    // For analyze_image action, we can process it immediately since it's quick
+    if (action === 'analyze_image') {
+      if (!imageUrl || !userObservation) {
+        return NextResponse.json(
+          { error: "Image URL and user observation are required for image analysis" },
+          { status: 400 }
         );
-        
-        return NextResponse.json({
+      }
+
+      const analysisResult = await analyzeImageForClues(imageUrl, userObservation, cluesAtLocation);
+      
+      // Save discovered clues if any
+      if (analysisResult.matches.length > 0) {
+        try {
+          await saveLocationDiscoveredClues(caseId, locationId, analysisResult.matches);
+        } catch (error: any) {
+          console.error('Error saving discovered clues:', error);
+        }
+      }
+
+      return NextResponse.json({
+        success: true,
+        action: 'analyze_image',
+        analysis: analysisResult.analysis,
+        discoveredClues: analysisResult.matches,
+        clueCount: analysisResult.matches.length
+      });
+    }
+
+    // For time-consuming operations, use background processing
+    const operationId = operationStatusManager.createOperation(
+      'investigate-location',
+      action === 'generate_images' ? 'Preparing to generate location images...' : 'Preparing witness interrogation...'
+    );
+
+    console.log("Created location investigation operation:", operationId);
+
+    // Return immediately with operation ID
+    const response = NextResponse.json({
+      success: true,
+      operationId,
+      status: 'processing',
+      action,
+      message: action === 'generate_images' ? "Generating crime scene images..." : "Starting witness interrogation..."
+    });
+
+    // Start background processing (don't await)
+    processLocationInvestigation(operationId, {
+      caseId,
+      locationId,
+      action,
+      detectiveName,
+      witnessName,
+      questions,
+      caseData,
+      location,
+      locationName,
+      cluesAtLocation,
+      witnessesAtLocation
+    }).catch((error: any) => {
+      console.error("Background location investigation failed:", operationId, error);
+      operationStatusManager.updateOperation(operationId, {
+        status: 'failed',
+        error: error.message || 'Location investigation failed'
+      });
+    });
+
+    return response;
+
+  } catch (error: any) {
+    console.error("Error processing location investigation:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// Background processing function
+async function processLocationInvestigation(
+  operationId: string,
+  data: {
+    caseId: string;
+    locationId: string;
+    action: string;
+    detectiveName?: string;
+    witnessName?: string;
+    questions?: string[];
+    caseData: any;
+    location: any;
+    locationName: string;
+    cluesAtLocation: any[];
+    witnessesAtLocation: any[];
+  }
+) {
+  const { 
+    caseId, 
+    locationId, 
+    action, 
+    detectiveName, 
+    witnessName, 
+    questions, 
+    caseData, 
+    location, 
+    locationName, 
+    cluesAtLocation, 
+    witnessesAtLocation 
+  } = data;
+
+  try {
+    if (action === 'generate_images') {
+      operationStatusManager.updateOperation(operationId, {
+        progress: 20,
+        message: 'Analyzing location clues...'
+      });
+
+      const imageResult = await generateLocationImages(
+        locationName,
+        caseData.story.setting,
+        cluesAtLocation,
+        caseId,
+        locationId
+      );
+
+      operationStatusManager.updateOperation(operationId, {
+        status: 'completed',
+        progress: 100,
+        message: 'Crime scene images generated successfully!',
+        result: {
           success: true,
           images: imageResult.images,
           clueCount: cluesAtLocation.length,
           witnessCount: witnessesAtLocation.length,
           error: imageResult.error
-        });
-
-      case 'interrogate_witness':
-        if (!witnessName || !questions || !detectiveName) {
-          return NextResponse.json(
-            { error: "Witness name, questions, and detective name are required" },
-            { status: 400 }
-          );
         }
+      });
 
-        const witness = witnessesAtLocation.find(w => w.name === witnessName);
-        if (!witness) {
-          return NextResponse.json(
-            { error: "Witness not found at this location" },
-            { status: 404 }
-          );
+    } else if (action === 'interrogate_witness') {
+      if (!witnessName || !questions || !detectiveName) {
+        throw new Error("Witness name, questions, and detective name are required");
+      }
+
+      operationStatusManager.updateOperation(operationId, {
+        progress: 20,
+        message: 'Finding witness for interrogation...'
+      });
+
+      const witness = witnessesAtLocation.find(w => w.name === witnessName);
+      if (!witness) {
+        throw new Error("Witness not found at this location");
+      }
+
+      operationStatusManager.updateOperation(operationId, {
+        progress: 40,
+        message: 'Conducting witness interrogation...'
+      });
+
+      const interrogationResult = await interrogateWitness(
+        witness,
+        questions,
+        {
+          victimName: caseData.story.victim.name,
+          setting: caseData.story.setting,
+          locationName
+        },
+        detectiveName
+      );
+
+      operationStatusManager.updateOperation(operationId, {
+        progress: 80,
+        message: 'Recording testimony and findings...'
+      });
+
+      // Save revealed clues to location and add findings
+      if (interrogationResult.revealedClues.length > 0) {
+        try {
+          await saveLocationDiscoveredClues(caseId, locationId, interrogationResult.revealedClues);
+        } catch (error: any) {
+          console.error('Error saving witness revealed clues:', error);
         }
+      }
 
-        const interrogationResult = await interrogateWitness(
-          witness,
-          questions,
-          {
-            victimName: caseData.story.victim.name,
-            setting: caseData.story.setting,
-            locationName
-          },
-          detectiveName
-        );
-
-        // Save revealed clues to location and add findings
-        if (interrogationResult.revealedClues.length > 0) {
-          try {
-            await saveLocationDiscoveredClues(caseId, locationId, interrogationResult.revealedClues);
-          } catch (error) {
-            console.error('Error saving witness revealed clues:', error);
-          }
+      // Add findings for revealed clues
+      for (const clue of interrogationResult.revealedClues) {
+        try {
+          await addInvestigationFinding(caseId, {
+            source: 'location_visit',
+            sourceDetails: `Witness testimony from ${witness.name} at ${locationName}`,
+            finding: clue.content,
+            importance: clue.category === 'direct' ? 'important' : 'minor'
+          });
+        } catch (error: any) {
+          console.error('Error adding witness finding:', error);
         }
+      }
 
-        // Add findings for revealed clues
-        for (const clue of interrogationResult.revealedClues) {
-          try {
-            await addInvestigationFinding(caseId, {
-              source: 'location_visit',
-              sourceDetails: `Witness testimony from ${witness.name} at ${locationName}`,
-              finding: clue.content,
-              importance: clue.category === 'direct' ? 'important' : 'minor'
-            });
-          } catch (error) {
-            console.error('Error adding witness finding:', error);
-          }
-        }
-
-        return NextResponse.json({
+      operationStatusManager.updateOperation(operationId, {
+        status: 'completed',
+        progress: 100,
+        message: 'Witness interrogation completed successfully!',
+        result: {
           success: true,
+          message: "Witness interrogated successfully",
           conversation: interrogationResult.conversation,
           audioId: interrogationResult.audioId,
           revealedClues: interrogationResult.revealedClues,
@@ -515,64 +668,20 @@ export async function POST(request: NextRequest) {
             role: witness.role,
             reliability: witness.reliability
           }
-        });
-
-      case 'analyze_image':
-        if (!imageUrl || !userObservation) {
-          return NextResponse.json(
-            { error: "Image URL and user observation are required" },
-            { status: 400 }
-          );
         }
-
-        const analysisResult = await analyzeImageForClues(
-          imageUrl,
-          userObservation,
-          cluesAtLocation
-        );
-
-        // Save discovered clues to location and add findings
-        if (analysisResult.matches.length > 0) {
-          try {
-            await saveLocationDiscoveredClues(caseId, locationId, analysisResult.matches);
-          } catch (error) {
-            console.error('Error saving discovered clues:', error);
-          }
-        }
-
-        // Add findings for discovered clues
-        for (const clue of analysisResult.matches) {
-          try {
-            await addInvestigationFinding(caseId, {
-              source: 'clue_discovery',
-              sourceDetails: `Visual analysis at ${locationName}: "${userObservation}"`,
-              finding: clue.content,
-              importance: clue.category === 'direct' ? 'critical' : 'important'
-            });
-          } catch (error) {
-            console.error('Error adding clue discovery finding:', error);
-          }
-        }
-
-        return NextResponse.json({
-          success: true,
-          discoveredClues: analysisResult.matches,
-          analysis: analysisResult.analysis,
-          totalDiscovered: analysisResult.matches.length
-        });
-
-      default:
-        return NextResponse.json(
-          { error: "Invalid action" },
-          { status: 400 }
-        );
+      });
+    } else {
+      throw new Error(`Unknown action: ${action}`);
     }
 
-  } catch (error) {
-    console.error("Error in location investigation:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    console.log(`Location investigation operation ${operationId} completed successfully`);
+
+  } catch (error: any) {
+    console.error(`Background location investigation failed for operation ${operationId}:`, error);
+    operationStatusManager.updateOperation(operationId, {
+      status: 'failed',
+      error: error.message || 'Location investigation processing failed'
+    });
+    throw error;
   }
 } 

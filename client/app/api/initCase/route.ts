@@ -1,21 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  generateAndStoreCase,
   estimateCaseDuration,
   generateCaseTags,
 } from "@/lib/caseGenerator";
 import { getUserData } from "@/lib/auth";
-import {
-  ClueType,
-  DiscoveryRequirement,
-  ClueCategory,
-} from "@/functions/types";
+import { createCase, updateCase } from "@/lib/gameDb";
 import {
   uploadImageFromArrayBuffer,
   generateMapFileName,
 } from "@/lib/cloudinary";
-
-// Import your generation functions (adjust paths as needed)
 import { generateStory } from "@/functions/storyGenerator";
 import { composeCaseIntro } from "@/functions/caseIntroComposer";
 import { generateGameClues, generateEnhancedStoryWithTriggers } from "@/functions/clueGenerator";
@@ -29,6 +22,10 @@ export async function POST(request: NextRequest) {
     // Parse request body
     const body = await request.json();
     const { userId, difficulty = "medium" } = body;
+
+    // Validate difficulty type
+    const validDifficulties: ('easy' | 'medium' | 'hard')[] = ['easy', 'medium', 'hard'];
+    const validatedDifficulty: 'easy' | 'medium' | 'hard' = validDifficulties.includes(difficulty as any) ? (difficulty as 'easy' | 'medium' | 'hard') : 'medium';
 
     // Validate required fields
     if (!userId) {
@@ -44,7 +41,67 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    console.log("Generating case content...");
+    // Create case immediately with generating status and placeholder data
+    const placeholderCaseData = {
+      userId,
+      title: "Brewing the Perfect Mystery...",
+      story: {} as any, // Empty placeholder
+      caseIntro: {} as any, // Empty placeholder
+      clues: {} as any, // Empty placeholder
+      map: {} as any, // Empty placeholder
+      mapImageUrl: "",
+      mapImagePublicId: "",
+      status: 'generating' as const,
+      difficulty: validatedDifficulty,
+      estimatedDuration: 45, // Default estimate
+      tags: ['mystery', 'detective']
+    };
+
+    console.log("Creating case with generating status...");
+    const createResult = await createCase(placeholderCaseData);
+    
+    if (createResult.error || !createResult.caseId) {
+      console.error("Failed to create initial case:", createResult.error);
+      return NextResponse.json({ error: createResult.error }, { status: 500 });
+    }
+
+    const caseId = createResult.caseId;
+    console.log("Case created with ID:", caseId, "- Starting background generation...");
+
+    // Return immediately with the case ID
+    const response = NextResponse.json({
+      success: true,
+      caseId,
+      status: 'generating',
+      message: "Case is being generated. Please wait..."
+    });
+
+    // Start background generation (don't await)
+    generateCaseContent(caseId, userId, validatedDifficulty, userResult.data.name).catch(error => {
+      console.error("Background generation failed for case:", caseId, error);
+      // Update case with error status
+      updateCase(caseId, { 
+        status: 'archived' as const,
+        title: "Generation Failed - Please Try Again"
+      }).catch(updateError => {
+        console.error("Failed to update case with error status:", updateError);
+      });
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error initializing case:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// Background generation function
+async function generateCaseContent(caseId: string, userId: string, difficulty: 'easy' | 'medium' | 'hard', userName: string) {
+  try {
+    console.log(`Starting background generation for case ${caseId}...`);
 
     // Generate all case content
     console.log("Generating basic story...");
@@ -55,7 +112,7 @@ export async function POST(request: NextRequest) {
     
     const caseIntro = await composeCaseIntro(
       story,
-      userResult.data.name,
+      userName,
       difficulty
     );
     const clues = await generateGameClues(story);
@@ -87,7 +144,7 @@ export async function POST(request: NextRequest) {
           const imageArrayBuffer = await imageBlob.arrayBuffer();
           
           // Generate filename for the location image
-          const locationImageFileName = `location_${tempCaseId}_${location.id}_${Date.now()}`;
+          const locationImageFileName = `location_${caseId}_${location.id}_${Date.now()}`;
           
           // Upload to Cloudinary
           const uploadResult = await uploadImageFromArrayBuffer(
@@ -119,12 +176,7 @@ export async function POST(request: NextRequest) {
 
     // Convert map image to ArrayBuffer
     const mapImage = await updatedMap.mapImage.arrayBuffer();
-
-    // Generate a temporary case ID for the filename
-    const tempCaseId = `temp_${Date.now()}_${Math.random()
-      .toString(36)
-      .substr(2, 9)}`;
-    const mapFileName = generateMapFileName(tempCaseId);
+    const mapFileName = generateMapFileName(caseId);
 
     console.log("Uploading map image to Cloudinary...");
 
@@ -142,26 +194,16 @@ export async function POST(request: NextRequest) {
       console.log("Map image uploaded successfully:", mapImageUrl);
     } catch (uploadError) {
       console.error("Failed to upload map image:", uploadError);
-      // Continue without the map image - it's not critical for case creation
       mapImageUrl = undefined;
       mapImagePublicId = undefined;
     }
 
-    const generatedData = {
-      story,
-      caseIntro,
-      clues,
-      map: updatedMap,
-      mapImageUrl: mapImageUrl ?? "No map image",
-      mapImagePublicId: mapImagePublicId ?? "No map image",
-    };
-
-    // Generate case title if not provided
+    // Generate case title
     const title = story.title;
 
     // Calculate estimated duration
-    const clueCount = Object.values(generatedData.clues).flat().length;
-    const suspectCount = generatedData.story.suspects.length;
+    const clueCount = Object.values(clues).flat().length;
+    const suspectCount = story.suspects.length;
     const estimatedDuration = estimateCaseDuration(
       difficulty,
       clueCount,
@@ -169,59 +211,30 @@ export async function POST(request: NextRequest) {
     );
 
     // Generate tags
-    const tags = generateCaseTags(generatedData.story);
+    const tags = generateCaseTags(story);
 
-    console.log("Storing case in database...");
-
-    // console.log(JSON.stringify(generatedData, null, 4));
-    console.log("User ID: ", userId);
-    console.log("Title: ", title);
-    console.log("Difficulty: ", difficulty);
-    console.log("Estimated Duration: ", estimatedDuration);
-    console.log("Tags: ", tags);
-
-    // Store the case in Firebase
-    const result = await generateAndStoreCase(
-      {
-        userId,
-        title,
-        difficulty,
-        estimatedDuration,
-        tags,
-      },
-      generatedData
-    );
-
-    if (result.error) {
-      console.error("Failed to store case:", result.error);
-      return NextResponse.json({ error: result.error }, { status: 500 });
-    }
-
-    // If we have a case ID and map image URL, update the Cloudinary filename with the real case ID
-    if (result.caseId && mapImageUrl) {
-      try {
-        console.log("Case created with map image:", result.caseId);
-      } catch (error) {
-        console.error("Failed to update map filename:", error);
-      }
-    }
-
-    console.log("Case initialized successfully:", result.caseId);
-
-    return NextResponse.json({
-      success: true,
-      caseId: result.caseId,
-      generatedData,
+    // Update the case with all generated content
+    const updateResult = await updateCase(caseId, {
       title,
+      story,
+      caseIntro,
+      clues,
+      map: updatedMap,
+      mapImageUrl: mapImageUrl || "",
+      mapImagePublicId: mapImagePublicId || "",
+      status: 'active' as const,
       estimatedDuration,
-      tags,
-      mapImageUrl,
+      tags
     });
+
+    if (updateResult.error) {
+      console.error("Failed to update case with generated content:", updateResult.error);
+      throw new Error("Failed to update case");
+    }
+
+    console.log(`Case ${caseId} generation completed successfully!`);
   } catch (error) {
-    console.error("Error initializing case:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    console.error(`Background generation failed for case ${caseId}:`, error);
+    throw error;
   }
 }

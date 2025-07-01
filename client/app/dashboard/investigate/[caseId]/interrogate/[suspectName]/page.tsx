@@ -18,7 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import Navbar from "@/components/navbar";
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, useRef } from "react";
 import { useCase } from "@/hooks/useCases";
 import { canInterrogateSuspect } from "@/lib/investigationUtils";
 import { Suspect } from "@/functions/types";
@@ -48,6 +48,40 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
   const [conversation, setConversation] = useState<string | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingMessage, setProcessingMessage] = useState<string>('');
+  const [processingProgress, setProcessingProgress] = useState(0);
+  const [displayMessage, setDisplayMessage] = useState<string>('');
+  const rotationIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Realistic interrogation messages
+  const interrogationMessages = [
+    "Reading suspect's body language...",
+    "Analyzing psychological patterns...",
+    "Building rapport with the suspect...",
+    "Reviewing case files one more time...",
+    "Setting up recording equipment...",
+    "Preparing strategic questioning approach...",
+    "Studying suspect's background information...",
+    "Crafting the perfect interrogation flow...",
+    "Analyzing potential pressure points...",
+    "Reviewing witness testimonies...",
+    "Preparing evidence for confrontation...",
+    "Setting the interrogation room mood...",
+    "Running through questioning scenarios...",
+    "Checking audio recording systems...",
+    "Reviewing suspect's previous statements...",
+    "Coordinating with investigation team...",
+    "Analyzing forensic evidence correlation...",
+    "Preparing psychological pressure tactics...",
+    "Setting up one-way mirror observation...",
+    "Final equipment and room check...",
+    "Establishing baseline behavioral patterns...",
+    "Reviewing constitutional rights procedures...",
+    "Preparing alternative questioning routes...",
+    "Analyzing potential confession triggers...",
+    "Setting up stress monitoring systems..."
+  ];
 
   const suspectName = decodeURIComponent(resolvedParams.suspectName);
   const suspect = caseData?.story.suspects.find(
@@ -81,6 +115,128 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
     setQuestions(newQuestions);
   };
 
+  // Polling for interrogation completion
+  const pollOperationStatus = async (operationId: string) => {
+    let attempts = 0;
+    const maxAttempts = 100; // 5 minutes at 3-second intervals
+    
+    const poll = async () => {
+      try {
+        console.log(`Polling operation: ${operationId}, attempt: ${attempts + 1}`);
+        const response = await fetch(`/api/operation-status/${operationId}`);
+        
+        if (response.ok) {
+          const status = await response.json();
+          console.log('Operation status:', status);
+          
+          setProcessingProgress(status.progress || 0);
+          setProcessingMessage(status.message || 'Processing...'); // Backend message for debugging
+          
+          if (status.isComplete) {
+            setIsProcessing(false);
+            stopMessageRotation();
+            setDisplayMessage('Interrogation completed!');
+            
+            if (status.status === 'completed' && status.result) {
+              setConversation(status.result.conversation);
+              if (status.result.audioId) {
+                const directAudioUrl = `/api/getAudio?id=${status.result.audioId}`;
+                setAudioUrl(directAudioUrl);
+                console.log("Audio URL:", directAudioUrl);
+              }
+              setShowResults(true);
+            } else if (status.status === 'failed') {
+              alert(status.error || 'Interrogation failed');
+              setIsProcessing(false);
+              stopMessageRotation();
+            }
+            return;
+          }
+          
+          // Continue polling if not complete
+          if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(poll, 3000);
+          } else {
+            setIsProcessing(false);
+            stopMessageRotation();
+            alert('Interrogation is taking longer than expected. Please try again.');
+          }
+        } else if (response.status === 404) {
+          console.log(`Operation ${operationId} not found yet, retrying...`);
+          // Operation might not be stored yet, retry with shorter interval for first few attempts
+          if (attempts < 5) {
+            attempts++;
+            setTimeout(poll, 1000); // 1 second for first few attempts
+          } else if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(poll, 3000); // Normal 3 second interval after
+          } else {
+            setIsProcessing(false);
+            stopMessageRotation();
+            alert('Could not track interrogation progress. Please try again.');
+          }
+        } else {
+          console.error('Failed to check operation status:', response.status, response.statusText);
+          if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(poll, 3000);
+                  } else {
+          setIsProcessing(false);
+          stopMessageRotation();
+          alert('Failed to track interrogation progress.');
+        }
+        }
+      } catch (error) {
+        console.error('Error polling operation status:', error);
+        if (attempts < maxAttempts) {
+          attempts++;
+          setTimeout(poll, 3000);
+        } else {
+          setIsProcessing(false);
+          stopMessageRotation();
+          alert('Network error while tracking progress.');
+        }
+      }
+    };
+    
+    // Start polling with a small delay to ensure operation is stored
+    setTimeout(poll, 500);
+  };
+
+  // Message rotation for realistic interrogation atmosphere
+  const startMessageRotation = () => {
+    // Clear any existing interval
+    if (rotationIntervalRef.current) {
+      clearInterval(rotationIntervalRef.current);
+    }
+    
+    let messageIndex = 0;
+    setDisplayMessage(interrogationMessages[0]);
+    console.log('Starting message rotation with:', interrogationMessages[0]);
+    
+    rotationIntervalRef.current = setInterval(() => {
+      messageIndex = (messageIndex + 1) % interrogationMessages.length;
+      console.log(`Rotating to message ${messageIndex}:`, interrogationMessages[messageIndex]);
+      setDisplayMessage(interrogationMessages[messageIndex]);
+    }, 2500); // Change message every 2.5 seconds
+  };
+
+  const stopMessageRotation = () => {
+    if (rotationIntervalRef.current) {
+      console.log('Stopping message rotation');
+      clearInterval(rotationIntervalRef.current);
+      rotationIntervalRef.current = null;
+    }
+  };
+
+  // Clean up interval on unmount
+  useEffect(() => {
+    return () => {
+      stopMessageRotation();
+    };
+  }, []);
+
   const handleStartInterrogation = async () => {
     const validQuestions = questions.filter((q) => q.trim());
     if (validQuestions.length === 0 || isSubmitting) return;
@@ -102,12 +258,26 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
       const result = await response.json();
       
       if (response.ok && result.success) {
-        setConversation(result.conversation);
-        // Use direct URL method with audioId
-        const directAudioUrl = `/api/getAudio?id=${result.audioId}`;
-        setAudioUrl(directAudioUrl);
-        setShowResults(true);
-        console.log("Audio URL:", directAudioUrl);
+        if (result.operationId) {
+          // Background processing - start polling
+          setIsProcessing(true);
+          setProcessingMessage('Starting interrogation...');
+          setDisplayMessage('Preparing interrogation room...');
+          setProcessingProgress(10);
+          
+          // Start message rotation
+          startMessageRotation();
+          
+          pollOperationStatus(result.operationId);
+        } else {
+          // Old format - handle immediately (fallback)
+          setConversation(result.conversation);
+          if (result.audioId) {
+            const directAudioUrl = `/api/getAudio?id=${result.audioId}`;
+            setAudioUrl(directAudioUrl);
+          }
+          setShowResults(true);
+        }
       } else {
         alert(result.error || "Failed to start interrogation");
       }
@@ -457,10 +627,11 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
           </motion.div>
 
           {/* Suspect Information */}
-          <motion.div
-            variants={fadeInUp}
-            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
-          >
+          {!isProcessing && (
+            <motion.div
+              variants={fadeInUp}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+            >
             <h2 className="text-2xl font-bold text-white mb-6">
               Suspect Profile
             </h2>
@@ -546,9 +717,74 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
               </div>
             </div>
           </motion.div>
+          )}
+
+          {/* Processing State */}
+          {isProcessing && (
+            <motion.div
+              variants={fadeInUp}
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-center"
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-500/20 backdrop-blur-xl border border-purple-400/30 rounded-2xl mb-6">
+                <User className="w-8 h-8 text-purple-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Conducting Interrogation</h3>
+              
+              <motion.p 
+                key={displayMessage}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-gray-400 mb-6 h-6"
+              >
+                {displayMessage}
+              </motion.p>
+              
+              <div className="w-80 max-w-full mx-auto">
+                <div className="flex justify-between text-sm text-gray-400 mb-2">
+                  <span>Progress</span>
+                  <span>{processingProgress}%</span>
+                </div>
+                <div className="w-full h-3 bg-gray-700/50 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-purple-500 via-purple-400 to-purple-300 rounded-full relative"
+                    initial={{ width: "0%" }}
+                    animate={{ width: `${processingProgress}%` }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                      animate={{ x: ["-100%", "100%"] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </motion.div>
+                </div>
+              </div>
+              
+              {/*                 <div className="mt-8 text-xs text-gray-500 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${processingProgress >= 20 ? 'bg-purple-400' : 'bg-gray-600'}`} />
+                    <p>🎭 Analyzing suspect behavior</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${processingProgress >= 40 ? 'bg-purple-400' : 'bg-gray-600'}`} />
+                    <p>💬 Generating conversation</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${processingProgress >= 60 ? 'bg-purple-400' : 'bg-gray-600'}`} />
+                    <p>🎙️ Creating audio recording</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${processingProgress >= 90 ? 'bg-purple-400' : 'bg-gray-600'}`} />
+                    <p>📝 Recording findings</p>
+                  </div>
+                </div> */}
+            </motion.div>
+          )}
+
+          
 
           {/* Previous Questions (if any) */}
-          {existingInterrogation &&
+          {!isProcessing && existingInterrogation &&
             existingInterrogation.questionsAsked.length > 0 && (
               <motion.div
                 variants={fadeInUp}
@@ -595,12 +831,13 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
             )}
 
           {/* Questions Input */}
-          <motion.div
-            variants={fadeInUp}
-            className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 ${
-              !canInterrogate ? 'opacity-60' : ''
-            }`}
-          >
+          {!isProcessing && (
+            <motion.div
+              variants={fadeInUp}
+              className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 ${
+                !canInterrogate ? 'opacity-60' : ''
+              }`}
+            >
             <h2 className="text-2xl font-bold text-white mb-6">
               {canInterrogate ? 'Prepare Your Questions' : 'Review Previous Interrogation'}
             </h2>
@@ -715,7 +952,8 @@ export default function InterrogatePage({ params }: InterrogatePageProps) {
                 </div>
               )}
             </div>
-          </motion.div>
+            </motion.div>
+          )}
         </motion.div>
       </main>
       

@@ -11,7 +11,7 @@ export interface CaseData {
   map: any;
   mapImageUrl?: string;
   mapImagePublicId?: string;
-  status: 'active' | 'completed' | 'archived';
+  status: 'active' | 'completed' | 'archived' | 'generating';
   createdAt: any;
   updatedAt: any;
   completedAt?: any;

@@ -33,6 +33,9 @@ export default function DashboardPage() {
   const router = useRouter();
   const [showDifficultyModal, setShowDifficultyModal] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatingCaseId, setGeneratingCaseId] = useState<string | null>(null);
+  const [generationMessage, setGenerationMessage] = useState<string>('');
+  const [generationProgress, setGenerationProgress] = useState(0);
   const [showAllCases, setShowAllCases] = useState(false);
   const { cases: recentCases, loading: casesLoading, error: casesError } = useCases(user?.uid, showAllCases ? undefined : 3);
   const { stats: userStats, loading: statsLoading, error: statsError } = useUserStats(user?.uid);
@@ -52,7 +55,71 @@ export default function DashboardPage() {
     console.log('Dashboard - Stats loading:', statsLoading);
   }, [user?.uid, casesLoading, recentCases, casesError, userStats, statsLoading]);
 
+  // Polling for case generation completion
+  useEffect(() => {
+    if (!generatingCaseId) return;
 
+    let pollInterval: NodeJS.Timeout;
+    let timeoutFallback: NodeJS.Timeout;
+
+    const checkCaseStatus = async () => {
+      try {
+        const response = await fetch(`/api/case-status/${generatingCaseId}`);
+        if (response.ok) {
+          const result = await response.json();
+          
+          if (result.isComplete) {
+            setIsGenerating(false);
+            setGeneratingCaseId(null);
+            setShowDifficultyModal(false);
+            clearInterval(pollInterval);
+            clearTimeout(timeoutFallback);
+            // Navigate to the completed case
+            router.push(`/dashboard/case/${generatingCaseId}`);
+          } else {
+            // Update progress and message
+            setGenerationProgress(prev => Math.min(prev + Math.random() * 3 + 1, 95));
+            const messages = [
+              'Analyzing case details...',
+              'Reviewing evidence patterns...',
+              'Cross-referencing witness statements...',
+              'Mapping crime scene layout...',
+              'Processing forensic data...',
+              'Compiling investigation notes...',
+              'Finalizing case documentation...',
+              'Preparing case briefing...'
+            ];
+            setGenerationMessage(messages[Math.floor(Math.random() * messages.length)]);
+          }
+        } else {
+          console.error('Failed to check case status:', response.status);
+        }
+      } catch (error) {
+        console.error('Error checking case status:', error);
+      }
+    };
+
+    // Start polling every 3 seconds
+    pollInterval = setInterval(checkCaseStatus, 3000);
+    
+    // Start with immediate check
+    checkCaseStatus();
+
+    // Failsafe timeout (5 minutes)
+    timeoutFallback = setTimeout(() => {
+      console.error('Case generation timeout reached');
+      setIsGenerating(false);
+      setGeneratingCaseId(null);
+      setShowDifficultyModal(false);
+      clearInterval(pollInterval);
+      alert('Case generation is taking longer than expected. Please try refreshing the page or creating a new case.');
+    }, 5 * 60 * 1000); // 5 minutes
+
+    return () => {
+      clearInterval(pollInterval);
+      clearTimeout(timeoutFallback);
+    };
+  }, [generatingCaseId, router]);
 
   if (loading) {
     return (
@@ -193,6 +260,8 @@ export default function DashboardPage() {
 
   const handleSelectDifficulty = async (difficulty: 'easy' | 'medium' | 'hard') => {
     setIsGenerating(true);
+    setGenerationProgress(10);
+    setGenerationMessage('Initializing case generation...');
     
     try {
       const response = await fetch('/api/initCase', {
@@ -213,8 +282,10 @@ export default function DashboardPage() {
       const result = await response.json();
       
       if (result.success && result.caseId) {
-        // Navigate to the case file page
-        router.push(`/dashboard/case/${result.caseId}`);
+        // Case creation started, begin polling
+        setGeneratingCaseId(result.caseId);
+        setGenerationProgress(20);
+        setGenerationMessage('Brewing the perfect mystery...');
       } else {
         throw new Error(result.error || 'Failed to generate case');
       }
@@ -222,6 +293,7 @@ export default function DashboardPage() {
       console.error('Error generating case:', error);
       alert('Failed to generate case. Please try again.');
       setIsGenerating(false);
+      setGeneratingCaseId(null);
       setShowDifficultyModal(false);
     }
   };
@@ -432,8 +504,12 @@ export default function DashboardPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    onClick={() => case_.id && router.push(`/dashboard/case/${case_.id}`)}
-                    className="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                    onClick={() => case_.status !== 'generating' && case_.id && router.push(`/dashboard/case/${case_.id}`)}
+                    className={`flex items-center justify-between p-4 bg-white/5 rounded-lg transition-colors ${
+                      case_.status === 'generating' 
+                        ? 'cursor-not-allowed opacity-60' 
+                        : 'hover:bg-white/10 cursor-pointer'
+                    }`}
                   >
                     <div className="flex items-center space-x-4">
                       <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-400 rounded-lg flex items-center justify-center">
@@ -452,9 +528,10 @@ export default function DashboardPage() {
                         <p className={`text-sm font-medium capitalize ${
                           case_.status === 'active' ? 'text-teal-400' :
                           case_.status === 'completed' ? 'text-green-400' :
+                          case_.status === 'generating' ? 'text-yellow-400' :
                           'text-gray-400'
                         }`}>
-                          {case_.status}
+                          {case_.status === 'generating' ? 'Brewing...' : case_.status}
                         </p>
                         <p className="text-gray-400 text-xs">
                           {case_.progress !== undefined 
@@ -585,6 +662,8 @@ export default function DashboardPage() {
         onClose={handleCloseModal}
         onSelectDifficulty={handleSelectDifficulty}
         isGenerating={isGenerating}
+        generationMessage={generationMessage}
+        generationProgress={generationProgress}
       />
     </div>
   );
